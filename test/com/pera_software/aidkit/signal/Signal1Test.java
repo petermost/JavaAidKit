@@ -9,6 +9,13 @@ public class Signal1Test extends SignalTest
 {
 	//==============================================================================================
 
+	public Signal1Test()
+	{
+		super( Signal1.class, Slot1.class, Byte.class );
+	}
+
+	//==============================================================================================
+
 	@Test
 	@SuppressWarnings("static-method")
 	public void testEmitToMultipleSlots()

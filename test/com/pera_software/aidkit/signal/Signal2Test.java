@@ -5,8 +5,14 @@ import static org.junit.Assert.*;
 
 //##################################################################################################
 
-public class Signal2Test extends SignalTest< Class< Signal2< Byte, Long >>>
+public class Signal2Test extends SignalTest
 {
+	//==============================================================================================
+
+	public Signal2Test()
+	{
+		super( Signal2.class, Slot2.class, Byte.class, Long.class );
+	}
 	//==============================================================================================
 
 	@Test
@@ -85,7 +91,6 @@ public class Signal2Test extends SignalTest< Class< Signal2< Byte, Long >>>
 
 		Slot2< Byte, Long > disconnectingSlot = new Slot2< Byte, Long >() {
 			@Override
-			@SuppressWarnings("unused")
 			public void call( Byte value1, Long value2 ) throws Exception {
 				signal.disconnect( this );
 			}

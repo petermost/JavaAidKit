@@ -1,11 +1,13 @@
 package com.pera_software.aidkit.signal;
 
 import static org.junit.Assert.*;
+import java.lang.reflect.*;
+import java.util.*;
 import org.junit.*;
 
 //##################################################################################################
 
-abstract class SignalTest< SignalClass extends Class< SignalBase< T extends Slot2 > >>
+public abstract class SignalTest // < SignalClass // extends Class< SignalBase< T extends Slot2 > >>
 {
 	protected static final Byte    EXPECTED_VALUE_1 = 1;
 	protected static final Long    EXPECTED_VALUE_2 = 2l;
@@ -15,7 +17,8 @@ abstract class SignalTest< SignalClass extends Class< SignalBase< T extends Slot
 	protected static final String  EXPECTED_VALUE_6 = "6";
 	protected static final Integer EXPECTED_VALUE_7 = 7;
 
-	protected static final Object EXPECTED_VALUES[] = {
+	protected static final Object EXPECTED_VALUES[] = 
+	{
 		EXPECTED_VALUE_1,
 		EXPECTED_VALUE_2,
 		EXPECTED_VALUE_3,
@@ -25,35 +28,61 @@ abstract class SignalTest< SignalClass extends Class< SignalBase< T extends Slot
 		EXPECTED_VALUE_7
 	};
 
-	//==============================================================================================
-
-	@Test
-	@SuppressWarnings("static-method")
-	public void test( SignalClass signalClass )
-	{
-
-//		// A Signal must be able to emit to multiple slots:
-//
-//		Slot2< Byte, Long > mustCallSlot1 = ( value1, value2 ) -> {
-//			assertParameters( value1, value2 );
-//		};
-//		Slot2< Byte, Long > mustCallSlot2 = ( value1, value2 ) -> {
-//			assertParameters( value1, value2 );
-//		};
-//
-//		SignalBase signal = signalClass.newInstance();
-//		signal.connect( mustCallSlot1 );
-//		signal.connect( mustCallSlot2 );
-//
-//		signalClass.getMethod( "emit" name, parameterTypes)emit( EXPECTED_VALUE_1, EXPECTED_VALUE_2 );
-	}
-
-	//==============================================================================================
-
 	protected static void assertParameters( Object ... parameters )
 	{
 		for ( int i = 0; i < parameters.length; ++i ) {
 			assertEquals( parameters[ i ], EXPECTED_VALUES[ i ]);
 		}
 	}
+
+	private Class< ? extends Signal > _signalClass;
+	private Class< ? > _slotClass;
+	private Class< ? > _parameterTypes[];
+
+	//==============================================================================================
+
+	public SignalTest( Class< ? extends Signal > signalClass, Class< ? extends Slot > slotClass,
+		Class< ? > ... parameterTypes )
+	{
+		_signalClass = signalClass;
+		_slotClass = slotClass;
+
+		// Because of type erasure we have to use an array of Object classes, but we keep the
+		// more type safer signature:
+
+		_parameterTypes = new Class< ? >[ parameterTypes.length ];
+		Arrays.fill( _parameterTypes, Object.class );
+	}
+
+	//==============================================================================================
+
+	@Test
+	public void test() 
+		throws Exception
+	{
+		// A Signal must be able to emit to multiple slots:
+
+		InvocationHandler slot1Call = ( proxy, method, parameters ) -> {
+			assertParameters( parameters );
+			return null;
+		};
+		InvocationHandler slot2Call = ( proxy, method, parameters ) -> {
+			assertParameters( parameters );
+			return null;
+		};
+		Slot slot1 = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), new Class< ? >[] { _slotClass }, slot1Call );
+		Slot slot2 = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), new Class< ? >[] { _slotClass }, slot2Call );
+
+		Method connectMethod = _signalClass.getMethod( "connect", Object.class );
+		Signal signal = _signalClass.newInstance();
+		connectMethod.invoke( signal, slot1 );
+		connectMethod.invoke( signal, slot2 );
+
+		Method emitMethod = _signalClass.getMethod( "emit", _parameterTypes );
+		Object parameters[] = Arrays.copyOf( EXPECTED_VALUES, _parameterTypes.length );
+		emitMethod.invoke( signal, parameters );
+	}
+
+	//==============================================================================================
+
 }

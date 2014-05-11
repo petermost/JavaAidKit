@@ -8,7 +8,7 @@ import com.pera_software.aidkit.util.function.*;
 // An excellent article: "Java theory and practice: Be a good (event) listener"
 // (http://www.ibm.com/developerworks/java/library/j-jtp07265/index.html)
 
-abstract class SignalBase< T >
+abstract class SignalBase< T > extends Signal
 {
 	private List< T > _slots = new CopyOnWriteArrayList<>();
 
