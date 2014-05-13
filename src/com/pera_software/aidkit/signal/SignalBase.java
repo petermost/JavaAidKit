@@ -52,15 +52,11 @@ abstract class SignalBase< T > extends Signal
 
 	//==============================================================================================
 
-	protected void forEach( Callable1< ? super T > action )
+	protected void forEach( Callable1< ? super T > action ) 
+		throws Exception
 	{
 		for ( T slot : _slots ) {
-			try {
-				action.call( slot );
-			} catch ( Exception exception ) {
-				// Ignore slot exceptions. Note we don't catch Throwable because then we would also
-				// catch the AssertionErrors from the unit tests!
-			}
+			action.call( slot );
 		}
 	}
 }

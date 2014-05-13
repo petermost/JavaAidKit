@@ -35,6 +35,7 @@ public class Signal2Test extends SignalTest
 	@Test
 	@SuppressWarnings("static-method")
 	public void testEmitToMultipleSlots()
+		throws Exception
 	{
 		// A Signal must be able to emit to multiple slots:
 
@@ -57,6 +58,7 @@ public class Signal2Test extends SignalTest
 	@Test
 	@SuppressWarnings("static-method")
 	public void testDontEmitToDisconnectedSlot()
+		throws Exception
 	{
 		// A Signal must not emit to a disconnected slot:
 
@@ -81,6 +83,7 @@ public class Signal2Test extends SignalTest
 	@Test
 	@SuppressWarnings("static-method")
 	public void testEmitToSignal()
+		throws Exception
 	{
 		// A Signal can be used as a Slot:
 
@@ -101,6 +104,7 @@ public class Signal2Test extends SignalTest
 	@Test
 	@SuppressWarnings("static-method")
 	public void testHandleDisconnectingSlot()
+		throws Exception
 	{
 		// A Signal must be able to handle a Slot which disconnects while being called:
 

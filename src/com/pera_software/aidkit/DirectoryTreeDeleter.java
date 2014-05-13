@@ -45,6 +45,7 @@ public class DirectoryTreeDeleter extends SimpleFileVisitor< Path >
 	//==============================================================================================
 
 	private void deleteFile( Path file )
+		throws Exception
 	{
 		try {
 			if ( _deletionMode == DeletionMode.Real )
@@ -71,9 +72,13 @@ public class DirectoryTreeDeleter extends SimpleFileVisitor< Path >
 	public FileVisitResult visitFile( Path file, BasicFileAttributes attributes )
 		throws IOException
 	{
-		deleteFile( file );
+		try {
+			deleteFile( file );
 
-		return FileVisitResult.CONTINUE;
+			return FileVisitResult.CONTINUE;
+		} catch ( Exception cause ) {
+			throw new IOException( cause );
+		}
 	}
 
 	//==============================================================================================
@@ -83,20 +88,27 @@ public class DirectoryTreeDeleter extends SimpleFileVisitor< Path >
 	public FileVisitResult postVisitDirectory( Path directory, IOException exception )
 		throws IOException
 	{
-		deleteFile( directory );
+		try {
+			deleteFile( directory );
 
-		return FileVisitResult.CONTINUE;
+			return FileVisitResult.CONTINUE;
+		} catch ( Exception cause ) {
+			throw new IOException( cause );
+		}
 	}
 
 	//==============================================================================================
 
 	@Override
-	@SuppressWarnings("unused")
 	public FileVisitResult visitFileFailed( Path file, IOException exception )
 		throws IOException
 	{
-		fileDeletionFailedSignal.emit( file, exception );
+		try {
+			fileDeletionFailedSignal.emit( file, exception );
 
-		return FileVisitResult.CONTINUE;
+			return FileVisitResult.CONTINUE;
+		} catch ( Exception cause ) {
+			throw new IOException( cause );
+		}
 	}
 }
