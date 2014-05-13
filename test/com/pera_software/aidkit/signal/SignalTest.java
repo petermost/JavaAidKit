@@ -49,7 +49,6 @@ public abstract class SignalTest
 
 	protected static void assertParameters( Object ... parameters )
 	{
-		fail();
 		for ( int i = 0; i < parameters.length; ++i ) {
 			assertEquals( parameters[ i ], EXPECTED_VALUES[ i ] );
 		}

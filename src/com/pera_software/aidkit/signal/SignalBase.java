@@ -57,8 +57,9 @@ abstract class SignalBase< T > extends Signal
 		for ( T slot : _slots ) {
 			try {
 				action.call( slot );
-			} catch ( Throwable exception ) {
-				// Ignore slot exceptions.
+			} catch ( Exception exception ) {
+				// Ignore slot exceptions. Note we don't catch Throwable because then we would also
+				// catch the AssertionErrors from the unit tests!
 			}
 		}
 	}
