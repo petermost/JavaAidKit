@@ -17,8 +17,16 @@
 
 package com.pera_software.aidkit.signal;
 
-public interface Slot1< P1 > extends Slot
+public class Signal3< P1, P2, P3 > extends SignalBase< Slot3< P1, P2, P3 >> implements Slot3< P1, P2, P3 >
 {
-	void call( P1 value )
-		throws Exception;
+	public void emit( P1 value1, P2 value2, P3 value3 )
+	{
+		forEach(( slot ) -> slot.call( value1, value2, value3 ));
+	}
+
+	@Override
+	public void call( P1 value1, P2 value2, P3 value3 ) throws Exception
+	{
+		emit( value1, value2, value3 );
+	}
 }

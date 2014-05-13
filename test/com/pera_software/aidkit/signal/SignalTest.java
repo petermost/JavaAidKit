@@ -63,8 +63,7 @@ public abstract class SignalTest
 		_slotClass = slotClass;
 
 		// Because of type erasure we have to use an array of Object classes,
-		// but we keep the
-		// more type safer signature:
+		// but we keep the more type safer signature:
 
 		_parameterTypes = new Class< ? >[ parameterTypes.length ];
 		Arrays.fill( _parameterTypes, Object.class );
@@ -74,9 +73,11 @@ public abstract class SignalTest
 
 	private Slot createSlotMock( InvocationHandler handler )
 	{
-		Slot slot = ( Slot ) Proxy.newProxyInstance( _slotClass.getClassLoader(), new Class< ? >[] {
+		Class< ? >[] interfaces = new Class< ? >[] {
 			_slotClass
-		}, handler );
+		};
+		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces,
+			handler );
 
 		return slot;
 	}
@@ -85,8 +86,7 @@ public abstract class SignalTest
 
 	// A Signal must be able to emit to multiple slots:
 	@Test
-	public void test()
-		throws Exception
+	public void test() throws Exception
 	{
 		InvocationHandler slot1Call = ( proxy, method, parameters ) -> {
 			assertParameters( parameters );

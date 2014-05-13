@@ -17,8 +17,10 @@
 
 package com.pera_software.aidkit.signal;
 
-public interface Slot1< P1 > extends Slot
+public class Signal3Test extends SignalTest
 {
-	void call( P1 value )
-		throws Exception;
+	public Signal3Test()
+	{
+		super( Signal3.class, Slot3.class, Byte.class, Long.class, Short.class );
+	}
 }
