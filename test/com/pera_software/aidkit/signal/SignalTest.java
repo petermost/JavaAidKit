@@ -1,6 +1,6 @@
 // Copyright 2014 Peter Most, PERA Software Solutions GmbH
 //
-// This file is part of JavaAidKit.
+// This file is part of the JavaAidKit library.
 //
 // JavaAidKit is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -24,39 +24,37 @@ import org.junit.*;
 
 //##################################################################################################
 
-public abstract class SignalTest // < SignalClass // extends Class< SignalBase< T extends Slot2 > >>
+public abstract class SignalTest
 {
-	protected static final Byte    EXPECTED_VALUE_1 = 1;
-	protected static final Long    EXPECTED_VALUE_2 = 2l;
-	protected static final Short   EXPECTED_VALUE_3 = 3;
-	protected static final Float   EXPECTED_VALUE_4 = 4f;
-	protected static final Double  EXPECTED_VALUE_5 = 5d;
-	protected static final String  EXPECTED_VALUE_6 = "6";
+	protected static final Byte EXPECTED_VALUE_1 = 1;
+	protected static final Long EXPECTED_VALUE_2 = 2l;
+	protected static final Short EXPECTED_VALUE_3 = 3;
+	protected static final Float EXPECTED_VALUE_4 = 4f;
+	protected static final Double EXPECTED_VALUE_5 = 5d;
+	protected static final String EXPECTED_VALUE_6 = "6";
 	protected static final Integer EXPECTED_VALUE_7 = 7;
-
-	protected static final Object EXPECTED_VALUES[] = 
-		{
-		EXPECTED_VALUE_1,
-		EXPECTED_VALUE_2,
-		EXPECTED_VALUE_3,
-		EXPECTED_VALUE_4,
-		EXPECTED_VALUE_5,
-		EXPECTED_VALUE_6,
-		EXPECTED_VALUE_7
-		};
-
-	protected static void assertParameters( Object ... parameters )
-	{
-		for ( int i = 0; i < parameters.length; ++i ) {
-			assertEquals( parameters[ i ], EXPECTED_VALUES[ i ]);
-		}
-	}
 
 	private Class< ? extends Signal > _signalClass;
 	private Class< ? > _slotClass;
 	private Class< ? > _parameterTypes[];
 
-	//==============================================================================================
+	// ==============================================================================================
+
+	protected static final Object EXPECTED_VALUES[] = {
+		EXPECTED_VALUE_1, EXPECTED_VALUE_2, EXPECTED_VALUE_3, EXPECTED_VALUE_4, EXPECTED_VALUE_5,
+		EXPECTED_VALUE_6, EXPECTED_VALUE_7
+	};
+
+	// ==============================================================================================
+
+	protected static void assertParameters( Object ... parameters )
+	{
+		for ( int i = 0; i < parameters.length; ++i ) {
+			assertEquals( parameters[ i ], EXPECTED_VALUES[ i ] );
+		}
+	}
+
+	// ==============================================================================================
 
 	public SignalTest( Class< ? extends Signal > signalClass, Class< ? extends Slot > slotClass,
 		Class< ? > ... parameterTypes )
@@ -64,21 +62,32 @@ public abstract class SignalTest // < SignalClass // extends Class< SignalBase< 
 		_signalClass = signalClass;
 		_slotClass = slotClass;
 
-		// Because of type erasure we have to use an array of Object classes, but we keep the
+		// Because of type erasure we have to use an array of Object classes,
+		// but we keep the
 		// more type safer signature:
 
 		_parameterTypes = new Class< ? >[ parameterTypes.length ];
 		Arrays.fill( _parameterTypes, Object.class );
 	}
 
-	//==============================================================================================
+	// ==============================================================================================
 
+	private Slot createSlotMock( InvocationHandler handler )
+	{
+		Slot slot = ( Slot ) Proxy.newProxyInstance( _slotClass.getClassLoader(), new Class< ? >[] {
+			_slotClass
+		}, handler );
+
+		return slot;
+	}
+
+	// ==============================================================================================
+
+	// A Signal must be able to emit to multiple slots:
 	@Test
-	public void test() 
+	public void test()
 		throws Exception
 	{
-		// A Signal must be able to emit to multiple slots:
-
 		InvocationHandler slot1Call = ( proxy, method, parameters ) -> {
 			assertParameters( parameters );
 			return null;
@@ -87,8 +96,8 @@ public abstract class SignalTest // < SignalClass // extends Class< SignalBase< 
 			assertParameters( parameters );
 			return null;
 		};
-		Slot slot1 = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), new Class< ? >[] { _slotClass }, slot1Call );
-		Slot slot2 = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), new Class< ? >[] { _slotClass }, slot2Call );
+		Slot slot1 = createSlotMock( slot1Call );
+		Slot slot2 = createSlotMock( slot2Call );
 
 		Method connectMethod = _signalClass.getMethod( "connect", Object.class );
 		Signal signal = _signalClass.newInstance();
@@ -100,6 +109,6 @@ public abstract class SignalTest // < SignalClass // extends Class< SignalBase< 
 		emitMethod.invoke( signal, parameters );
 	}
 
-	//==============================================================================================
+	// ==============================================================================================
 
 }

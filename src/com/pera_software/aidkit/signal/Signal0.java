@@ -1,6 +1,6 @@
 // Copyright 2014 Peter Most, PERA Software Solutions GmbH
 //
-// This file is part of JavaAidKit.
+// This file is part of the JavaAidKit library.
 //
 // JavaAidKit is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
