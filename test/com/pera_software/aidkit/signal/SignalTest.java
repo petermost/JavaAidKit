@@ -37,6 +37,8 @@ public abstract class SignalTest
 	private Class< ? extends Signal > _signalClass;
 	private Class< ? > _slotClass;
 	private Class< ? > _parameterTypes[];
+	private Method _connectMethod;
+	private Method _emitMethod;
 
 	// ==============================================================================================
 
@@ -49,24 +51,34 @@ public abstract class SignalTest
 
 	protected static void assertParameters( Object ... parameters )
 	{
-		for ( int i = 0; i < parameters.length; ++i ) {
-			assertEquals( parameters[ i ], EXPECTED_VALUES[ i ] );
+		for ( int i = 0; parameters != null && i < parameters.length; ++i ) {
+			Object parameter = parameters[ i ];
+			Object expectedValue = EXPECTED_VALUES[ i ];
+
+			assertEquals( parameter, expectedValue );
+			assertEquals( parameter.getClass(), expectedValue.getClass() );
 		}
 	}
 
 	// ==============================================================================================
 
 	public SignalTest( Class< ? extends Signal > signalClass, Class< ? extends Slot > slotClass,
-		Class< ? > ... parameterTypes )
+			Class< ? > ... parameterTypes )
+		throws Exception
 	{
 		_signalClass = signalClass;
 		_slotClass = slotClass;
 
 		// Because of type erasure we have to use an array of Object classes,
-		// but we keep the more type safer signature:
+		// but we keep the type safer constructor signature:
 
 		_parameterTypes = new Class< ? >[ parameterTypes.length ];
 		Arrays.fill( _parameterTypes, Object.class );
+
+		// Prefetch the methods:
+
+		_connectMethod = _signalClass.getMethod( "connect", Object.class );
+		_emitMethod = _signalClass.getMethod( "emit", _parameterTypes );
 	}
 
 	// ==============================================================================================
@@ -84,10 +96,12 @@ public abstract class SignalTest
 
 	// ==============================================================================================
 
-	// A Signal must be able to emit to multiple slots:
 	@Test
-	public void test() throws Exception
+	public void testEmitToMultipleSlots()
+		throws Exception
 	{
+		// A Signal must be able to emit to multiple slots:
+
 		InvocationHandler slot1Call = ( proxy, method, parameters ) -> {
 			assertParameters( parameters );
 			return null;
@@ -99,14 +113,12 @@ public abstract class SignalTest
 		Slot slot1 = createSlotMock( slot1Call );
 		Slot slot2 = createSlotMock( slot2Call );
 
-		Method connectMethod = _signalClass.getMethod( "connect", Object.class );
 		Signal signal = _signalClass.newInstance();
-		connectMethod.invoke( signal, slot1 );
-		connectMethod.invoke( signal, slot2 );
+		_connectMethod.invoke( signal, slot1 );
+		_connectMethod.invoke( signal, slot2 );
 
-		Method emitMethod = _signalClass.getMethod( "emit", _parameterTypes );
 		Object parameters[] = Arrays.copyOf( EXPECTED_VALUES, _parameterTypes.length );
-		emitMethod.invoke( signal, parameters );
+		_emitMethod.invoke( signal, parameters );
 	}
 
 	// ==============================================================================================

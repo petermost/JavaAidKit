@@ -27,31 +27,9 @@ public class Signal1Test extends SignalTest
 	//==============================================================================================
 
 	public Signal1Test()
-	{
-		super( Signal1.class, Slot1.class, Byte.class );
-	}
-
-	//==============================================================================================
-
-	@Test
-	@SuppressWarnings("static-method")
-	public void testEmitToMultipleSlots() 
 		throws Exception
 	{
-		// A Signal must be able to emit to multiple slots:
-
-		Slot1< Byte > mustCallSlot1 = ( value1 ) -> {
-			assertParameters( value1 );
-		};
-		Slot1< Byte > mustCallSlot2 = ( value1 ) -> {
-			assertParameters( value1 );
-		};
-
-		Signal1< Byte > signal = new Signal1<>();
-		signal.connect( mustCallSlot1 );
-		signal.connect( mustCallSlot2 );
-
-		signal.emit( EXPECTED_VALUE_1 );
+		super( Signal1.class, Slot1.class, Byte.class );
 	}
 
 	//==============================================================================================

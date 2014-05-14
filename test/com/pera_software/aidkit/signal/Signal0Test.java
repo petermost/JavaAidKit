@@ -20,6 +20,7 @@ package com.pera_software.aidkit.signal;
 public class Signal0Test extends SignalTest
 {
 	public Signal0Test()
+		throws Exception
 	{
 		super( Signal0.class, Slot0.class );
 	}
