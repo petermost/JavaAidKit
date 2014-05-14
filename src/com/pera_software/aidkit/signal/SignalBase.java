@@ -52,7 +52,7 @@ abstract class SignalBase< T > extends Signal
 
 	//==============================================================================================
 
-	protected void forEach( Callable1< ? super T > action ) 
+	protected void forEach( Callable1< ? super T > action )
 		throws Exception
 	{
 		for ( T slot : _slots ) {

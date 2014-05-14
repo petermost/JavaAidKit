@@ -17,16 +17,22 @@
 
 package com.pera_software.aidkit.signal;
 
+//##################################################################################################
+
 public class Signal0 extends SignalBase< Slot0 > implements Slot0
 {
-	public void emit() 
+	//==============================================================================================
+
+	public void emit()
 		throws Exception
 	{
 		forEach(( slot ) -> slot.call() );
 	}
 
+	//==============================================================================================
+
 	@Override
-	public void call() 
+	public void call()
 		throws Exception
 	{
 		emit();
