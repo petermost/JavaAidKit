@@ -42,14 +42,14 @@ public class Signal1Test extends SignalTest
 
 		Signal1< Byte > mustCallSignalSlot = new Signal1<>();
 		Slot1< Byte > mustCallSlot = ( value1 ) -> {
-			assertParameters( value1 );
+			assertArguments( value1 );
 		};
 		mustCallSignalSlot.connect( mustCallSlot );
 
 		Signal1< Byte > signal = new Signal1<>();
 		signal.connect( mustCallSignalSlot );
 
-		signal.emit( EXPECTED_VALUE_1 );
+		signal.emit( EXPECTED_ARGUMENT_1 );
 	}
 
 	//==============================================================================================
@@ -77,6 +77,6 @@ public class Signal1Test extends SignalTest
 		signal.connect( unimportantSlot2 );
 		signal.connect( unimportantSlot1 );
 
-		signal.emit( EXPECTED_VALUE_1 );
+		signal.emit( EXPECTED_ARGUMENT_1 );
 	}
 }
