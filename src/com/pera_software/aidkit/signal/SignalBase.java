@@ -30,14 +30,22 @@ abstract class SignalBase< T > extends Signal
 	private List< T > _slots = new CopyOnWriteArrayList<>();
 
 	//==============================================================================================
-
+	/**
+	 * Connect a slot to a signal.
+	 * @param slot The slot which gets connected.
+	 * @return Whether the slot was connected.
+	 */
 	public boolean connect( T slot )
 	{
 		return _slots.add( slot );
 	}
 
 	//==============================================================================================
-
+	/**
+	 * Disconnect a slot from a signal.
+	 * @param slot The slot which get disconnected.
+	 * @return Whether the slot was disconnected.
+	 */
 	public boolean disconnect( T slot )
 	{
 		return _slots.remove( slot );
@@ -51,12 +59,19 @@ abstract class SignalBase< T > extends Signal
 	}
 
 	//==============================================================================================
-
-	protected void forEach( Callable1< ? super T > action )
+	/**
+	 * Apply an action to each slot.
+	 * @param action The action to apply to each slot.
+	 * @return The number a called slots.
+	 */
+	protected int forEach( Callable1< ? super T > action )
 		throws Exception
 	{
+		int calls = 0;
 		for ( T slot : _slots ) {
 			action.call( slot );
+			++calls;
 		}
+		return calls;
 	}
 }

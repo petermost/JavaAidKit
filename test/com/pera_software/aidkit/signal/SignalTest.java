@@ -155,7 +155,7 @@ public abstract class SignalTest
 		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot2 ));
 
 		Object parameters[] = Arrays.copyOf( EXPECTED_VALUES, _parameterTypes.length );
-		_emitMethod.invoke( signal, parameters );
+		assertEquals( 2, _emitMethod.invoke( signal, parameters ));
 	}
 
 	//==============================================================================================
@@ -172,7 +172,27 @@ public abstract class SignalTest
 		assertTrue(( Boolean )_disconnectMethod.invoke( signal, _mustNotCallSlot1 ));
 
 		Object parameters[] = Arrays.copyOf( EXPECTED_VALUES, _parameterTypes.length );
-		_emitMethod.invoke( signal, parameters );
+		assertEquals( 1, _emitMethod.invoke( signal, parameters ));
 	}
+
+	//==============================================================================================
+//	@Test
+//	@SuppressWarnings("static-method")
+//	public void _testEmitToSignal()
+//		throws Exception
+//	{
+//		// A Signal can be used as a Slot:
+//
+//		Signal2< Byte, Long > mustCallSignalSlot = new Signal2<>();
+//		Slot2< Byte, Long > mustCallSlot = ( value1, value2 ) -> {
+//			assertParameters( value1, value2 );
+//		};
+//		mustCallSignalSlot.connect( mustCallSlot );
+//
+//		Signal2< Byte, Long > signal = new Signal2<>();
+//		signal.connect( mustCallSignalSlot );
+//
+//		signal.emit( EXPECTED_VALUE_1, EXPECTED_VALUE_2 );
+//	}
 
 }
