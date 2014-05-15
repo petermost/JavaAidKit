@@ -44,7 +44,7 @@ public abstract class SignalTest
 	private Method _emitMethod;
 	private Method _disconnectMethod;
 
-	// Slot method:
+	// Slot methods:
 
 	private Method _callMethod;
 
@@ -76,53 +76,6 @@ public abstract class SignalTest
 
 	//==============================================================================================
 
-	public SignalTest( Class< ? extends Signal > signalClass, Class< ? extends Slot > slotClass,
-		Class< ? > ... parameterTypes ) throws Exception
-	{
-		_signalClass = signalClass;
-		_slotClass = slotClass;
-
-		// Because of type erasure we have to use an array of Object classes,
-		// but we keep the type safer constructor signature:
-
-		_parameterTypes = new Class< ? >[ parameterTypes.length ];
-		Arrays.fill( _parameterTypes, Object.class );
-
-		// Get the Signal methods:
-
-		_connectMethod = _signalClass.getMethod( "connect", Object.class );
-		_emitMethod = _signalClass.getMethod( "emit", _parameterTypes );
-		_disconnectMethod = _signalClass.getMethod( "disconnect",  Object.class );
-
-		// Get the Slot method:
-
-		_callMethod = _slotClass.getMethod( "call", _parameterTypes );
-
-		// Create the slot mocks:
-
-		InvocationHandler parameterAssertion = ( proxy, method, parameters ) -> {
-			if ( method == _callMethod ) {
-				assertParameters( parameters );
-			}
-			return null;
-		};
-		_mustCallSlot1 = createSlotMock( parameterAssertion );
-		_mustCallSlot2 = createSlotMock( parameterAssertion );
-
-		InvocationHandler failingAssertion = ( proxy, method, parameters ) -> {
-			if ( method.getName().equals( "equals" )) {
-				// TODO: How to handle?
-			}
-			else if ( method == _callMethod ) {
-				fail( "Slot must not be called!" );
-			}
-			return null;
-		};
-		_mustNotCallSlot1 = createSlotMock( failingAssertion );
-	}
-
-	//==============================================================================================
-
 	private Slot createSlotMock( InvocationHandler handler )
 	{
 		Class< ? >[] interfaces = new Class< ? >[] {
@@ -134,6 +87,62 @@ public abstract class SignalTest
 		return slot;
 	}
 
+	private Slot createMustCallSlotMock()
+	{
+		InvocationHandler parameterAssertion = ( proxy, method, parameters ) -> {
+			if ( method.equals( _callMethod )) {
+				assertParameters( parameters );
+			}
+			return null;
+		};
+		return createSlotMock( parameterAssertion );
+	}
+
+	private Slot createMustNotCallSlotMock()
+	{
+		InvocationHandler failingAssertion = ( proxy, method, parameters ) -> {
+			if ( method.getName().equals( "equals" )) {
+				return proxy == parameters[ 0 ];
+			} else if ( method.equals( _callMethod )) {
+				fail( "Slot must not be called!" );
+			}
+			return null;
+		};
+		return createSlotMock( failingAssertion );
+	}
+
+	//==============================================================================================
+
+	public SignalTest( Class< ? extends Signal > signalClass, Class< ? extends Slot > slotClass,
+		Class< ? > ... parameterTypes ) throws Exception
+	{
+		_signalClass = signalClass;
+		_slotClass = slotClass;
+
+		// Because of type erasure we have to use an array of Object classes, but we keep the type
+		// safe constructor signature anyway:
+
+		_parameterTypes = new Class< ? >[ parameterTypes.length ];
+		Arrays.fill( _parameterTypes, Object.class );
+
+		// Get the Signal methods:
+
+		_connectMethod = _signalClass.getMethod( "connect", Object.class );
+		_emitMethod = _signalClass.getMethod( "emit", _parameterTypes );
+		_disconnectMethod = _signalClass.getMethod( "disconnect", Object.class );
+
+		// Get the Slot methods:
+
+		_callMethod = _slotClass.getMethod( "call", _parameterTypes );
+
+		// Create the slot mocks:
+
+		_mustCallSlot1 = createMustCallSlotMock();
+		_mustCallSlot2 = createMustCallSlotMock();
+
+		_mustNotCallSlot1 = createMustNotCallSlotMock();
+	}
+
 	//==============================================================================================
 
 	@Test
@@ -142,8 +151,8 @@ public abstract class SignalTest
 		// A Signal must be able to emit to multiple slots:
 
 		Signal signal = _signalClass.newInstance();
-		_connectMethod.invoke( signal, _mustCallSlot1 );
-		_connectMethod.invoke( signal, _mustCallSlot2 );
+		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot1 ));
+		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot2 ));
 
 		Object parameters[] = Arrays.copyOf( EXPECTED_VALUES, _parameterTypes.length );
 		_emitMethod.invoke( signal, parameters );
@@ -152,7 +161,7 @@ public abstract class SignalTest
 	//==============================================================================================
 
 	@Test
-	public void _testDontEmitToDisconnectedSlot() throws Exception
+	public void testDontEmitToDisconnectedSlot() throws Exception
 	{
 		// A Signal must not emit to a disconnected slot:
 

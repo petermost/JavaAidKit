@@ -18,7 +18,6 @@
 package com.pera_software.aidkit.signal;
 
 import org.junit.*;
-import static org.junit.Assert.*;
 
 //##################################################################################################
 
@@ -30,30 +29,6 @@ public class Signal2Test extends SignalTest
 		throws Exception
 	{
 		super( Signal2.class, Slot2.class, Byte.class, Long.class );
-	}
-	//==============================================================================================
-
-	@Test
-	@SuppressWarnings("static-method")
-	public void testDontEmitToDisconnectedSlot()
-		throws Exception
-	{
-		// A Signal must not emit to a disconnected slot:
-
-		Slot2< Byte, Long > mustCallSlot = ( value1, value2 ) -> {
-			assertParameters( value1, value2 );
-		};
-		Slot2< Byte, Long > mustNotCallSlot = ( value1, value2 ) -> {
-			fail( "Slot must not be called!" );
-		};
-
-		Signal2< Byte, Long > signal = new Signal2<>();
-
-		signal.connect( mustCallSlot );
-		signal.connect( mustNotCallSlot );
-		signal.disconnect( mustNotCallSlot );
-
-		signal.emit( EXPECTED_VALUE_1, EXPECTED_VALUE_2 );
 	}
 
 	//==============================================================================================
