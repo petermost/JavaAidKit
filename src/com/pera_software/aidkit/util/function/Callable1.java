@@ -17,8 +17,8 @@
 
 package com.pera_software.aidkit.util.function;
 
-public interface Callable1< T1 >
+public interface Callable1< P1 >
 {
-	void call( T1 t )
+	void call( P1 t )
 		throws Exception;
 }

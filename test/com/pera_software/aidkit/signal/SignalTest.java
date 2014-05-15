@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 import java.lang.reflect.*;
 import java.util.*;
 import org.junit.*;
+import com.pera_software.aidkit.util.function.*;
 
 class MethodArgumentsAsserter implements InvocationHandler
 {
@@ -79,9 +80,11 @@ public abstract class SignalTest
 	private Class< ? > _slotClass;
 	private Class< ? > _argumentTypes[];
 
-	// Signal:
+	// Signals:
 
-	private Signal _signal;
+	private Signal _signal1;
+	private Signal _signal2;
+
 	private Method _connectMethod;
 	private Method _emitMethod;
 	private Method _disconnectMethod;
@@ -126,6 +129,12 @@ public abstract class SignalTest
 
 	//==============================================================================================
 
+	private Signal createSignal() 
+		throws Exception
+	{
+		return _signalClass.newInstance();
+	}
+
 	private Slot createSlotMock()
 	{
 		MethodArgumentsAsserter argumentsAsserter = new MethodArgumentsAsserter( _callMethod, expectedArguments() );
@@ -134,6 +143,12 @@ public abstract class SignalTest
 		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces, argumentsAsserter );
 
 		return slot;
+	}
+
+	private Slot createSlotMock( Callable0 callable )
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private static void assertSlotCallCounter( int expectedCallCounter, Slot slot )
@@ -168,7 +183,8 @@ public abstract class SignalTest
 
 		// Create the signal:
 
-		_signal = _signalClass.newInstance();
+		_signal1 = createSignal();
+		_signal2 = createSignal();
 
 		// Create the slot mocks:
 
@@ -185,10 +201,10 @@ public abstract class SignalTest
 	{
 		// A Signal must be able to emit to multiple slots:
 
-		assertTrue(( Boolean )_connectMethod.invoke( _signal, _connectedSlot1 ));
-		assertTrue(( Boolean )_connectMethod.invoke( _signal, _connectedSlot2 ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _connectedSlot1 ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _connectedSlot2 ));
 
-		_emitMethod.invoke( _signal, expectedArguments() );
+		_emitMethod.invoke( _signal1, expectedArguments() );
 		assertSlotCallCounter( 1, _connectedSlot1 );
 		assertSlotCallCounter( 1, _connectedSlot2 );
 	}
@@ -200,11 +216,12 @@ public abstract class SignalTest
 	{
 		// A Signal must not emit to a disconnected slot:
 
-		assertTrue(( Boolean )_connectMethod.invoke( _signal, _connectedSlot1 ));
-		assertTrue(( Boolean )_connectMethod.invoke( _signal, _disconnectedSlot ));
-		assertTrue(( Boolean )_disconnectMethod.invoke( _signal, _disconnectedSlot ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _connectedSlot1 ));
 
-		_emitMethod.invoke( _signal, expectedArguments() );
+		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _disconnectedSlot ));
+		assertTrue(( Boolean )_disconnectMethod.invoke( _signal1, _disconnectedSlot ));
+
+		_emitMethod.invoke( _signal1, expectedArguments() );
 		assertSlotCallCounter( 0, _disconnectedSlot );
 	}
 
@@ -216,13 +233,40 @@ public abstract class SignalTest
 	{
 		// A Signal can be used as a Slot:
 
-		Signal mustCallSignalSlot = _signalClass.newInstance();
-		assertTrue(( Boolean )_connectMethod.invoke( mustCallSignalSlot, _connectedSlot1 ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal2, _connectedSlot1 ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _signal2 ));
 
-		assertTrue(( Boolean )_connectMethod.invoke( _signal, mustCallSignalSlot ));
-
-		_emitMethod.invoke( _signal,  expectedArguments() );
+		_emitMethod.invoke( _signal1,  expectedArguments() );
 		assertSlotCallCounter( 1, _connectedSlot1 );
 	}
+
+	//==============================================================================================
+
+	@Test
+	public void _testHandleDisconnectingSlot()
+		throws Exception
+	{
+		// A Signal must be able to handle a Slot which disconnects while being called:
+
+		Signal signal = createSignal();
+
+		Slot disconnectingSlot = createSlotMock( new Callable0() {
+			@Override
+			public void call() throws Exception
+			{
+				_disconnectMethod.invoke( signal, this );
+			}
+		});
+
+		Slot unimportantSlot1 = createSlotMock();
+		Slot unimportantSlot2 = createSlotMock();
+
+		_connectMethod.invoke( signal, disconnectingSlot );
+		_connectMethod.invoke( signal, unimportantSlot2 );
+		_connectMethod.invoke( signal, unimportantSlot1 );
+
+		_emitMethod.invoke( signal,  expectedArguments() );
+	}
+
 
 }
