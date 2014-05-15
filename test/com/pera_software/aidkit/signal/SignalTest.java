@@ -22,31 +22,47 @@ import java.lang.reflect.*;
 import java.util.*;
 import org.junit.*;
 
-// TODO: Give it a better name since it has nothing to do with a slot.
-class SlotMock implements InvocationHandler
+class MethodArgumentsAsserter implements InvocationHandler
 {
-	private boolean _called = false;
-	private InvocationHandler _handler;
+	private Method _expectedMethod;
+	private int _callCounter = 0;
+	private Object _expectedArguments[];
 
-	public SlotMock( InvocationHandler handler )
+	public MethodArgumentsAsserter( Method expectedMethod, Object ... expectedArguments )
 	{
-		_handler = handler;
+		_expectedMethod = expectedMethod;
+		_expectedArguments = expectedArguments;
+	}
+
+	private void assertArguments( Object ... arguments )
+	{
+		for ( int i = 0; arguments != null && i < arguments.length; ++i ) {
+			Object argument = arguments[ i ];
+			Object expectedArgument = _expectedArguments[ i ];
+
+			assertEquals( expectedArgument, argument );
+			assertEquals( expectedArgument.getClass(), argument.getClass() );
+		}
 	}
 
 	@Override
-	public Object invoke( Object proxy, Method method, Object arguments[] )
+	public Object invoke( Object proxy, Method method, Object arguments[] ) 
 		throws Throwable
 	{
-		_called = true;
-		return _handler.invoke( proxy, method, arguments );
+		if ( method.getName().equals( "equals" )) {
+			return proxy == arguments[ 0 ];
+		} else if ( method.equals( _expectedMethod )) {
+			assertArguments( arguments );
+			++_callCounter;
+		}
+		return null;
 	}
 
-	public boolean called()
+	public int callCounter()
 	{
-		return _called;
+		return _callCounter;
 	}
 }
-
 //##################################################################################################
 
 public abstract class SignalTest
@@ -63,21 +79,20 @@ public abstract class SignalTest
 	private Class< ? > _slotClass;
 	private Class< ? > _argumentTypes[];
 
-	// Signal methods:
+	// Signal:
 
+	private Signal _signal;
 	private Method _connectMethod;
 	private Method _emitMethod;
 	private Method _disconnectMethod;
 
-	// Slot methods:
+	// Slots:
+
+	private Slot _connectedSlot1;
+	private Slot _connectedSlot2;
+	private Slot _disconnectedSlot;
 
 	private Method _callMethod;
-
-	// Slot mocks:
-
-	private Slot _mustCallSlot1;
-	private Slot _mustCallSlot2;
-	private Slot _mustNotCallSlot1;
 
 	//==============================================================================================
 
@@ -111,45 +126,20 @@ public abstract class SignalTest
 
 	//==============================================================================================
 
-	private Slot createSlotMock( InvocationHandler handler )
+	private Slot createSlotMock()
 	{
-		Class< ? >[] interfaces = new Class< ? >[] {
-			_slotClass
-		};
-		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces,
-			new SlotMock( handler ));
+		MethodArgumentsAsserter argumentsAsserter = new MethodArgumentsAsserter( _callMethod, expectedArguments() );
+
+		Class< ? >[] interfaces = new Class< ? >[] { _slotClass };
+		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces, argumentsAsserter );
 
 		return slot;
 	}
 
-	private Slot createMustCallSlotMock()
+	private static void assertSlotCallCounter( int expectedCallCounter, Slot slot )
 	{
-		InvocationHandler parameterAssertion = ( proxy, method, arguments ) -> {
-			if ( method.equals( _callMethod )) {
-				assertArguments( arguments );
-			}
-			return null;
-		};
-		return createSlotMock( parameterAssertion );
-	}
-
-	private Slot createMustNotCallSlotMock()
-	{
-		InvocationHandler failingAssertion = ( proxy, method, arguments ) -> {
-			if ( method.getName().equals( "equals" )) {
-				return proxy == arguments[ 0 ];
-			} else if ( method.equals( _callMethod )) {
-				fail( "Slot must not be called!" );
-			}
-			return null;
-		};
-		return createSlotMock( failingAssertion );
-	}
-
-	private static void assertSlotCalled( Slot slot )
-	{
-		SlotMock slotMock = ( SlotMock )Proxy.getInvocationHandler( slot );
-		assertTrue( slotMock.called() );
+		MethodArgumentsAsserter argumentsAsserter = ( MethodArgumentsAsserter )Proxy.getInvocationHandler( slot );
+		assertEquals( expectedCallCounter, argumentsAsserter.callCounter() );
 	}
 
 	//==============================================================================================
@@ -176,12 +166,16 @@ public abstract class SignalTest
 
 		_callMethod = _slotClass.getMethod( "call", _argumentTypes );
 
+		// Create the signal:
+
+		_signal = _signalClass.newInstance();
+
 		// Create the slot mocks:
 
-		_mustCallSlot1 = createMustCallSlotMock();
-		_mustCallSlot2 = createMustCallSlotMock();
+		_connectedSlot1 = createSlotMock();
+		_connectedSlot2 = createSlotMock();
 
-		_mustNotCallSlot1 = createMustNotCallSlotMock();
+		_disconnectedSlot = createSlotMock();
 	}
 
 	//==============================================================================================
@@ -191,47 +185,44 @@ public abstract class SignalTest
 	{
 		// A Signal must be able to emit to multiple slots:
 
-		Signal signal = _signalClass.newInstance();
-//		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot1 ));
-//		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot2 ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal, _connectedSlot1 ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal, _connectedSlot2 ));
 
-		_emitMethod.invoke( signal, expectedArguments() );
-		assertSlotCalled( _mustCallSlot1 );
-		assertSlotCalled( _mustCallSlot2 );
+		_emitMethod.invoke( _signal, expectedArguments() );
+		assertSlotCallCounter( 1, _connectedSlot1 );
+		assertSlotCallCounter( 1, _connectedSlot2 );
 	}
 
 	//==============================================================================================
-
 
 	@Test
 	public void testDontEmitToDisconnectedSlot() throws Exception
 	{
 		// A Signal must not emit to a disconnected slot:
 
-		Signal signal = _signalClass.newInstance();
+		assertTrue(( Boolean )_connectMethod.invoke( _signal, _connectedSlot1 ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal, _disconnectedSlot ));
+		assertTrue(( Boolean )_disconnectMethod.invoke( _signal, _disconnectedSlot ));
 
-		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot1 ));
-		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustNotCallSlot1 ));
-		assertTrue(( Boolean )_disconnectMethod.invoke( signal, _mustNotCallSlot1 ));
-
-		assertEquals( 1, _emitMethod.invoke( signal, expectedArguments() ));
+		_emitMethod.invoke( _signal, expectedArguments() );
+		assertSlotCallCounter( 0, _disconnectedSlot );
 	}
 
 	//==============================================================================================
 
 	@Test
-	public void _testEmitToSignal()
+	public void testEmitToSignal()
 		throws Exception
 	{
 		// A Signal can be used as a Slot:
 
 		Signal mustCallSignalSlot = _signalClass.newInstance();
-		assertTrue(( Boolean )_connectMethod.invoke( mustCallSignalSlot, _mustCallSlot1 ));
+		assertTrue(( Boolean )_connectMethod.invoke( mustCallSignalSlot, _connectedSlot1 ));
 
-		Signal signal = _signalClass.newInstance();
-		assertTrue(( Boolean )_connectMethod.invoke( signal, mustCallSignalSlot ));
+		assertTrue(( Boolean )_connectMethod.invoke( _signal, mustCallSignalSlot ));
 
-		assertEquals( 1, _emitMethod.invoke( signal,  expectedArguments() ));
+		_emitMethod.invoke( _signal,  expectedArguments() );
+		assertSlotCallCounter( 1, _connectedSlot1 );
 	}
 
 }

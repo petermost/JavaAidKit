@@ -35,27 +35,6 @@ public class Signal2Test extends SignalTest
 
 	@Test
 	@SuppressWarnings("static-method")
-	public void testEmitToSignal()
-		throws Exception
-	{
-		// A Signal can be used as a Slot:
-
-		Signal2< Byte, Long > mustCallSignalSlot = new Signal2<>();
-		Slot2< Byte, Long > mustCallSlot = ( value1, value2 ) -> {
-			assertArguments( value1, value2 );
-		};
-		mustCallSignalSlot.connect( mustCallSlot );
-
-		Signal2< Byte, Long > signal = new Signal2<>();
-		signal.connect( mustCallSignalSlot );
-
-		signal.emit( EXPECTED_ARGUMENT_1, EXPECTED_ARGUMENT_2 );
-	}
-
-	//==============================================================================================
-
-	@Test
-	@SuppressWarnings("static-method")
 	public void testHandleDisconnectingSlot()
 		throws Exception
 	{

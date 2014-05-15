@@ -23,10 +23,10 @@ public class Signal0 extends SignalBase< Slot0 > implements Slot0
 {
 	//==============================================================================================
 
-	public int emit()
+	public void emit()
 		throws Exception
 	{
-		return forEach(( slot ) -> slot.call() );
+		forEach(( slot ) -> slot.call() );
 	}
 
 	//==============================================================================================

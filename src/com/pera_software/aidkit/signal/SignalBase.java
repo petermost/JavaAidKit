@@ -64,14 +64,11 @@ abstract class SignalBase< T > extends Signal
 	 * @param action The action to apply to each slot.
 	 * @return The number a called slots.
 	 */
-	protected int forEach( Callable1< ? super T > action )
+	protected void forEach( Callable1< ? super T > action )
 		throws Exception
 	{
-		int calls = 0;
 		for ( T slot : _slots ) {
 			action.call( slot );
-			++calls;
 		}
-		return calls;
 	}
 }
