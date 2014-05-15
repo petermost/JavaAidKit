@@ -22,6 +22,31 @@ import java.lang.reflect.*;
 import java.util.*;
 import org.junit.*;
 
+// TODO: Give it a better name since it has nothing to do with a slot.
+class SlotMock implements InvocationHandler
+{
+	private boolean _called = false;
+	private InvocationHandler _handler;
+
+	public SlotMock( InvocationHandler handler )
+	{
+		_handler = handler;
+	}
+
+	@Override
+	public Object invoke( Object proxy, Method method, Object arguments[] )
+		throws Throwable
+	{
+		_called = true;
+		return _handler.invoke( proxy, method, arguments );
+	}
+
+	public boolean called()
+	{
+		return _called;
+	}
+}
+
 //##################################################################################################
 
 public abstract class SignalTest
@@ -92,7 +117,7 @@ public abstract class SignalTest
 			_slotClass
 		};
 		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces,
-			handler );
+			new SlotMock( handler ));
 
 		return slot;
 	}
@@ -119,6 +144,12 @@ public abstract class SignalTest
 			return null;
 		};
 		return createSlotMock( failingAssertion );
+	}
+
+	private static void assertSlotCalled( Slot slot )
+	{
+		SlotMock slotMock = ( SlotMock )Proxy.getInvocationHandler( slot );
+		assertTrue( slotMock.called() );
 	}
 
 	//==============================================================================================
@@ -161,13 +192,16 @@ public abstract class SignalTest
 		// A Signal must be able to emit to multiple slots:
 
 		Signal signal = _signalClass.newInstance();
-		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot1 ));
-		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot2 ));
+//		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot1 ));
+//		assertTrue(( Boolean )_connectMethod.invoke( signal, _mustCallSlot2 ));
 
-		assertEquals( 2, _emitMethod.invoke( signal, expectedArguments() ));
+		_emitMethod.invoke( signal, expectedArguments() );
+		assertSlotCalled( _mustCallSlot1 );
+		assertSlotCalled( _mustCallSlot2 );
 	}
 
 	//==============================================================================================
+
 
 	@Test
 	public void testDontEmitToDisconnectedSlot() throws Exception
