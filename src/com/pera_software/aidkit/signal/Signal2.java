@@ -26,7 +26,7 @@ public class Signal2< P1, P2 >  extends SignalBase< Slot2< P1, P2 >> implements 
 	public void emit( P1 parameter1, P2 parameter2 )
 		throws Exception
 	{
-		forEach(( slot ) -> slot.handle( parameter1, parameter2 ));
+		forEach( slot -> slot.handle( parameter1, parameter2 ));
 	}
 
 	//==============================================================================================

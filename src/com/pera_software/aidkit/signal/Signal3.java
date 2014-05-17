@@ -26,13 +26,13 @@ public class Signal3< P1, P2, P3 > extends SignalBase< Slot3< P1, P2, P3 >> impl
 	public void emit( P1 parameter1, P2 parameter2, P3 parameter3 )
 		throws Exception
 	{
-		forEach(( slot ) -> slot.call( parameter1, parameter2, parameter3 ));
+		forEach( slot -> slot.handle( parameter1, parameter2, parameter3 ));
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void call( P1 parameter1, P2 parameter2, P3 parameter3 )
+	public void handle( P1 parameter1, P2 parameter2, P3 parameter3 )
 		throws Exception
 	{
 		emit( parameter1, parameter2, parameter3 );

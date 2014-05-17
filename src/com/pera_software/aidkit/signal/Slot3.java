@@ -19,7 +19,7 @@ package com.pera_software.aidkit.signal;
 
 public interface Slot3< P1, P2, P3 > extends Slot
 {
-	void call( P1 parameter1, P2 parameter2, P3 parameter3 )
+	void handle( P1 parameter1, P2 parameter2, P3 parameter3 )
 		throws Exception;
 
 }

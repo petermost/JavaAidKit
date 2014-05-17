@@ -242,31 +242,29 @@ public abstract class SignalTest
 
 	//==============================================================================================
 
-	@Test
-	public void _testHandleDisconnectingSlot()
-		throws Exception
-	{
-		// A Signal must be able to handle a Slot which disconnects while being called:
-
-		Signal signal = createSignal();
-
-		Slot disconnectingSlot = createSlotMock( new Callable0() {
-			@Override
-			public void call() throws Exception
-			{
-				_disconnectMethod.invoke( signal, this );
-			}
-		});
-
-		Slot unimportantSlot1 = createSlotMock();
-		Slot unimportantSlot2 = createSlotMock();
-
-		_connectMethod.invoke( signal, disconnectingSlot );
-		_connectMethod.invoke( signal, unimportantSlot2 );
-		_connectMethod.invoke( signal, unimportantSlot1 );
-
-		_emitMethod.invoke( signal,  expectedArguments() );
-	}
-
-
+	//	@Test
+	//	public void _testHandleDisconnectingSlot()
+	//		throws Exception
+	//	{
+	//		// A Signal must be able to handle a Slot which disconnects while being called:
+	//
+	//		Signal signal = createSignal();
+	//
+	//		Slot disconnectingSlot = createSlotMock( new Callable0() {
+	//			@Override
+	//			public void call() throws Exception
+	//			{
+	//				_disconnectMethod.invoke( signal, this );
+	//			}
+	//		});
+	//
+	//		Slot unimportantSlot1 = createSlotMock();
+	//		Slot unimportantSlot2 = createSlotMock();
+	//
+	//		_connectMethod.invoke( signal, disconnectingSlot );
+	//		_connectMethod.invoke( signal, unimportantSlot2 );
+	//		_connectMethod.invoke( signal, unimportantSlot1 );
+	//
+	//		_emitMethod.invoke( signal,  expectedArguments() );
+	//	}
 }
