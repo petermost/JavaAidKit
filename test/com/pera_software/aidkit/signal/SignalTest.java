@@ -68,13 +68,15 @@ class MethodArgumentsAsserter implements InvocationHandler
 
 public abstract class SignalTest
 {
-	protected static final Byte EXPECTED_ARGUMENT_1 = 1;
+	protected static final Byte EXPECTED_PARAMETER_1 = 1;
 	protected static final Long EXPECTED_ARGUMENT_2 = 2l;
 	protected static final Short EXPECTED_ARGUMENT_3 = 3;
 	protected static final Float EXPECTED_ARGUMENT_4 = 4f;
 	protected static final Double EXPECTED_ARGUMENT_5 = 5d;
 	protected static final String EXPECTED_ARGUMENT_6 = "6";
 	protected static final Integer EXPECTED_ARGUMENT_7 = 7;
+	protected static final Boolean EXPECTED_ARGUMENT_8 = true;
+	protected static final Character EXPECTED_ARGUMENT_9 = '9';
 
 	private Class< ? extends Signal > _signalClass;
 	private Class< ? > _slotClass;
@@ -100,7 +102,7 @@ public abstract class SignalTest
 	//==============================================================================================
 
 	protected static final Object EXPECTED_ARGUMENTS[] = {
-		EXPECTED_ARGUMENT_1,
+		EXPECTED_PARAMETER_1,
 		EXPECTED_ARGUMENT_2,
 		EXPECTED_ARGUMENT_3,
 		EXPECTED_ARGUMENT_4,

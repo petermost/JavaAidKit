@@ -22,6 +22,7 @@ public class Signal4Test extends SignalTest
 	public Signal4Test() 
 		throws Exception
 	{
-		super( Signal4.class, Slot4.class, Byte.class, Long.class, Short.class, Float.class );
+		super( Signal4.class, Slot4.class, EXPECTED_PARAMETER_1.getClass(), EXPECTED_ARGUMENT_2.getClass(),
+			EXPECTED_ARGUMENT_3.getClass(), EXPECTED_ARGUMENT_4.getClass() );
 	}
 }

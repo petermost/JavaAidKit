@@ -28,7 +28,7 @@ public class Signal2Test extends SignalTest
 	public Signal2Test()
 		throws Exception
 	{
-		super( Signal2.class, Slot2.class, Byte.class, Long.class );
+		super( Signal2.class, Slot2.class, EXPECTED_PARAMETER_1.getClass(), EXPECTED_ARGUMENT_2.getClass() );
 	}
 
 	//==============================================================================================
@@ -56,6 +56,6 @@ public class Signal2Test extends SignalTest
 		signal.connect( unimportantSlot2 );
 		signal.connect( unimportantSlot1 );
 
-		signal.emit( EXPECTED_ARGUMENT_1, EXPECTED_ARGUMENT_2 );
+		signal.emit( EXPECTED_PARAMETER_1, EXPECTED_ARGUMENT_2 );
 	}
 }
