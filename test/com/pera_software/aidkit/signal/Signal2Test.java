@@ -45,12 +45,12 @@ public class Signal2Test extends SignalTest
 		Slot2< Byte, Long > disconnectingSlot = new Slot2< Byte, Long >() {
 			@Override
 			@SuppressWarnings( "unused" )
-			public void handle( Byte value1, Long value2 ) throws Exception {
+			public void handle( Byte parameter1, Long parameter2 ) throws Exception {
 				signal.disconnect( this );
 			}
 		};
-		Slot2< Byte, Long > unimportantSlot1 = ( value1, value2 ) -> {};
-		Slot2< Byte, Long > unimportantSlot2 = ( value1, value2 ) -> {};
+		Slot2< Byte, Long > unimportantSlot1 = ( parameter1, parameter2 ) -> {};
+		Slot2< Byte, Long > unimportantSlot2 = ( parameter1, parameter2 ) -> {};
 
 		signal.connect( disconnectingSlot );
 		signal.connect( unimportantSlot2 );

@@ -23,18 +23,18 @@ public class Signal2< P1, P2 >  extends SignalBase< Slot2< P1, P2 >> implements 
 {
 	//==============================================================================================
 
-	public void emit( P1 value1, P2 value2 )
+	public void emit( P1 parameter1, P2 parameter2 )
 		throws Exception
 	{
-		forEach(( slot ) -> slot.handle( value1, value2 ));
+		forEach(( slot ) -> slot.handle( parameter1, parameter2 ));
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void handle( P1 value1, P2 value2 )
+	public void handle( P1 parameter1, P2 parameter2 )
 		throws Exception
 	{
-		emit( value1, value2 );
+		emit( parameter1, parameter2 );
 	}
 }

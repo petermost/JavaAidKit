@@ -49,8 +49,8 @@ public class Signal1Test extends SignalTest
 				signal.disconnect( this );
 			}
 		};
-		Slot1< Byte > unimportantSlot1 = ( value1 ) -> {};
-		Slot1< Byte > unimportantSlot2 = ( value1 ) -> {};
+		Slot1< Byte > unimportantSlot1 = ( parameter1 ) -> {};
+		Slot1< Byte > unimportantSlot2 = ( parameter1 ) -> {};
 
 		signal.connect( disconnectingSlot );
 		signal.connect( unimportantSlot2 );
