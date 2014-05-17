@@ -45,7 +45,7 @@ public class Signal2Test extends SignalTest
 		Slot2< Byte, Long > disconnectingSlot = new Slot2< Byte, Long >() {
 			@Override
 			@SuppressWarnings( "unused" )
-			public void call( Byte value1, Long value2 ) throws Exception {
+			public void handle( Byte value1, Long value2 ) throws Exception {
 				signal.disconnect( this );
 			}
 		};

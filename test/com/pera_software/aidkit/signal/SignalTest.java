@@ -179,7 +179,7 @@ public abstract class SignalTest
 
 		// Get the Slot methods:
 
-		_callMethod = _slotClass.getMethod( "call", _argumentTypes );
+		_callMethod = _slotClass.getMethod( "handle", _argumentTypes );
 
 		// Create the signal:
 

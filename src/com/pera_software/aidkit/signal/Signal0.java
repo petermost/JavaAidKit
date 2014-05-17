@@ -26,13 +26,13 @@ public class Signal0 extends SignalBase< Slot0 > implements Slot0
 	public void emit()
 		throws Exception
 	{
-		forEach(( slot ) -> slot.call() );
+		forEach(( slot ) -> slot.handle() );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void call()
+	public void handle()
 		throws Exception
 	{
 		emit();
