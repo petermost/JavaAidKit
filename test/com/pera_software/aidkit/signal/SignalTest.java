@@ -68,16 +68,6 @@ class MethodArgumentsAsserter implements InvocationHandler
 
 public abstract class SignalTest
 {
-	private static final Byte EXPECTED_ARGUMENT_1 = 1;
-	private static final Long EXPECTED_ARGUMENT_2 = 2l;
-	private static final Short EXPECTED_ARGUMENT_3 = 3;
-	private static final Float EXPECTED_ARGUMENT_4 = 4f;
-	private static final Double EXPECTED_ARGUMENT_5 = 5d;
-	private static final String EXPECTED_ARGUMENT_6 = "6";
-	private static final Integer EXPECTED_ARGUMENT_7 = 7;
-	private static final Boolean EXPECTED_ARGUMENT_8 = true;
-	private static final Character EXPECTED_ARGUMENT_9 = '9';
-
 	private Class< ? extends Signal > _signalClass;
 	private Class< ? > _slotClass;
 	private Class< ? > _argumentTypes[];
@@ -97,20 +87,20 @@ public abstract class SignalTest
 	private Slot _connectedSlot2;
 	private Slot _disconnectedSlot;
 
-	private Method _callMethod;
+	private Method _handleMethod;
 
 	//==============================================================================================
 
 	protected static final Object EXPECTED_ARGUMENTS[] = {
-		EXPECTED_ARGUMENT_1,
-		EXPECTED_ARGUMENT_2,
-		EXPECTED_ARGUMENT_3,
-		EXPECTED_ARGUMENT_4,
-		EXPECTED_ARGUMENT_5,
-		EXPECTED_ARGUMENT_6,
-		EXPECTED_ARGUMENT_7,
-		EXPECTED_ARGUMENT_8,
-		EXPECTED_ARGUMENT_9
+		new Byte(( byte )1 ),
+		new Long( 2 ),
+		new Short(( short )3 ),
+		new Float( 4 ),
+		new Double( 5 ),
+		new String( "6" ),
+		new Integer( 7 ),
+		new Boolean( true ),
+		new Character( '9' )
 	};
 
 	//==============================================================================================
@@ -141,7 +131,7 @@ public abstract class SignalTest
 
 	private Slot createSlotMock()
 	{
-		MethodArgumentsAsserter argumentsAsserter = new MethodArgumentsAsserter( _callMethod, expectedArguments() );
+		MethodArgumentsAsserter argumentsAsserter = new MethodArgumentsAsserter( _handleMethod, expectedArguments() );
 
 		Class< ? >[] interfaces = new Class< ? >[] { _slotClass };
 		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces, argumentsAsserter );
@@ -178,15 +168,18 @@ public abstract class SignalTest
 		// Get the Signal methods:
 
 		_connectMethod = _signalClass.getMethod( "connect", Object.class );
+		assertEquals( "connect() has wrong parameter count!", 1, _connectMethod.getParameterCount() );
 
 		_emitMethod = _signalClass.getMethod( "emit", _argumentTypes );
-		assertEquals( parameterCount, _emitMethod.getParameterCount() );
+		assertEquals( "emit() has wrong parameter count!", parameterCount, _emitMethod.getParameterCount() );
 
 		_disconnectMethod = _signalClass.getMethod( "disconnect", Object.class );
+		assertEquals( "disconnect() has wrong parameter count!", 1, _disconnectMethod.getParameterCount() );
 
 		// Get the Slot methods:
 
-		_callMethod = _slotClass.getMethod( "handle", _argumentTypes );
+		_handleMethod = _slotClass.getMethod( "handle", _argumentTypes );
+		assertEquals( "handle() has wrong parameter count!", parameterCount, _handleMethod.getParameterCount() );
 
 		// Create the signal:
 
