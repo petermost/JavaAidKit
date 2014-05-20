@@ -19,10 +19,9 @@ package com.pera_software.aidkit.signal;
 
 public class Signal4Test extends SignalTest
 {
-	public Signal4Test() 
+	public Signal4Test()
 		throws Exception
 	{
-		super( Signal4.class, Slot4.class, EXPECTED_PARAMETER_1.getClass(), EXPECTED_ARGUMENT_2.getClass(),
-			EXPECTED_ARGUMENT_3.getClass(), EXPECTED_ARGUMENT_4.getClass() );
+		super( Signal4.class, Slot4.class, 4 );
 	}
 }

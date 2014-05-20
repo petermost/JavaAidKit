@@ -47,7 +47,7 @@ class MethodArgumentsAsserter implements InvocationHandler
 	}
 
 	@Override
-	public Object invoke( Object proxy, Method method, Object arguments[] ) 
+	public Object invoke( Object proxy, Method method, Object arguments[] )
 		throws Throwable
 	{
 		if ( method.getName().equals( "equals" )) {
@@ -68,15 +68,15 @@ class MethodArgumentsAsserter implements InvocationHandler
 
 public abstract class SignalTest
 {
-	protected static final Byte EXPECTED_PARAMETER_1 = 1;
-	protected static final Long EXPECTED_ARGUMENT_2 = 2l;
-	protected static final Short EXPECTED_ARGUMENT_3 = 3;
-	protected static final Float EXPECTED_ARGUMENT_4 = 4f;
-	protected static final Double EXPECTED_ARGUMENT_5 = 5d;
-	protected static final String EXPECTED_ARGUMENT_6 = "6";
-	protected static final Integer EXPECTED_ARGUMENT_7 = 7;
-	protected static final Boolean EXPECTED_ARGUMENT_8 = true;
-	protected static final Character EXPECTED_ARGUMENT_9 = '9';
+	private static final Byte EXPECTED_ARGUMENT_1 = 1;
+	private static final Long EXPECTED_ARGUMENT_2 = 2l;
+	private static final Short EXPECTED_ARGUMENT_3 = 3;
+	private static final Float EXPECTED_ARGUMENT_4 = 4f;
+	private static final Double EXPECTED_ARGUMENT_5 = 5d;
+	private static final String EXPECTED_ARGUMENT_6 = "6";
+	private static final Integer EXPECTED_ARGUMENT_7 = 7;
+	private static final Boolean EXPECTED_ARGUMENT_8 = true;
+	private static final Character EXPECTED_ARGUMENT_9 = '9';
 
 	private Class< ? extends Signal > _signalClass;
 	private Class< ? > _slotClass;
@@ -102,13 +102,15 @@ public abstract class SignalTest
 	//==============================================================================================
 
 	protected static final Object EXPECTED_ARGUMENTS[] = {
-		EXPECTED_PARAMETER_1,
+		EXPECTED_ARGUMENT_1,
 		EXPECTED_ARGUMENT_2,
 		EXPECTED_ARGUMENT_3,
 		EXPECTED_ARGUMENT_4,
 		EXPECTED_ARGUMENT_5,
 		EXPECTED_ARGUMENT_6,
-		EXPECTED_ARGUMENT_7
+		EXPECTED_ARGUMENT_7,
+		EXPECTED_ARGUMENT_8,
+		EXPECTED_ARGUMENT_9
 	};
 
 	//==============================================================================================
@@ -131,7 +133,7 @@ public abstract class SignalTest
 
 	//==============================================================================================
 
-	private Signal createSignal() 
+	private Signal createSignal()
 		throws Exception
 	{
 		return _signalClass.newInstance();
@@ -162,21 +164,24 @@ public abstract class SignalTest
 	//==============================================================================================
 
 	public SignalTest( Class< ? extends Signal > signalClass, Class< ? extends Slot > slotClass,
-		Class< ? > ... parameterTypes ) throws Exception
+			int parameterCount )
+		throws Exception
 	{
 		_signalClass = signalClass;
 		_slotClass = slotClass;
 
-		// Because of type erasure we have to use an array of Object classes, but we keep the type
-		// safe constructor signature anyway:
+		// Because of type erasure we have to use an array of Object classes:
 
-		_argumentTypes = new Class< ? >[ parameterTypes.length ];
+		_argumentTypes = new Class< ? >[ parameterCount ];
 		Arrays.fill( _argumentTypes, Object.class );
 
 		// Get the Signal methods:
 
 		_connectMethod = _signalClass.getMethod( "connect", Object.class );
+
 		_emitMethod = _signalClass.getMethod( "emit", _argumentTypes );
+		assertEquals( parameterCount, _emitMethod.getParameterCount() );
+
 		_disconnectMethod = _signalClass.getMethod( "disconnect", Object.class );
 
 		// Get the Slot methods:
@@ -269,4 +274,31 @@ public abstract class SignalTest
 	//
 	//		_emitMethod.invoke( signal,  expectedArguments() );
 	//	}
+
+//	@Test
+//	@SuppressWarnings("static-method")
+//	public void testHandleDisconnectingSlot()
+//		throws Exception
+//	{
+//		// A Signal must be able to handle a Slot which disconnects while being called:
+//
+//		Signal2< Byte, Long > signal = new Signal2<>();
+//
+//		Slot2< Byte, Long > disconnectingSlot = new Slot2< Byte, Long >() {
+//			@Override
+//			@SuppressWarnings( "unused" )
+//			public void handle( Byte parameter1, Long parameter2 ) throws Exception {
+//				signal.disconnect( this );
+//			}
+//		};
+//		Slot2< Byte, Long > unimportantSlot1 = ( parameter1, parameter2 ) -> {};
+//		Slot2< Byte, Long > unimportantSlot2 = ( parameter1, parameter2 ) -> {};
+//
+//		signal.connect( disconnectingSlot );
+//		signal.connect( unimportantSlot2 );
+//		signal.connect( unimportantSlot1 );
+//
+//		signal.emit( EXPECTED_PARAMETER_1, EXPECTED_ARGUMENT_2 );
+//	}
+
 }

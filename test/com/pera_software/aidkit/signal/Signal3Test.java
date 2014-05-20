@@ -22,7 +22,6 @@ public class Signal3Test extends SignalTest
 	public Signal3Test()
 		throws Exception
 	{
-		super( Signal3.class, Slot3.class, EXPECTED_PARAMETER_1.getClass(), EXPECTED_ARGUMENT_2.getClass(),
-			EXPECTED_ARGUMENT_3.getClass() );
+		super( Signal3.class, Slot3.class, 3 );
 	}
 }

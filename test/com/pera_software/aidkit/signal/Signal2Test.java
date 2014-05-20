@@ -17,45 +17,11 @@
 
 package com.pera_software.aidkit.signal;
 
-import org.junit.*;
-
-//##################################################################################################
-
 public class Signal2Test extends SignalTest
 {
-	//==============================================================================================
-
 	public Signal2Test()
 		throws Exception
 	{
-		super( Signal2.class, Slot2.class, EXPECTED_PARAMETER_1.getClass(), EXPECTED_ARGUMENT_2.getClass() );
-	}
-
-	//==============================================================================================
-
-	@Test
-	@SuppressWarnings("static-method")
-	public void testHandleDisconnectingSlot()
-		throws Exception
-	{
-		// A Signal must be able to handle a Slot which disconnects while being called:
-
-		Signal2< Byte, Long > signal = new Signal2<>();
-
-		Slot2< Byte, Long > disconnectingSlot = new Slot2< Byte, Long >() {
-			@Override
-			@SuppressWarnings( "unused" )
-			public void handle( Byte parameter1, Long parameter2 ) throws Exception {
-				signal.disconnect( this );
-			}
-		};
-		Slot2< Byte, Long > unimportantSlot1 = ( parameter1, parameter2 ) -> {};
-		Slot2< Byte, Long > unimportantSlot2 = ( parameter1, parameter2 ) -> {};
-
-		signal.connect( disconnectingSlot );
-		signal.connect( unimportantSlot2 );
-		signal.connect( unimportantSlot1 );
-
-		signal.emit( EXPECTED_PARAMETER_1, EXPECTED_ARGUMENT_2 );
+		super( Signal2.class, Slot2.class, 2 );
 	}
 }
