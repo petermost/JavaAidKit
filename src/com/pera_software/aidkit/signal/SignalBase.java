@@ -37,6 +37,8 @@ abstract class SignalBase< T > extends Signal
 	 */
 	public boolean connect( T slot )
 	{
+		Objects.requireNonNull( slot );
+
 		return _slots.add( slot );
 	}
 
@@ -48,6 +50,8 @@ abstract class SignalBase< T > extends Signal
 	 */
 	public boolean disconnect( T slot )
 	{
+		Objects.requireNonNull( slot );
+
 		return _slots.remove( slot );
 	}
 
@@ -66,6 +70,8 @@ abstract class SignalBase< T > extends Signal
 	protected void forEach( Callable1< ? super T > action )
 		throws Exception
 	{
+		Objects.requireNonNull( action );
+
 		for ( T slot : _slots ) {
 			action.call( slot );
 		}
