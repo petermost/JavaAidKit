@@ -23,6 +23,8 @@ import java.io.*;
 
 public final class Streams
 {
+	private static final int BUFFER_SIZE = 8192;
+
 	//==============================================================================================
 
 	private Streams()
@@ -38,9 +40,41 @@ public final class Streams
 		throws IOException
 	{
 		int length;
-		byte buffer[] = new byte[ 8192 ];
-		while (( length = inputStream.read( buffer )) > 0 ) {
+		byte buffer[] = new byte[ BUFFER_SIZE ];
+		while ( ( length = inputStream.read( buffer ) ) > 0 ) {
 			outputStream.write( buffer, 0, length );
 		}
+	}
+
+	//==============================================================================================
+
+	/**
+	 * Read the complete content from the stream.
+	 */
+	public static String read( InputStream inputStream )
+		throws IOException
+	{
+		int length;
+
+		char buffer[] = new char[ BUFFER_SIZE ];
+		StringBuilder content = new StringBuilder( BUFFER_SIZE );
+		InputStreamReader streamReader = new InputStreamReader( inputStream );
+		while ( ( length = streamReader.read( buffer ) ) > 0 )
+			content.append( buffer, 0, length );
+
+		return ( content.toString() );
+	}
+
+	//==============================================================================================
+
+	/**
+	 * Write the content to the stream.
+	 */
+	public static void write( OutputStream outputStream, String content )
+		throws IOException
+	{
+		OutputStreamWriter streamWriter = new OutputStreamWriter( outputStream );
+		streamWriter.write( content );
+		streamWriter.flush();
 	}
 }
