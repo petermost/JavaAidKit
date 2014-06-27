@@ -22,7 +22,7 @@ package com.pera_software.aidkit.lang;
  * Wrap the call to System.getProperty to avoid failing calls because of mistyped
  * key names.
  */
-public class SystemProperties
+public final class SystemProperties
 {
 	private static final String CLASS_PATH_KEY     = "java.class.path";
 	private static final String PATH_SEPARATOR_KEY = "path.separator";
@@ -30,6 +30,12 @@ public class SystemProperties
 	private static final String LINE_SEPARATOR_KEY = "line.separator";
 	private static final String TMP_DIR_KEY        = "java.io.tmpdir";
 	private static final String USER_DIR_KEY       = "user.dir";
+
+	//==============================================================================================
+
+	private SystemProperties()
+	{
+	}
 
 	//==============================================================================================
 

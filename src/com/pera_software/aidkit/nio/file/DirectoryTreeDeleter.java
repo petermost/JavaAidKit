@@ -22,6 +22,8 @@ import java.nio.file.*;
 import java.nio.file.attribute.*;
 import com.pera_software.aidkit.signal.*;
 
+//##################################################################################################
+
 public class DirectoryTreeDeleter extends SimpleFileVisitor< Path >
 {
 	public enum DeletionMode
