@@ -9,11 +9,11 @@
 //
 // JavaAidKit is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with JavaAidKit.  If not, see <http://www.gnu.org/licenses/>.
+// along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
 package com.pera_software.aidkit;
 
@@ -23,8 +23,41 @@ import java.util.regex.*;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
 
-public class FileFinder
+//##################################################################################################
+
+public final class FileFinder
 {
+	//==============================================================================================
+
+	private FileFinder()
+	{
+	}
+
+	//==============================================================================================
+
+	public static List< Path > find( Path startDirectoryPath, String ... wildcardPatterns )
+		throws Exception
+	{
+		final Pattern filePatterns[] = convertWildcardPatternsToRegularExpressions( wildcardPatterns );
+		final List< Path > foundFiles = new ArrayList<>();
+
+		Files.walkFileTree( startDirectoryPath, new SimpleFileVisitor< Path >() {
+			@Override
+			public FileVisitResult visitFile( Path file, BasicFileAttributes attributes ) throws IOException {
+				String fileName = file.toString();
+				for ( Pattern filePattern : filePatterns ) {
+					Matcher matcher = filePattern.matcher( fileName );
+					if ( matcher.matches() )
+						foundFiles.add( file );
+				}
+				return super.visitFile( file, attributes );
+			}
+		});
+		return foundFiles;
+	}
+
+	//==============================================================================================
+
 	static String convertWildcardPatternToRegularExpression( String wildcardPattern )
 	{
 		StringBuilder regularExpression = new StringBuilder( wildcardPattern.length() );
@@ -62,6 +95,7 @@ public class FileFinder
 		return regularExpression.toString();
 	}
 
+	//==============================================================================================
 
 	private static Pattern[] convertWildcardPatternsToRegularExpressions( String ... wildcardPatterns )
 	{
@@ -74,28 +108,4 @@ public class FileFinder
 	}
 
 
-
-	public static List< Path > find( Path startDirectoryPath, String ... wildcardPatterns ) throws Exception
-	{
-		final Pattern filePatterns[] = convertWildcardPatternsToRegularExpressions( wildcardPatterns );
-		final List< Path > foundFiles = new ArrayList<>();
-
-		Files.walkFileTree( startDirectoryPath, new SimpleFileVisitor< Path >() {
-			@Override
-			public FileVisitResult visitFile( Path file, BasicFileAttributes attributes ) throws IOException {
-				String fileName = file.toString();
-				for ( Pattern filePattern : filePatterns ) {
-					Matcher matcher = filePattern.matcher( fileName );
-					if ( matcher.matches() )
-						foundFiles.add( file );
-				}
-				return super.visitFile( file, attributes );
-			}
-		});
-		return foundFiles;
-	}
-
-	private FileFinder()
-	{
-	}
 }

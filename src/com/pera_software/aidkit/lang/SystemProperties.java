@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit;
+package com.pera_software.aidkit.lang;
 
 //##################################################################################################
-
+/**
+ * Wrap the call to System.getProperty to avoid failing calls because of mistyped
+ * key names.
+ */
 public class SystemProperties
 {
 	private static final String CLASS_PATH_KEY     = "java.class.path";
@@ -28,21 +31,21 @@ public class SystemProperties
 	private static final String TMP_DIR_KEY        = "java.io.tmpdir";
 	private static final String USER_DIR_KEY       = "user.dir";
 
-	//===========================================================================
+	//==============================================================================================
 
 	public static String setClassPath( String classPath )
 	{
 		return System.setProperty( CLASS_PATH_KEY, classPath );
 	}
 
-	//===========================================================================
+	//==============================================================================================
 
 	public static String getClassPath()
 	{
 		return System.getProperty( CLASS_PATH_KEY );
 	}
 
-	//===========================================================================
+	//==============================================================================================
 	/**
 	 * @return ":" under UNIX and ";" under Windows
 	 */
@@ -51,7 +54,7 @@ public class SystemProperties
 		return System.getProperty( PATH_SEPARATOR_KEY );
 	}
 
-	//===========================================================================
+	//==============================================================================================
 	/**
 	 * @return "/" under UNIX and "\" under Windows
 	 */
@@ -60,7 +63,7 @@ public class SystemProperties
 		return System.getProperty( FILE_SEPARATOR_KEY );
 	}
 
-	//===========================================================================
+	//==============================================================================================
 	/**
 	 * @return "\n" under UNIX and "\r\n" under Windows
 	 */
@@ -69,14 +72,14 @@ public class SystemProperties
 		return System.getProperty( LINE_SEPARATOR_KEY );
 	}
 
-	//===========================================================================
+	//==============================================================================================
 
 	public static String getTmpDir()
 	{
 		return System.getProperty( TMP_DIR_KEY );
 	}
 
-	//===========================================================================
+	//==============================================================================================
 
 	public static String getCurrentWorkingDirectory()
 	{

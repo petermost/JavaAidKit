@@ -15,38 +15,45 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit;
+package com.pera_software.aidkit.lang;
 
+//##################################################################################################
 /**
  * Central class to query platform specific settings.
  */
-public final class Platform
+public final class SystemEnvironment
 {
-	public static String tempDirectory()
+	private SystemEnvironment()
 	{
-		return System.getProperty( "java.io.tmpdir" );
 	}
+
+	//==============================================================================================
 
 	public static String systemDrive()
 	{
 		return System.getenv( "SystemDrive" );
 	}
 
+	//==============================================================================================
+
 	public static String programsDirectory()
 	{
 		return System.getenv( "ProgramFiles(x86)" );
 	}
+
+	//==============================================================================================
 
 	public static String settingsDirectory()
 	{
 		return System.getenv( "AppData" );
 	}
 
+	//==============================================================================================
+
 	public static String windowsDirectory()
 	{
 		return System.getenv( "windir" );
 	}
 
-	private Platform() { }
 
 }

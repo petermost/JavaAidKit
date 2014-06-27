@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit;
+package com.pera_software.aidkit.nio.file;
 
 import java.io.*;
 import java.nio.file.*;

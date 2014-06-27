@@ -32,11 +32,18 @@ public final class Paths
 
 	//==============================================================================================
 
+	public static Path get( String first, String... more )
+	{
+		return java.nio.file.Paths.get( first, more );
+	}
+
+	//==============================================================================================
+
 	public static List< Path > get( List< String > pathNames )
 	{
 		List< Path > paths = new ArrayList<>( pathNames.size() );
 		for ( String pathName : pathNames ) {
-			paths.add( java.nio.file.Paths.get( pathName ));
+			paths.add( Paths.get( pathName ));
 		}
 		return paths;
 	}

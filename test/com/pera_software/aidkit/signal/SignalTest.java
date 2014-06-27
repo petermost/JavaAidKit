@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 import java.lang.reflect.*;
 import java.util.*;
 import org.junit.*;
-import com.pera_software.aidkit.util.function.*;
 
 class MethodArgumentsAsserter implements InvocationHandler
 {
@@ -139,11 +138,11 @@ public abstract class SignalTest
 		return slot;
 	}
 
-	private Slot createSlotMock( Callable0 callable )
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	private Slot createSlotMock( Callable0 callable )
+//	{
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	private static void assertSlotCallCounter( int expectedCallCounter, Slot slot )
 	{
