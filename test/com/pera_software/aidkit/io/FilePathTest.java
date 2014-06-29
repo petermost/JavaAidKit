@@ -72,10 +72,10 @@ public class FilePathTest
 		FilePath path = new FilePath( "" );
 
 		path.addDirectory( "dir" );
-		assertEquals( "dir\\", path.getDirectory( 0 ) );
+		assertEquals( "dir/", path.getDirectory( 0 ) );
 
-		path.setDirectory( 0, "dir\\" );
-		assertEquals( "dir\\", path.getDirectory( 0 ) );
+		path.setDirectory( 0, "dir/" );
+		assertEquals( "dir/", path.getDirectory( 0 ) );
 
 		path.setDirectory( 0, "" );
 		assertEquals( "", path.getDirectory( 0 ) );
@@ -111,17 +111,17 @@ public class FilePathTest
 	@SuppressWarnings( "static-method" )
 	public void testFullPath()
 	{
-		FilePath path = new FilePath( "D:\\dir1\\dir2\\name.ext1.ext2" );
+		FilePath path = new FilePath( "D:/dir1/dir2/name.ext1.ext2" );
 
 		assertEquals( "D:", path.getDrive() );
 
-		assertEquals( "\\", path.getDirectory( 0 ) );
+		assertEquals( "/", path.getDirectory( 0 ) );
 
-		assertEquals( "dir1\\", path.getDirectory( 1 ) );
-		assertEquals( "dir1\\", path.getDirectory( -2 ) );
+		assertEquals( "dir1/", path.getDirectory( 1 ) );
+		assertEquals( "dir1/", path.getDirectory( -2 ) );
 
-		assertEquals( "dir2\\", path.getDirectory( 2 ) );
-		assertEquals( "dir2\\", path.getDirectory( -1 ) );
+		assertEquals( "dir2/", path.getDirectory( 2 ) );
+		assertEquals( "dir2/", path.getDirectory( -1 ) );
 
 		assertEquals( "name", path.getName() );
 
@@ -162,12 +162,12 @@ public class FilePathTest
 	@SuppressWarnings( "static-method" )
 	public void testFileNameWithoutExtension()
 	{
-		FilePath path = new FilePath( "D:\\dir1\\dir2\\name" );
+		FilePath path = new FilePath( "D:/dir1/dir2/name" );
 
 		assertEquals( "D:", path.getDrive() );
-		assertEquals( "\\", path.getDirectory( 0 ) );
-		assertEquals( "dir1\\", path.getDirectory( 1 ) );
-		assertEquals( "dir2\\", path.getDirectory( 2 ) );
+		assertEquals( "/", path.getDirectory( 0 ) );
+		assertEquals( "dir1/", path.getDirectory( 1 ) );
+		assertEquals( "dir2/", path.getDirectory( 2 ) );
 		assertEquals( "name", path.getName() );
 		assertEquals( "", path.getExtension() );
 	}
@@ -178,15 +178,15 @@ public class FilePathTest
 	@SuppressWarnings( "static-method" )
 	public void testAddingExtension()
 	{
-		FilePath path = new FilePath( "D:\\dir1\\dir2\\name.ext" );
+		FilePath path = new FilePath( "D:/dir1/dir2/name.ext" );
 
 		path.setExtension( 0, ".second" );
-		assertEquals( "D:\\dir1\\dir2\\name.second", path.toString() );
+		assertEquals( "D:/dir1/dir2/name.second", path.toString() );
 
 		path.addExtension( 0, ".first" );
-		assertEquals( "D:\\dir1\\dir2\\name.first.second", path.toString() );
+		assertEquals( "D:/dir1/dir2/name.first.second", path.toString() );
 
 		path.setExtension( -1, ".third" );
-		assertEquals( "D:\\dir1\\dir2\\name.first.third", path.toString() );
+		assertEquals( "D:/dir1/dir2/name.first.third", path.toString() );
 	}
 }

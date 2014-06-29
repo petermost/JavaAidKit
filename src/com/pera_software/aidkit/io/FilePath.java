@@ -18,17 +18,14 @@
 package com.pera_software.aidkit.io;
 
 import java.util.*;
-import com.pera_software.aidkit.lang.*;
 import com.pera_software.aidkit.util.*;
 
 //##################################################################################################
 
 public class FilePath
 {
-	private static final char DRIVE_SEPARATOR = ':';
-	private static final char DIRECTORY_SEPARATOR = SystemProperties.getFileSeparator().charAt( 0 );
-	private static final char WINDOWS_DIRECTORY_SEPARATOR = '\\';
-	private static final char UNIX_DIRECTORY_SEPARATOR = '/';
+	private static final char DRIVE_SEPARATOR     = ':';
+	private static final char DIRECTORY_SEPARATOR = '/'; // Works on all platforms.
 	private static final char EXTENSION_SEPARATOR = '.';
 
 	private String _drive = null;
@@ -40,6 +37,9 @@ public class FilePath
 
 	public FilePath( String path )
 	{
+		final char WINDOWS_DIRECTORY_SEPARATOR = '\\';
+		final char UNIX_DIRECTORY_SEPARATOR = '/';
+
 		char c;
 		boolean isEnd;
 		int begin = 0, end = 0;
