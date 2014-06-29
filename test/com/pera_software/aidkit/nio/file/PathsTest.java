@@ -30,14 +30,14 @@ public class PathsTest
 	public void testRemoveOverlaps()
 	{
 		final List< Path > expectedDirs = Arrays.asList(
-			java.nio.file.Paths.get( "c:\\dir1" ),
-			java.nio.file.Paths.get( "c:\\single"
+			java.nio.file.Paths.get( "c:/dir1" ),
+			java.nio.file.Paths.get( "c:/single"
 				));
 		List< Path > overlappedDirs = new ArrayList<>();
-		overlappedDirs.add( java.nio.file.Paths.get( "c:\\dir1\\dir2\\dir3" ));
-		overlappedDirs.add( java.nio.file.Paths.get( "c:\\dir1" ));
-		overlappedDirs.add( java.nio.file.Paths.get( "c:\\dir1\\dir2" ));
-		overlappedDirs.add( java.nio.file.Paths.get( "c:\\single" ));
+		overlappedDirs.add( java.nio.file.Paths.get( "c:/dir1/dir2/dir3" ));
+		overlappedDirs.add( java.nio.file.Paths.get( "c:/dir1" ));
+		overlappedDirs.add( java.nio.file.Paths.get( "c:/dir1/dir2" ));
+		overlappedDirs.add( java.nio.file.Paths.get( "c:/single" ));
 
 		List< Path > actualDirs = Paths.removeOverlaps( overlappedDirs );
 		assertThat( actualDirs, is( expectedDirs ));
