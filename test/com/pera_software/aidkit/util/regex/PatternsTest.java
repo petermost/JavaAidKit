@@ -15,18 +15,22 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit;
+package com.pera_software.aidkit.util.regex;
 
 import static org.junit.Assert.*;
 import org.junit.*;
 
+//##################################################################################################
+
 @SuppressWarnings("static-method")
-public class FileFinderTest
+public class PatternsTest
 {
+	//==============================================================================================
+
 	@Test
 	public void testConvertWildcardPatternToRegularExpression()
 	{
-		String regularExpression = FileFinder.convertWildcardPatternToRegularExpression( "*.csproj" );
+		String regularExpression = Patterns.convertWildcardPatternToRegularExpression( "*.csproj" );
 		assertEquals( ".*\\.csproj", regularExpression );
 	}
 }
