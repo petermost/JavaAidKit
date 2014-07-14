@@ -50,15 +50,26 @@ public class ProjectFileParser
 
 	//==============================================================================================
 
+	private NodeList findNodes( String nodeName )
+		throws Exception
+	{
+		XPathExpression xpathExpression = _xpath.compile( nodeName );
+		NodeList nodes = ( NodeList )xpathExpression.evaluate( _document, XPathConstants.NODESET );
+		return nodes;
+	}
+
+	//==============================================================================================
+
 	public List< String > findXmlTags( String nodeName )
 		throws Exception
 	{
 		List< String > texts = new ArrayList<>();
-		XPathExpression xpathExpression = _xpath.compile( nodeName );
-		NodeList nodes = ( NodeList )xpathExpression.evaluate( _document, XPathConstants.NODESET );
+		NodeList nodes = findNodes( nodeName );
 		if ( nodes != null ) {
-			for ( int i = 0; i < nodes.getLength(); ++i )
-				texts.add( nodes.item( i ).getTextContent() );
+			for ( int i = 0; i < nodes.getLength(); ++i ) {
+				Node node = nodes.item( i );
+				texts.add( node.getTextContent() );
+			}
 		}
 		return texts;
 	}

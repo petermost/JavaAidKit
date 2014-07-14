@@ -61,43 +61,30 @@ public final class Paths
 
 	//==============================================================================================
 
-	public static List< Path > removeOverlaps( List< Path > outputPaths )
+	public static List< Path > removeOverlaps( List< Path > paths )
 	{
 		// Walk through all paths and nullify those which have a parent path:
 
-		List< Path > paths = new ArrayList<>( outputPaths );
-		for ( int path1Idx = 0; path1Idx < paths.size(); ++path1Idx ) {
-			Path path1 = paths.get( path1Idx );
-			for ( int path2Idx = path1Idx + 1; path2Idx < paths.size(); ++path2Idx ) {
-				Path path2 = paths.get( path2Idx );
+		List< Path > pathsCopy = new ArrayList<>( paths );
+		for ( int path1Idx = 0; path1Idx < pathsCopy.size(); ++path1Idx ) {
+			Path path1 = pathsCopy.get( path1Idx );
+			for ( int path2Idx = path1Idx + 1; path2Idx < pathsCopy.size(); ++path2Idx ) {
+				Path path2 = pathsCopy.get( path2Idx );
 				if ( path1 != null && path2 != null ) {
 					if ( path1.startsWith( path2 ))
-						paths.set( path1Idx, null );
+						pathsCopy.set( path1Idx, null );
 					else if ( path2.startsWith( path1 ))
-						paths.set( path2Idx,  null );
+						pathsCopy.set( path2Idx,  null );
 				}
 			}
 		}
 		// Copy the remaining paths:
 
 		List< Path > nonOverlappingPaths = new ArrayList<>();
-		for ( Path path : paths ) {
+		for ( Path path : pathsCopy ) {
 			if ( path != null )
 				nonOverlappingPaths.add( path );
 		}
 		return nonOverlappingPaths;
-	}
-
-	//==============================================================================================
-
-	public static List< Path > removeDuplicates( List< Path > outputDirectories )
-	{
-		List< Path > uniqueOutputDirectories = new ArrayList<>();
-
-		for ( Path outputDirectory : outputDirectories ) {
-			if ( !uniqueOutputDirectories.contains( outputDirectory ))
-				uniqueOutputDirectories.add( outputDirectory );
-		}
-		return uniqueOutputDirectories;
 	}
 }

@@ -37,6 +37,36 @@ public class CSharpProjectFile extends ProjectFile
 	//==============================================================================================
 
 	@Override
+	public List< String > findBuildConfigurationNames()
+		throws Exception
+	{
+		List< String > buildConfigurationNames = new ArrayList<>();
+
+		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
+		// for C++ projects.
+
+//		buildConfigurationNames.addAll( _parser.findXmlTags( "/Project/ItemGroup/ProjectConfiguration/Configuration" ));
+		buildConfigurationNames.addAll( _parser.findXmlTags( "//PropertyGroup/@Condition" ));
+
+		return buildConfigurationNames;
+	}
+
+	//==============================================================================================
+
+	@Override
+	public List< String > findPlatformNames( String buildConfiguration )
+		throws Exception
+	{
+		List< String > platformNames = new ArrayList<>();
+
+		platformNames.addAll( _parser.findXmlTags( String.format( "//PropertyGroup[@Condition=\"%s\"]/PlatformTarget", buildConfiguration )));
+
+		return platformNames;
+	}
+
+	//==============================================================================================
+
+	@Override
 	public String findTargetName()
 		throws Exception
 	{

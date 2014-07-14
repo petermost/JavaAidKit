@@ -59,7 +59,7 @@ public class CustomCSharpProjectFileTest extends CSharpProjectFileTest
 	public void testFindBuildConfigurationNames()
 		throws Exception
 	{
-		assertBuildConfigurationNames( Arrays.asList( "Debug" ));
+		assertBuildConfigurationNames( Arrays.asList( "Debug", "Release" ));
 	}
 
 	//==============================================================================================

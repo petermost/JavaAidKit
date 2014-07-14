@@ -30,6 +30,9 @@ public abstract class ProjectFile
 	private Path _projectFilePath;
 	protected ProjectFileParser _parser;
 
+	public abstract List< String > findPlatformNames( String buildConfiguration )
+		throws Exception;
+
 	//==============================================================================================
 
 	protected abstract List< String > findOutputFileNames()
@@ -118,18 +121,8 @@ public abstract class ProjectFile
 
 	//==============================================================================================
 
-	public List< String > findBuildConfigurationNames()
-		throws Exception
-	{
-		List< String > buildConfigurationNames = new ArrayList<>();
-
-		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
-		// for C++ projects.
-
-		buildConfigurationNames.addAll( _parser.findXmlTags( "//Configuration" ));
-
-		return buildConfigurationNames;
-	}
+	public abstract List< String > findBuildConfigurationNames()
+		throws Exception;
 
 	//==============================================================================================
 
@@ -214,18 +207,6 @@ public abstract class ProjectFile
 			resolvedPaths.add( resolvedPath );
 		}
 		return resolvedPaths;
-	}
-
-	//==============================================================================================
-
-	public List< String > findPlatformNames( String buildConfiguration )
-		throws Exception
-	{
-		List< String > platformNames = new ArrayList<>();
-
-		platformNames.addAll( _parser.findXmlTags( String.format( "//Configuration[text()=\"%s\"]/../Platform", buildConfiguration )));
-
-		return platformNames;
 	}
 
 	//==============================================================================================

@@ -19,7 +19,7 @@ package com.pera_software.aidkit.debug;
 
 import java.lang.reflect.*;
 import java.util.*;
-import com.pera_software.aidkit.util.*;
+import com.pera_software.aidkit.collection.*;
 
 //#############################################################################
 

@@ -18,7 +18,7 @@
 package com.pera_software.aidkit.io;
 
 import java.util.*;
-import com.pera_software.aidkit.util.*;
+import com.pera_software.aidkit.collection.*;
 
 //##################################################################################################
 
