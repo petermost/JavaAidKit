@@ -124,14 +124,15 @@ public abstract class ProjectFile
 		throws Exception
 	{
 		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
-		// for C++ projects. This search returns something like:
-		// >'$(Configuration)|$(Platform)'=='Debug|Win32'< for C++ and
-		// > '$(Configuration)|$(Platform)' == 'Debug|x86' < for C# without the '<>'.
+		// for C++ projects. This search returns:
+		// C++: <'$(Configuration)|$(Platform)'=='Debug|Win32'>
+		// C# : < '$(Configuration)|$(Platform)' == 'Debug|x86' >
+		// without the <> of course. Watch out for the blanks!
 
 		List< String > conditions = _parser.findXmlTags( "//PropertyGroup/@Condition" );
 		conditions = Lists.removeDuplicates( conditions );
 
-		// Extract the configuration name and platform:
+		// Extract the configuration- and platform name:
 
 		List< BuildConfiguration > configurations = new ArrayList<>();
 		Pattern conditionPattern = Pattern.compile( ".*'\\$\\(Configuration\\)\\|\\$\\(Platform\\)'.*==.*'(.*)\\|(.*)'.*" );
