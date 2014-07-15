@@ -37,34 +37,6 @@ public class CPlusPlusProjectFile extends ProjectFile
 	//==============================================================================================
 
 	@Override
-	public List< String > findBuildConfigurationNames()
-		throws Exception
-	{
-		List< String > buildConfigurationNames = new ArrayList<>();
-
-//		buildConfigurationNames.addAll( _parser.findXmlTags( "/Project/ItemGroup/ProjectConfiguration/Configuration" ));
-		buildConfigurationNames.addAll( _parser.findXmlTags( "//PropertyGroup/@Condition" ));
-
-		return buildConfigurationNames;
-	}
-
-	//==============================================================================================
-
-	@Override
-	public List< String > findPlatformNames( String buildConfiguration )
-		throws Exception
-	{
-		List< String > platformNames = new ArrayList<>();
-
-		String nodeName = String.format( "/Project/ItemGroup/ProjectConfiguration/Configuration[text()=\"%s\"]/../Platform", buildConfiguration );
-		platformNames.addAll( _parser.findXmlTags( nodeName ));
-
-		return platformNames;
-	}
-
-	//==============================================================================================
-
-	@Override
 	public String findTargetName()
 		throws Exception
 	{

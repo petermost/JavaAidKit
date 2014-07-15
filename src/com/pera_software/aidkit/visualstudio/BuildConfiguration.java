@@ -15,32 +15,34 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.collection;
-
-import java.util.*;
+package com.pera_software.aidkit.visualstudio;
 
 //##################################################################################################
 
-public final class Lists
+public class BuildConfiguration
 {
+	private String _configurationName;
+	private String _platformName;
+
 	//==============================================================================================
 
-	private Lists()
+	public BuildConfiguration( String configurationName, String platformName )
 	{
+		_configurationName = configurationName;
+		_platformName = platformName;
 	}
 
 	//==============================================================================================
 
-	public static < T > List< T > removeDuplicates( List< T > elements )
+	public String configurationName()
 	{
-		List< T > uniqueElements = new ArrayList<>();
+		return _configurationName;
+	}
 
-		// Walk through all elements and add those which we haven't already added:
+	//==============================================================================================
 
-		elements.forEach( element -> {
-			if ( !uniqueElements.contains( element ))
-				uniqueElements.add( element );
-		});
-		return uniqueElements;
+	public String platformName()
+	{
+		return _platformName;
 	}
 }

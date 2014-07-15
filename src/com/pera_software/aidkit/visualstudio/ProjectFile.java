@@ -20,7 +20,9 @@ package com.pera_software.aidkit.visualstudio;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.regex.*;
 import com.pera_software.aidkit.Console;
+import com.pera_software.aidkit.collection.*;
 import com.pera_software.aidkit.nio.file.Paths;
 
 //##################################################################################################
@@ -30,12 +32,33 @@ public abstract class ProjectFile
 	private Path _projectFilePath;
 	protected ProjectFileParser _parser;
 
-	public abstract List< String > findPlatformNames( String buildConfiguration )
-		throws Exception;
+	//==============================================================================================
+
+	public ProjectFile( Path projectFilePath )
+		throws Exception
+	{
+		_projectFilePath = projectFilePath;
+		_parser = new ProjectFileParser( projectFilePath );
+	}
 
 	//==============================================================================================
 
 	protected abstract List< String > findOutputFileNames()
+		throws Exception;
+
+	protected abstract List< String > findIntermediateDirectoryNames()
+		throws Exception;
+
+	protected abstract List< String > findOutputDirectoryNames()
+		throws Exception;
+
+	protected abstract String findTargetName()
+		throws Exception;
+
+	protected abstract List< String > findPreBuildCommands()
+		throws Exception;
+
+	protected abstract List< String > findPostBuildCommands()
 		throws Exception;
 
 	public List< Path > findOutputFiles( Path solutionFilePath )
@@ -49,9 +72,6 @@ public abstract class ProjectFile
 
 	//==============================================================================================
 
-	protected abstract List< String > findIntermediateDirectoryNames()
-		throws Exception;
-
 	public List< Path > findIntermediateDirectories( Path solutionFilePath )
 		throws Exception
 	{
@@ -62,9 +82,6 @@ public abstract class ProjectFile
 	}
 
 	//==============================================================================================
-
-	protected abstract List< String > findOutputDirectoryNames()
-		throws Exception;
 
 	public List< Path > findOutputDirectories( Path solutionFilePath )
 		throws Exception
@@ -77,17 +94,6 @@ public abstract class ProjectFile
 
 	//==============================================================================================
 
-	protected abstract String findTargetName()
-		throws Exception;
-
-	//==============================================================================================
-
-	protected abstract List< String > findPreBuildCommands()
-		throws Exception;
-
-	protected abstract List< String > findPostBuildCommands()
-		throws Exception;
-
 	public List< String > findDeployDirectoryNames()
 		throws Exception
 	{
@@ -98,6 +104,8 @@ public abstract class ProjectFile
 
 		return CopyCommandParser.findDestinationDirectoryNames( prePostBuildCommands );
 	}
+
+	//==============================================================================================
 
 	public List< Path > findDeployDirectories( Path solutionFilePath )
 		throws Exception
@@ -112,17 +120,61 @@ public abstract class ProjectFile
 
 	//==============================================================================================
 
-	public ProjectFile( Path projectFilePath )
+	private List< BuildConfiguration > findBuildConfigurations()
 		throws Exception
 	{
-		_projectFilePath = projectFilePath;
-		_parser = new ProjectFileParser( projectFilePath );
+		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
+		// for C++ projects. This search returns something like:
+		// >'$(Configuration)|$(Platform)'=='Debug|Win32'< for C++ and
+		// > '$(Configuration)|$(Platform)' == 'Debug|x86' < for C# without the '<>'.
+
+		List< String > conditions = _parser.findXmlTags( "//PropertyGroup/@Condition" );
+		conditions = Lists.removeDuplicates( conditions );
+
+		// Extract the configuration name and platform:
+
+		List< BuildConfiguration > configurations = new ArrayList<>();
+		Pattern conditionPattern = Pattern.compile( ".*'\\$\\(Configuration\\)\\|\\$\\(Platform\\)'.*==.*'(.*)\\|(.*)'.*" );
+		conditions.forEach( condition -> {
+			Matcher matcher = conditionPattern.matcher( condition );
+			if ( matcher.matches() ) {
+				String configurationName = matcher.group( 1 );
+				String platformName = matcher.group( 2 );
+				configurations.add( new BuildConfiguration( configurationName, platformName ));
+			}
+		});
+		return configurations;
 	}
 
 	//==============================================================================================
 
-	public abstract List< String > findBuildConfigurationNames()
-		throws Exception;
+	public List< String > findBuildConfigurationNames()
+		throws Exception
+	{
+		List< BuildConfiguration > buildConfigurations = findBuildConfigurations();
+
+		List< String > buildConfigurationNames = new ArrayList<>();
+		buildConfigurations.forEach( configuration -> {
+			buildConfigurationNames.add( configuration.configurationName() );
+		});
+		return buildConfigurationNames;
+	}
+
+	//==============================================================================================
+
+	public List< String > findPlatformNames( String buildConfigurationName )
+		throws Exception
+	{
+		List< BuildConfiguration > buildConfigurations = findBuildConfigurations();
+
+		List< String > platformNames = new ArrayList<>();
+		buildConfigurations.forEach( configuration -> {
+			if ( configuration.configurationName().equals( buildConfigurationName )) {
+				platformNames.add( configuration.platformName() );
+			}
+		});
+		return platformNames;
+	}
 
 	//==============================================================================================
 
@@ -215,5 +267,4 @@ public abstract class ProjectFile
 	{
 		return _projectFilePath;
 	}
-
 }
