@@ -19,20 +19,31 @@ package com.pera_software.aidkit.visualstudio;
 
 import java.nio.file.*;
 import java.util.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
 //##################################################################################################
 
-public class DefaultCPlusPlusProjectFileTest extends CPlusPlusProjectFileTest
+@RunWith( Parameterized.class )
+public final class DefaultCPlusPlusProjectFileTest extends CPlusPlusProjectFileTest
 {
-	public static final Path PATH = Resource.getPath( DefaultCPlusPlusProjectFileTest.class,  "CPlusPlusProjectWithDefaultOutputDirectories.vcxproj" );
+	private static final Path PATH = Resource.getPath( DefaultCPlusPlusProjectFileTest.class,  "2010/CPlusPlusProjectWithDefaultOutputDirectories.vcxproj" );
+
+	@Parameters
+	public static Iterable< Object[] > loadProjectFiles()
+		throws Exception
+	{
+		return Arrays.asList( new Object[][] {
+			{ new CPlusPlusProjectFile( PATH )}
+		});
+	}
 
 	//==============================================================================================
 
-	@Override
-	public CPlusPlusProjectFile loadProjectFile()
-		throws Exception
+	public DefaultCPlusPlusProjectFileTest( ProjectFile projectFile )
 	{
-		return new CPlusPlusProjectFile( PATH );
+		super( projectFile );
 	}
 
 	//==============================================================================================

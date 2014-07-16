@@ -25,6 +25,13 @@ public abstract class CSharpProjectFileTest extends ProjectFileTest
 {
 	//==============================================================================================
 
+	public CSharpProjectFileTest( ProjectFile projectFile )
+	{
+		super( projectFile );
+	}
+
+	//==============================================================================================
+
 	@Override
 	public void testFindPlatformNames()
 		throws Exception

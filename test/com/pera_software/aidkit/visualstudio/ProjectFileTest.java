@@ -26,17 +26,12 @@ public abstract class ProjectFileTest
 {
 	private ProjectFile _projectFile;
 
-	@Before
-	public void initProjectFile()
-		throws Exception
+	public ProjectFileTest( ProjectFile projectFile )
 	{
-		_projectFile = loadProjectFile();
+		_projectFile = projectFile;
 	}
 
 	//==============================================================================================
-
-	protected abstract ProjectFile loadProjectFile()
-		throws Exception;
 
 	@Test
 	public abstract void testFindIntermediateDirectoryNames()

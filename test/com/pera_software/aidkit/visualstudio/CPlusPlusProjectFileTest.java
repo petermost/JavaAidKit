@@ -25,6 +25,13 @@ public abstract class CPlusPlusProjectFileTest extends ProjectFileTest
 {
 	//==============================================================================================
 
+	public CPlusPlusProjectFileTest( ProjectFile projectFile )
+	{
+		super( projectFile );
+	}
+
+	//==============================================================================================
+
 	@Override
 	public void testFindPlatformNames()
 		throws Exception

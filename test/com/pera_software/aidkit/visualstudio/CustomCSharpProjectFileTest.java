@@ -19,20 +19,31 @@ package com.pera_software.aidkit.visualstudio;
 
 import java.nio.file.*;
 import java.util.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
 //##################################################################################################
 
-public class CustomCSharpProjectFileTest extends CSharpProjectFileTest
+@RunWith( Parameterized.class )
+public final class CustomCSharpProjectFileTest extends CSharpProjectFileTest
 {
-	public static final Path PATH = Resource.getPath( CustomCSharpProjectFileTest.class, "CSharpProjectWithCustomOutputDirectories.csproj" );
+	private static final Path PATH = Resource.getPath( CustomCSharpProjectFileTest.class, "2010/CSharpProjectWithCustomOutputDirectories.csproj" );
+
+	@Parameters
+	public static Iterable< Object[] > loadProjectFiles()
+		throws Exception
+	{
+		return Arrays.asList( new Object[][] {
+			{ new CSharpProjectFile( PATH )}
+		});
+	}
 
 	//==============================================================================================
 
-	@Override
-	protected CSharpProjectFile loadProjectFile()
-		throws Exception
+	public CustomCSharpProjectFileTest( ProjectFile projectFile )
 	{
-		return new CSharpProjectFile( PATH );
+		super( projectFile );
 	}
 
 	//==============================================================================================
