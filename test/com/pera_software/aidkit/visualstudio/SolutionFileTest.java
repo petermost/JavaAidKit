@@ -18,7 +18,6 @@
 package com.pera_software.aidkit.visualstudio;
 
 import static org.junit.Assert.*;
-import java.nio.file.*;
 import java.util.*;
 import org.junit.*;
 import org.junit.runner.*;
@@ -30,8 +29,6 @@ import org.junit.runners.Parameterized.*;
 @RunWith( Parameterized.class )
 public final class SolutionFileTest
 {
-	private static final Path PATH = Resource.getPath(SolutionFileTest.class, "2010/Solution.sln" );
-
 	private SolutionFile _solutionFile;
 
 	@Parameters
@@ -39,7 +36,8 @@ public final class SolutionFileTest
 		throws Exception
 	{
 		return Arrays.asList( new Object[][] {
-			{ new SolutionFile( PATH )}
+			{ new SolutionFile( Resource.getPath(SolutionFileTest.class, "2010/Solution.sln" )) },
+			{ new SolutionFile( Resource.getPath(SolutionFileTest.class, "2013/Solution.sln" )) }
 		});
 	}
 

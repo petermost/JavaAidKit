@@ -17,7 +17,6 @@
 
 package com.pera_software.aidkit.visualstudio;
 
-import java.nio.file.*;
 import java.util.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -28,14 +27,13 @@ import org.junit.runners.Parameterized.*;
 @RunWith( Parameterized.class )
 public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFileTest
 {
-	private static final Path PATH = Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" );
-
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles()
 		throws Exception
 	{
 		return Arrays.asList( new Object[][] {
-			{ new CPlusPlusProjectFile( PATH )}
+			{ new CPlusPlusProjectFile( Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
+			{ new CPlusPlusProjectFile( Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
 		});
 	}
 

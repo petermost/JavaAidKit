@@ -17,7 +17,6 @@
 
 package com.pera_software.aidkit.visualstudio;
 
-import java.nio.file.*;
 import java.util.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -28,14 +27,13 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith( Parameterized.class )
 public final class DefaultCSharpProjectFileTest extends CSharpProjectFileTest
 {
-	private static final Path PATH = Resource.getPath( DefaultCSharpProjectFileTest.class,  "2010/CSharpProjectWithDefaultOutputDirectories.csproj" );
-
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles()
 		throws Exception
 	{
 		return Arrays.asList( new Object[][] {
-			{ new CSharpProjectFile( PATH )}
+			{ new CSharpProjectFile( Resource.getPath( DefaultCSharpProjectFileTest.class,  "2010/CSharpProjectWithDefaultOutputDirectories.csproj" )) },
+			{ new CSharpProjectFile( Resource.getPath( DefaultCSharpProjectFileTest.class,  "2013/CSharpProjectWithDefaultOutputDirectories.csproj" )) }
 		});
 	}
 
