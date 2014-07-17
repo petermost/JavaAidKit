@@ -21,22 +21,22 @@ package com.pera_software.aidkit.visualstudio;
 
 public class BuildConfiguration
 {
-	private String _configurationName;
+	private String _name;
 	private String _platformName;
 
 	//==============================================================================================
 
-	public BuildConfiguration( String configurationName, String platformName )
+	public BuildConfiguration( String name, String platformName )
 	{
-		_configurationName = configurationName;
+		_name = name;
 		_platformName = platformName;
 	}
 
 	//==============================================================================================
 
-	public String configurationName()
+	public String name()
 	{
-		return _configurationName;
+		return _name;
 	}
 
 	//==============================================================================================

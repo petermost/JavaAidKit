@@ -156,7 +156,7 @@ public abstract class ProjectFile
 
 		List< String > buildConfigurationNames = new ArrayList<>();
 		buildConfigurations.forEach( configuration -> {
-			buildConfigurationNames.add( configuration.configurationName() );
+			buildConfigurationNames.add( configuration.name() );
 		});
 		return buildConfigurationNames;
 	}
@@ -170,7 +170,7 @@ public abstract class ProjectFile
 
 		List< String > platformNames = new ArrayList<>();
 		buildConfigurations.forEach( configuration -> {
-			if ( configuration.configurationName().equals( buildConfigurationName )) {
+			if ( configuration.name().equals( buildConfigurationName )) {
 				platformNames.add( configuration.platformName() );
 			}
 		});
