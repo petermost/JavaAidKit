@@ -61,6 +61,8 @@ public abstract class ProjectFile
 	protected abstract List< String > findPostBuildCommands()
 		throws Exception;
 
+	//==============================================================================================
+
 	public List< Path > findOutputFiles( Path solutionFilePath )
 		throws Exception
 	{
@@ -72,29 +74,29 @@ public abstract class ProjectFile
 
 	//==============================================================================================
 
-	public List< Path > findIntermediateDirectories( Path solutionFilePath )
+	public OutputDirectory findIntermediateDirectories( Path solutionFilePath )
 		throws Exception
 	{
 		List< String > intermediateDirectoryNames = findIntermediateDirectoryNames();
 		List< Path > intermediateDirectories = convertOutputDirectoryNames( solutionFilePath, intermediateDirectoryNames );
 
-		return intermediateDirectories;
+		return new OutputDirectory( "intermediate", intermediateDirectories );
 	}
 
 	//==============================================================================================
 
-	public List< Path > findOutputDirectories( Path solutionFilePath )
+	public OutputDirectory findOutputDirectories( Path solutionFilePath )
 		throws Exception
 	{
 		List< String > outputDirectoryNames = findOutputDirectoryNames();
 		List< Path > outputDirectories = convertOutputDirectoryNames( solutionFilePath, outputDirectoryNames );
 
-		return outputDirectories;
+		return new OutputDirectory( "output", outputDirectories );
 	}
 
 	//==============================================================================================
 
-	public List< String > findDeployDirectoryNames()
+	public List< String > findCopyDirectoryNames()
 		throws Exception
 	{
 		List< String > prePostBuildCommands = new ArrayList<>();
@@ -107,15 +109,15 @@ public abstract class ProjectFile
 
 	//==============================================================================================
 
-	public List< Path > findDeployDirectories( Path solutionFilePath )
+	public OutputDirectory findCopyDirectories( Path solutionFilePath )
 		throws Exception
 	{
-		List< String > deployDirectoryNames = findDeployDirectoryNames();
-		List< Path > deployDirectories = convertOutputDirectoryNames( solutionFilePath, deployDirectoryNames );
+		List< String > copyDirectoryNames = findCopyDirectoryNames();
+		List< Path > copyDirectories = convertOutputDirectoryNames( solutionFilePath, copyDirectoryNames );
 
-		deployDirectories.removeIf( deployDirectory -> !Files.isDirectory( deployDirectory ));
+		copyDirectories.removeIf( copyDirectory -> !Files.isDirectory( copyDirectory ));
 
-		return deployDirectories;
+		return new OutputDirectory( "copy", copyDirectories );
 	}
 
 	//==============================================================================================
@@ -179,21 +181,21 @@ public abstract class ProjectFile
 
 	//==============================================================================================
 
-	public List< Path > findAllOutputDirectories( Path solutionFilePath )
+	public List< OutputDirectory > collectOutputDirectories( Path solutionFilePath )
 		throws Exception
 	{
-		List< Path > outputDirectories = new ArrayList<>();
-
 		// Replace the output files with their parent directory:
 
-		outputDirectories.addAll( findOutputFiles( solutionFilePath ));
-		for ( int i = 0; i < outputDirectories.size(); ++i ) {
-			outputDirectories.set( i, outputDirectories.get( i ).getParent() );
+		List< Path > outputFiles = findOutputFiles( solutionFilePath );
+		List< Path > outputFileDirectories = new ArrayList<>();
+		for ( Path outputFile : outputFiles ) {
+			outputFileDirectories.add( outputFile.getParent() );
 		}
-
-		outputDirectories.addAll( findIntermediateDirectories( solutionFilePath ));
-		outputDirectories.addAll( findOutputDirectories( solutionFilePath ));
-		outputDirectories.addAll( findDeployDirectories( solutionFilePath ));
+		List< OutputDirectory > outputDirectories = new ArrayList<>();
+		outputDirectories.add( new OutputDirectory( "files", outputFileDirectories ));
+		outputDirectories.add( findIntermediateDirectories( solutionFilePath ));
+		outputDirectories.add( findOutputDirectories( solutionFilePath ));
+		outputDirectories.add( findCopyDirectories( solutionFilePath ));
 
 		return outputDirectories;
 	}

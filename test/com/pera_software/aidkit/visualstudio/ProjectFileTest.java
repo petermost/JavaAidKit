@@ -136,7 +136,7 @@ public abstract class ProjectFileTest
 	protected void assertDeployDirectoryNames( List< String > expectedDeployDirectories )
 		throws Exception
 	{
-		List< String > actualDeployDirectories = _projectFile.findDeployDirectoryNames();
+		List< String > actualDeployDirectories = _projectFile.findCopyDirectoryNames();
 		assertThat( actualDeployDirectories, is( expectedDeployDirectories ));
 	}
 }

@@ -27,14 +27,14 @@ import java.nio.charset.*;
 public class SolutionFile
 {
 	private List< String > _lines = new ArrayList<>();
-	private Path _solutionFilePath;
+	private Path _path;
 
 	//==============================================================================================
 
 	public SolutionFile( Path solutionFilePath )
 		throws Exception
 	{
-		_solutionFilePath = solutionFilePath;
+		_path = solutionFilePath;
 		_lines = Files.readAllLines( solutionFilePath , Charset.defaultCharset() );
 	}
 
@@ -71,7 +71,7 @@ public class SolutionFile
 			Matcher matcher = projectPattern.matcher( line );
 			if ( matcher.matches() ) {
 				Path projectPath = Paths.get( matcher.group( 1 ));
-				projectPath = _solutionFilePath.resolveSibling( projectPath );
+				projectPath = _path.resolveSibling( projectPath );
 				if ( isCPlusPlusProjectFilePath( projectPath ))
 					projects.add( new CPlusPlusProjectFile( projectPath ));
 				else if ( isCSharpProjectFilePath( projectPath ))
@@ -79,5 +79,12 @@ public class SolutionFile
 			}
 		}
 		return projects;
+	}
+
+	//==============================================================================================
+
+	public Path path()
+	{
+		return _path;
 	}
 }

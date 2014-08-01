@@ -15,33 +15,37 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.collection;
+package com.pera_software.aidkit.visualstudio;
 
+import java.nio.file.*;
 import java.util.*;
 
 //##################################################################################################
 
-public final class Lists
+public class OutputDirectory
 {
+	private String _name;
+	private List< Path > _paths;
+
 	//==============================================================================================
 
-	private Lists()
+	public OutputDirectory( String name, List< Path > paths )
 	{
+		_name = name;
+		_paths = paths;
 	}
 
 	//==============================================================================================
 
-	public static < T > List< T > removeDuplicates( List< T > elements )
+	public String name()
 	{
-		List< T > uniqueElements = new ArrayList<>();
+		return _name;
+	}
 
-		// Walk through all elements and add those which we haven't already added:
-		// TODO: Can be replaced with removeIf ?
+	//==============================================================================================
 
-		elements.forEach( element -> {
-			if ( !uniqueElements.contains( element ))
-				uniqueElements.add( element );
-		});
-		return uniqueElements;
+	public List< Path > paths()
+	{
+		return _paths;
 	}
 }
