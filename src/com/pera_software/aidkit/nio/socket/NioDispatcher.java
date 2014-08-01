@@ -106,7 +106,7 @@ public class NioDispatcher
 	{
 		// If one thread is waiting in Selector.select() and another thread tries to
 		// register a channel, then SelectableChannel.register() blocks!
-		// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6446653
+		// http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6446653
 
 		synchronized ( _selectorGate ) {
 			_selector.wakeup();
