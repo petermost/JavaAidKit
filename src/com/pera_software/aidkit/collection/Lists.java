@@ -18,6 +18,7 @@
 package com.pera_software.aidkit.collection;
 
 import java.util.*;
+import java.util.stream.*;
 
 //##################################################################################################
 
@@ -33,15 +34,6 @@ public final class Lists
 
 	public static < T > List< T > removeDuplicates( List< T > elements )
 	{
-		List< T > uniqueElements = new ArrayList<>();
-
-		// Walk through all elements and add those which we haven't already added:
-		// TODO: Can be replaced with removeIf ?
-
-		elements.forEach( element -> {
-			if ( !uniqueElements.contains( element ))
-				uniqueElements.add( element );
-		});
-		return uniqueElements;
+		return elements.stream().distinct().collect( Collectors.toList() );
 	}
 }
