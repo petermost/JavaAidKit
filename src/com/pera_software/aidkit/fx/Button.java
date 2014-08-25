@@ -44,18 +44,21 @@ public class Button extends javafx.scene.control.Button
 	{
 		_accelerator = accelerator;
 
-		setOnKeyPressed(( KeyEvent event ) -> {
-			if ( _accelerator.match( event )) {
-				arm();
-			}
-		});
+		Scene scene = getScene();
+		if ( scene != null ) {
+			scene.addEventHandler( KeyEvent.KEY_PRESSED, ( KeyEvent event ) -> {
+				if ( _accelerator.match( event )) {
+					arm();
+				}
+			});
+			scene.addEventHandler( KeyEvent.KEY_RELEASED, ( KeyEvent event ) -> {
+				if ( _accelerator.match( event )) {
+					fire();
+					disarm();
+				}
+			});
+		}
 
-		setOnKeyReleased(( KeyEvent event ) -> {
-			if ( _accelerator.match( event )) {
-				disarm();
-				fire();
-			}
-		});
 	}
 
 	public final KeyCombination getAccelerator()
