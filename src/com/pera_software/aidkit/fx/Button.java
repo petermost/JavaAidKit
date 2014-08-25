@@ -23,6 +23,8 @@ import javafx.scene.input.*;
 
 public class Button extends javafx.scene.control.Button
 {
+	private KeyCombination _accelerator;
+
 	public Button()
 	{
 		super();
@@ -38,11 +40,26 @@ public class Button extends javafx.scene.control.Button
 		super( text, graphic );
 	}
 
-	public final void setAccelerator( KeyCombination keyCombination ) 
+	public final void setAccelerator( KeyCombination accelerator )
 	{
-		Scene scene = getScene();
-		if ( scene != null ) {
-			scene.getAccelerators().put( keyCombination, () -> fire() );
-		}
+		_accelerator = accelerator;
+
+		setOnKeyPressed(( KeyEvent event ) -> {
+			if ( _accelerator.match( event )) {
+				arm();
+			}
+		});
+
+		setOnKeyReleased(( KeyEvent event ) -> {
+			if ( _accelerator.match( event )) {
+				disarm();
+				fire();
+			}
+		});
+	}
+
+	public final KeyCombination getAccelerator()
+	{
+		return _accelerator;
 	}
 }
