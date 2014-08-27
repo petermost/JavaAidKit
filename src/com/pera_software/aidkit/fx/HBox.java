@@ -53,5 +53,7 @@ public class HBox extends javafx.scene.layout.HBox
 	private void setDefaults()
 	{
 		 setAlignment( Pos.BASELINE_LEFT );
+
+		 setSpacing( 5 );
 	}
 }

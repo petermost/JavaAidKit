@@ -19,6 +19,7 @@ package com.pera_software.aidkit.fx;
 
 import javafx.scene.*;
 import javafx.scene.input.*;
+import javafx.scene.layout.*;
 
 
 public class Button extends javafx.scene.control.Button
@@ -28,16 +29,35 @@ public class Button extends javafx.scene.control.Button
 	public Button()
 	{
 		super();
+
+		setDefaults();
 	}
 
 	public Button( String text )
 	{
 		super( text );
+
+		setDefaults();
 	}
 
 	public Button( String text, Node graphic )
 	{
 		super( text, graphic );
+
+		setDefaults();
+	}
+
+
+	private void setDefaults()
+	{
+		// Prevent the button from shrinking bellow its preferred size:
+
+		setMinWidth( USE_PREF_SIZE );
+
+		// Grow the button with its parent:
+
+		setMaxWidth( Double.MAX_VALUE );
+		HBox.setHgrow( this, Priority.ALWAYS );
 	}
 
 	public final void setAccelerator( KeyCombination accelerator )
