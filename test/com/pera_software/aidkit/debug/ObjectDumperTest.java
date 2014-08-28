@@ -65,7 +65,7 @@ public class ObjectDumperTest
 		mDumper.dump( "object", object );
 		assertEquals( "object = {One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}",
 			mDumper.toString() );
-		System.out.println( mDumper.toString() );
+		// System.out.println( mDumper.toString() );
 	}
 
 	//===========================================================================
@@ -79,7 +79,7 @@ public class ObjectDumperTest
 		mDumper.dump( "array", array );
 		assertEquals( "array[2] = [{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}, "
 			+ "{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}]", mDumper.toString() );
-		System.out.println( mDumper.toString() );
+		// System.out.println( mDumper.toString() );
 	}
 
 	//===========================================================================
@@ -92,7 +92,7 @@ public class ObjectDumperTest
 		};
 		mDumper.dump( "array", array );
 		assertEquals( "array[3] = [<10>, <20>, <30>]", mDumper.toString() );
-		System.out.println( mDumper.toString() );
+		// System.out.println( mDumper.toString() );
 	}
 
 	//===========================================================================
@@ -104,8 +104,6 @@ public class ObjectDumperTest
 		mDumper.dump( "list", list );
 		assertEquals( "list[2] = [{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}, "
 			+ "{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}]", mDumper.toString() );
-		System.out.println( mDumper.toString() );
+		// System.out.println( mDumper.toString() );
 	}
-
-	//===========================================================================
 }
