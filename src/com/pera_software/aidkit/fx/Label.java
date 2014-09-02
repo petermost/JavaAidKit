@@ -66,6 +66,14 @@ public class Label extends javafx.scene.control.Label
 	{
 		setMnemonicParsing( true );
 
+		// Prevent the label from shrinking bellow its preferred size:
+
+		setMinWidth( USE_PREF_SIZE );
+
+		// We don't want the label to grow with its parent, so we don't do:
+		// setMaxWidth( Double.MAX_VALUE );
+		// HBox.setHgrow( this, Priority.ALWAYS );
+
 		if ( labeledControl != null )
 			setLabelFor( labeledControl );
 	}
