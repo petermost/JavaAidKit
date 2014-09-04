@@ -15,16 +15,31 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.fx;
+package com.pera_software.aidkit.fx.scene.control;
 
-import javafx.scene.*;
-import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
-public class TitledBorderPane extends TitledPane
+public class TextField extends javafx.scene.control.TextField
 {
-	public TitledBorderPane( String title, Node content )
+	public TextField()
 	{
-		super( title, content );
-		setCollapsible( false );
+		super();
+
+		setDefaults();
+	}
+
+	public TextField( String text )
+	{
+		super( text );
+
+		setDefaults();
+	}
+
+
+	private void setDefaults()
+	{
+		setMaxWidth( Double.MAX_VALUE );
+
+		HBox.setHgrow( this, Priority.ALWAYS );
 	}
 }

@@ -21,7 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.*;
 
 /**
- * @author most
+ * @author P. Most
  *
  */
 public class ImageTableCell< S > extends TableCell< S, Image > {
@@ -30,5 +30,9 @@ public class ImageTableCell< S > extends TableCell< S, Image > {
 		super.updateItem( image, empty );
 		if ( !empty )
 			setGraphic( new ImageView( image ));
+		else {
+			setText( null );
+			setGraphic( null );
+		}
 	}
 }

@@ -20,14 +20,19 @@ package com.pera_software.aidkit.fx.log;
 import javafx.beans.property.*;
 import javafx.scene.image.*;
 
+/**
+ * @author P. Most
+ *
+ */
 public class LogMessage
 {
-	static final Image DEBUG_IMAGE = new Image( LogMessage.class.getResourceAsStream( "Debug.png" ));
+	private static final Image DEBUG_IMAGE = new Image( LogMessage.class.getResourceAsStream( "Debug.png" ));
 	private static final Image TRACE_IMAGE = DEBUG_IMAGE;
 	private static final Image INFO_IMAGE = new Image( LogMessage.class.getResourceAsStream( "dialog-information-16x16.png" ));
 	private static final Image WARN_IMAGE = new Image( LogMessage.class.getResourceAsStream( "dialog-warning-16x16.png" ));
 	private static final Image ERROR_IMAGE = new Image( LogMessage.class.getResourceAsStream( "dialog-error-16x16.png" ));
 	private static final Image FATAL_IMAGE = ERROR_IMAGE;
+
 	private static final Image IMAGES[] = {
 		TRACE_IMAGE, DEBUG_IMAGE, INFO_IMAGE, WARN_IMAGE, ERROR_IMAGE, FATAL_IMAGE
 	};

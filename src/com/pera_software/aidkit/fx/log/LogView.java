@@ -23,6 +23,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.image.*;
 
+/**
+ * @author P. Most
+ *
+ */
 public class LogView extends TableView< LogMessage >
 {
 	public LogView()
@@ -48,20 +52,20 @@ public class LogView extends TableView< LogMessage >
 	private void createColumns()
 	{
 		TableColumn< LogMessage, Image > iconColumn = new TableColumn<>();
-		iconColumn.setSortable( false );
+//		iconColumn.setSortable( false );
 		iconColumn.setCellFactory( new ImageTableCellFactory< LogMessage >() );
 		iconColumn.setCellValueFactory(( CellDataFeatures< LogMessage, Image > p ) -> p.getValue().iconProperty() );
 
 		TableColumn< LogMessage, LogLevel > levelColumn = new TableColumn<>( "Level" );
-		levelColumn.setSortable( false );
+//		levelColumn.setSortable( false );
 		levelColumn.setCellValueFactory(( CellDataFeatures< LogMessage, LogLevel > p ) -> p.getValue().levelProperty() );
 
 		TableColumn< LogMessage, String > nameColumn = new TableColumn< >( "Name" );
-		nameColumn.setSortable( false );
+//		nameColumn.setSortable( false );
 		nameColumn.setCellValueFactory(( CellDataFeatures< LogMessage, String > p ) -> p.getValue().nameProperty() );
 
 		TableColumn< LogMessage, String > textColumn = new TableColumn< >( "Text" );
-		textColumn.setSortable( false );
+//		textColumn.setSortable( false );
 		textColumn.setCellValueFactory(( CellDataFeatures< LogMessage, String > p ) -> p.getValue().textProperty() );
 		// textColumn.prefWidthProperty().bind( textColumn.textProperty().length() );
 
