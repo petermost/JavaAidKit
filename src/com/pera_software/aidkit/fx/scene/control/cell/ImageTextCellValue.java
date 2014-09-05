@@ -17,18 +17,36 @@
 
 package com.pera_software.aidkit.fx.scene.control.cell;
 
-import javafx.scene.control.*;
+import java.util.*;
+import javafx.beans.value.*;
 import javafx.scene.image.*;
-import javafx.util.*;
 
 /**
- * @author most
+ * @author P. Most
  *
  */
-public class ImageTableCellFactory< T > implements Callback< TableColumn< T, Image >, TableCell< T, Image >> {
+public class ImageTextCellValue extends ObservableValueBase< ImageTextCellValue >{
+	private Image _image;
+	private String _text;
+
+	public ImageTextCellValue( Image image, String text ) {
+		Objects.requireNonNull( image );
+		Objects.requireNonNull( text );
+
+		_image = image;
+		_text = text;
+	}
+
+	public Image getImage() {
+		return _image;
+	}
+
+	public String getText() {
+		return _text;
+	}
+
 	@Override
-	@SuppressWarnings( "unused" )
-	public TableCell< T, Image > call( TableColumn< T, Image > column ) {
-		return new ImageTableCell<>();
+	public ImageTextCellValue getValue() {
+		return this;
 	}
 }

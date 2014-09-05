@@ -15,20 +15,26 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.fx.scene.control.cell;
+package com.pera_software.aidkit.fx.log;
 
-import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.util.*;
 
 /**
- * @author most
+ * @author P. Most
  *
  */
-public class ImageTableCellFactory< T > implements Callback< TableColumn< T, Image >, TableCell< T, Image >> {
-	@Override
-	@SuppressWarnings( "unused" )
-	public TableCell< T, Image > call( TableColumn< T, Image > column ) {
-		return new ImageTableCell<>();
+public final class Images {
+	public static final String DEBUG_1 = "pmost-debug.png";
+	public static final String DEBUG_2 = "eclipse-debug.png";
+	public static final String TRACE = "baby-feet-black-icon.png";
+	public static final String INFO = "dialog-information-16x16.png";
+	public static final String WARN = "dialog-warning-16x16.png";
+	public static final String ERROR = "dialog-error-16x16.png";
+
+	public static Image loadImage( String imageName ) {
+		return new Image( Images.class.getResourceAsStream( imageName ));
+	}
+
+	private Images() {
 	}
 }

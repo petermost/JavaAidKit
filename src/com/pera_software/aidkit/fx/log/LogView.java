@@ -21,7 +21,7 @@ import com.pera_software.aidkit.fx.scene.control.cell.*;
 import javafx.collections.*;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.image.*;
+
 
 /**
  * @author P. Most
@@ -51,25 +51,21 @@ public class LogView extends TableView< LogMessage >
 	@SuppressWarnings({ "unchecked" })
 	private void createColumns()
 	{
-		TableColumn< LogMessage, Image > iconColumn = new TableColumn<>();
-//		iconColumn.setSortable( false );
-		iconColumn.setCellFactory( new ImageTableCellFactory< LogMessage >() );
-		iconColumn.setCellValueFactory(( CellDataFeatures< LogMessage, Image > p ) -> p.getValue().iconProperty() );
+//		TableColumn< LogMessage, Image > iconColumn = new TableColumn<>( "Icon" );
+//		iconColumn.setCellFactory( new ImageTableCellFactory< LogMessage >() );
+//		iconColumn.setCellValueFactory( cell -> cell.getValue().imageProperty() );
 
-		TableColumn< LogMessage, LogLevel > levelColumn = new TableColumn<>( "Level" );
-//		levelColumn.setSortable( false );
-		levelColumn.setCellValueFactory(( CellDataFeatures< LogMessage, LogLevel > p ) -> p.getValue().levelProperty() );
+		TableColumn< LogMessage, ImageTextCellValue > iconLevelColumn = new TableColumn<>( "Level" );
+		iconLevelColumn.setCellFactory( new ImageTextTableCellFactory< LogMessage >() );
+		iconLevelColumn.setCellValueFactory( cell -> new ImageTextCellValue( cell.getValue().getImage(), cell.getValue().getLevel().toString() ) );
 
 		TableColumn< LogMessage, String > nameColumn = new TableColumn< >( "Name" );
-//		nameColumn.setSortable( false );
 		nameColumn.setCellValueFactory(( CellDataFeatures< LogMessage, String > p ) -> p.getValue().nameProperty() );
 
 		TableColumn< LogMessage, String > textColumn = new TableColumn< >( "Text" );
-//		textColumn.setSortable( false );
 		textColumn.setCellValueFactory(( CellDataFeatures< LogMessage, String > p ) -> p.getValue().textProperty() );
-		// textColumn.prefWidthProperty().bind( textColumn.textProperty().length() );
 
-		getColumns().addAll( iconColumn, levelColumn, nameColumn, textColumn );
+		getColumns().addAll( iconLevelColumn, nameColumn, textColumn );
 
 		// setColumnResizePolicy(( ResizeFeatures features ) -> Boolean.TRUE );
 	}

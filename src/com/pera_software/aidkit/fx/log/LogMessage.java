@@ -26,39 +26,37 @@ import javafx.scene.image.*;
  */
 public class LogMessage
 {
-	private static final Image DEBUG_IMAGE = new Image( LogMessage.class.getResourceAsStream( "Debug.png" ));
-	private static final Image TRACE_IMAGE = DEBUG_IMAGE;
-	private static final Image INFO_IMAGE = new Image( LogMessage.class.getResourceAsStream( "dialog-information-16x16.png" ));
-	private static final Image WARN_IMAGE = new Image( LogMessage.class.getResourceAsStream( "dialog-warning-16x16.png" ));
-	private static final Image ERROR_IMAGE = new Image( LogMessage.class.getResourceAsStream( "dialog-error-16x16.png" ));
-	private static final Image FATAL_IMAGE = ERROR_IMAGE;
-
 	private static final Image IMAGES[] = {
-		TRACE_IMAGE, DEBUG_IMAGE, INFO_IMAGE, WARN_IMAGE, ERROR_IMAGE, FATAL_IMAGE
+		Images.loadImage( Images.TRACE ),
+		Images.loadImage( Images.DEBUG_2 ),
+		Images.loadImage( Images.INFO ),
+		Images.loadImage( Images.WARN ),
+		Images.loadImage( Images.ERROR ),
+		Images.loadImage( Images.ERROR )
 	};
 
-	private ReadOnlyObjectWrapper< Image > _icon = new ReadOnlyObjectWrapper<>();
+	private ReadOnlyObjectWrapper< Image > _image = new ReadOnlyObjectWrapper<>();
 	private ReadOnlyObjectWrapper< LogLevel > _level = new ReadOnlyObjectWrapper<>();
 	private ReadOnlyStringWrapper _name = new ReadOnlyStringWrapper();
 	private ReadOnlyStringWrapper _text = new ReadOnlyStringWrapper();
 
 	public LogMessage( LogLevel level, String name, String text )
 	{
-		_icon.set( IMAGES[ level.ordinal() ]);
+		_image.set( IMAGES[ level.ordinal() ]);
 		_level.set( level );
 		_name.set( name );
 		_text.set( text );
 
 	}
 
-	public final ReadOnlyObjectProperty< Image > iconProperty()
+	public final ReadOnlyObjectProperty< Image > imageProperty()
 	{
-		return _icon.getReadOnlyProperty();
+		return _image.getReadOnlyProperty();
 	}
 
-	public final Image getIcon()
+	public final Image getImage()
 	{
-		return iconProperty().get();
+		return imageProperty().get();
 	}
 
 	public final ReadOnlyObjectProperty< LogLevel > levelProperty()

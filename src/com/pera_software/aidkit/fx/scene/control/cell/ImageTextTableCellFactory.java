@@ -18,17 +18,16 @@
 package com.pera_software.aidkit.fx.scene.control.cell;
 
 import javafx.scene.control.*;
-import javafx.scene.image.*;
 import javafx.util.*;
 
 /**
- * @author most
+ * @author P. Most
  *
  */
-public class ImageTableCellFactory< T > implements Callback< TableColumn< T, Image >, TableCell< T, Image >> {
+public class ImageTextTableCellFactory< T > implements Callback< TableColumn< T, ImageTextCellValue >, TableCell< T, ImageTextCellValue >> {
 	@Override
 	@SuppressWarnings( "unused" )
-	public TableCell< T, Image > call( TableColumn< T, Image > column ) {
-		return new ImageTableCell<>();
+	public TableCell< T, ImageTextCellValue > call( TableColumn< T, ImageTextCellValue > column ) {
+		return new ImageTextTableCell<>();
 	}
 }

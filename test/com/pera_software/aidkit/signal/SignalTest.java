@@ -140,7 +140,6 @@ public abstract class SignalTest
 
 //	private Slot createSlotMock( Callable0 callable )
 //	{
-//		// TODO Auto-generated method stub
 //		return null;
 //	}
 
