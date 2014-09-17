@@ -235,18 +235,18 @@ public abstract class ProjectFile
 		List< String > pathNames = new ArrayList<>();
 		for ( String buildConfigurationName : buildConfigurationNames ) {
 			for ( String intermediateDirectoryName : intermediateDirectoryNames ) {
-				pathName = pathName.replace( BuildVariables.SOLUTION_DIR,  solutionDirectoryName );
-				pathName = pathName.replace( BuildVariables.INT_DIR,       intermediateDirectoryName );
-				pathName = pathName.replace( BuildVariables.CONFIGURATION, buildConfigurationName );
-				pathName = pathName.replace( BuildVariables.TARGET_NAME,   targetName );
+				String replacedPathName = pathName.replace( BuildVariables.SOLUTION_DIR,  solutionDirectoryName );
+				replacedPathName = replacedPathName.replace( BuildVariables.INT_DIR,       intermediateDirectoryName );
+				replacedPathName = replacedPathName.replace( BuildVariables.CONFIGURATION, buildConfigurationName );
+				replacedPathName = replacedPathName.replace( BuildVariables.TARGET_NAME,   targetName );
 
 				// Check for unknown build variables:
 
-				if ( pathName.contains( "$(" )) {
-					Console.printError( "Skipping path with unknown build variable: '%s'", pathName );
+				if ( replacedPathName.contains( "$(" )) {
+					Console.printError( "Skipping path with unknown build variable: '%s'", replacedPathName );
 					continue;
 				}
-				pathNames.add( pathName );
+				pathNames.add( replacedPathName );
 			}
 		}
 		return pathNames;
