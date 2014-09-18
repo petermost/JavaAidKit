@@ -79,7 +79,6 @@ public final class SolutionFileTest
 
 	@Test
 	@Ignore
-	@SuppressWarnings("static-method")
 	public void testIsCPlusPlusProjectFilePath()
 	{
 //		Path cplusPlusProjectPath = DefaultCPlusPlusProjectFileTest.PATH;
@@ -90,7 +89,6 @@ public final class SolutionFileTest
 
 	@Test
 	@Ignore
-	@SuppressWarnings("static-method")
 	public void testIsCSharpProjectFilePath()
 	{
 //		Path csharpProjectPath = DefaultCSharpProjectFileTest.PATH;

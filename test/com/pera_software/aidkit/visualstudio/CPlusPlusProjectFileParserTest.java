@@ -21,13 +21,13 @@ import java.util.*;
 
 //##################################################################################################
 
-public abstract class CSharpProjectFileTest extends ProjectFileTest
+public abstract class CPlusPlusProjectFileParserTest extends ProjectFileParserTest
 {
 	//==============================================================================================
 
-	public CSharpProjectFileTest( ProjectFile projectFile )
+	public CPlusPlusProjectFileParserTest( ProjectFileParser projectFileParser )
 	{
-		super( projectFile );
+		super( projectFileParser );
 	}
 
 	//==============================================================================================
@@ -36,7 +36,6 @@ public abstract class CSharpProjectFileTest extends ProjectFileTest
 	public void testFindPlatformNames()
 		throws Exception
 	{
-		assertPlatformNames( Arrays.asList( "x86" ));
+		assertPlatformNames( Arrays.asList( "Win32" ));
 	}
 }
-

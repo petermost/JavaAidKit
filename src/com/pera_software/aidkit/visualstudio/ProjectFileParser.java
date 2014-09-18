@@ -19,14 +19,17 @@ package com.pera_software.aidkit.visualstudio;
 
 import java.nio.file.*;
 import java.util.*;
+import java.util.regex.*;
 import javax.xml.parsers.*;
 import javax.xml.xpath.*;
 import org.w3c.dom.*;
+import com.pera_software.aidkit.collection.*;
 
 //##################################################################################################
 
-public class ProjectFileParser
+public abstract class ProjectFileParser
 {
+	private Path _projectFilePath;
 	private Document _document;
 	private XPath _xpath;
 
@@ -35,6 +38,8 @@ public class ProjectFileParser
 	public ProjectFileParser( Path projectFilePath )
 		throws Exception
 	{
+		_projectFilePath = projectFilePath;
+
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 		// Doesn't work with namespace awareness!
@@ -45,7 +50,98 @@ public class ProjectFileParser
 
 		XPathFactory xpathFactory = XPathFactory.newInstance();
 		_xpath = xpathFactory.newXPath();
+	}
 
+	//==============================================================================================
+
+	public abstract List< String > findOutputFileNames()
+		throws Exception;
+
+	public abstract List< String > findIntermediateDirectoryNames()
+		throws Exception;
+
+	public abstract List< String > findOutputDirectoryNames()
+		throws Exception;
+
+	public abstract String findTargetName()
+		throws Exception;
+
+	public abstract List< String > findPreBuildCommands()
+		throws Exception;
+
+	public abstract List< String > findPostBuildCommands()
+		throws Exception;
+
+	//==============================================================================================
+
+	public List< String > findCopyDirectoryNames()
+		throws Exception
+	{
+		List< String > prePostBuildCommands = new ArrayList<>();
+
+		prePostBuildCommands.addAll( findPreBuildCommands() );
+		prePostBuildCommands.addAll( findPostBuildCommands() );
+
+		return CopyCommandParser.findDestinationDirectoryNames( prePostBuildCommands );
+	}
+
+	//==============================================================================================
+
+	private List< BuildConfiguration > findBuildConfigurations()
+		throws Exception
+	{
+		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
+		// for C++ projects. This search returns:
+		// C++: <'$(Configuration)|$(Platform)'=='Debug|Win32'>
+		// C# : < '$(Configuration)|$(Platform)' == 'Debug|x86' >
+		// without the <> of course. Watch out for the blanks!
+
+		List< String > conditions = findXmlTags( "//PropertyGroup/@Condition" );
+		conditions = Lists.removeDuplicates( conditions );
+
+		// Extract the configuration- and platform name:
+
+		List< BuildConfiguration > configurations = new ArrayList<>();
+		Pattern conditionPattern = Pattern.compile( ".*'\\$\\(Configuration\\)\\|\\$\\(Platform\\)'.*==.*'(.*)\\|(.*)'.*" );
+		conditions.forEach( condition -> {
+			Matcher matcher = conditionPattern.matcher( condition );
+			if ( matcher.matches() ) {
+				String configurationName = matcher.group( 1 );
+				String platformName = matcher.group( 2 );
+				configurations.add( new BuildConfiguration( configurationName, platformName ));
+			}
+		});
+		return configurations;
+	}
+
+	//==============================================================================================
+
+	public List< String > findBuildConfigurationNames()
+		throws Exception
+	{
+		List< BuildConfiguration > buildConfigurations = findBuildConfigurations();
+
+		List< String > buildConfigurationNames = new ArrayList<>();
+		buildConfigurations.forEach( configuration -> {
+			buildConfigurationNames.add( configuration.name() );
+		});
+		return buildConfigurationNames;
+	}
+
+	//==============================================================================================
+
+	public List< String > findPlatformNames( String buildConfigurationName )
+		throws Exception
+	{
+		List< BuildConfiguration > buildConfigurations = findBuildConfigurations();
+
+		List< String > platformNames = new ArrayList<>();
+		buildConfigurations.forEach( configuration -> {
+			if ( configuration.name().equals( buildConfigurationName )) {
+				platformNames.add( configuration.platformName() );
+			}
+		});
+		return platformNames;
 	}
 
 	//==============================================================================================
@@ -84,5 +180,11 @@ public class ProjectFileParser
 			xmlLines.addAll( Arrays.asList( xmlTag.split( "\n" )));
 		}
 		return xmlLines;
+	}
+	//==============================================================================================
+
+	public Path path()
+	{
+		return _projectFilePath;
 	}
 }

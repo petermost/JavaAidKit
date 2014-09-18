@@ -22,13 +22,13 @@ import java.util.*;
 
 //##################################################################################################
 
-public class CPlusPlusProjectFile extends ProjectFile
+public class CPlusPlusProjectFileParser extends ProjectFileParser
 {
 	public static final String EXTENSION = ".vcxproj";
 
 	//==============================================================================================
 
-	public CPlusPlusProjectFile( Path projectFilePath )
+	public CPlusPlusProjectFileParser( Path projectFilePath )
 		throws Exception
 	{
 		super( projectFilePath );
@@ -48,7 +48,7 @@ public class CPlusPlusProjectFile extends ProjectFile
 	public String findProjectName()
 		throws Exception
 	{
-		List< String > projectNames = _parser.findXmlTags( "//ProjectName" );
+		List< String > projectNames = findXmlTags( "//ProjectName" );
 		if ( !projectNames.isEmpty() )
 			return projectNames.get( 0 );
 		else {
@@ -64,14 +64,14 @@ public class CPlusPlusProjectFile extends ProjectFile
 	//==============================================================================================
 
 	@Override
-	protected List< String > findOutputDirectoryNames()
+	public List< String > findOutputDirectoryNames()
 		throws Exception
 	{
 		List< String > outputDirectoryNames = new ArrayList<>();
 
 		// Add the 'Output Directory' names:
 
-		List< String > outDirs = _parser.findXmlTags( "//OutDir" );
+		List< String > outDirs = findXmlTags( "//OutDir" );
 		if ( !outDirs.isEmpty() )
 			outputDirectoryNames.addAll( outDirs );
 		else
@@ -83,14 +83,14 @@ public class CPlusPlusProjectFile extends ProjectFile
 	//==============================================================================================
 
 	@Override
-	protected List< String > findOutputFileNames()
+	public List< String > findOutputFileNames()
 		throws Exception
 	{
 		List< String > outputFileNames = new ArrayList<>();
 
 		// Add the 'Precompiled Header Output File' names:
 
-		List< String > precompiledHeaderOutputFiles = _parser.findXmlTags( "//PrecompiledHeaderOutputFile" );
+		List< String > precompiledHeaderOutputFiles = findXmlTags( "//PrecompiledHeaderOutputFile" );
 		if ( !precompiledHeaderOutputFiles.isEmpty() )
 			outputFileNames.addAll( precompiledHeaderOutputFiles );
 		else
@@ -102,12 +102,12 @@ public class CPlusPlusProjectFile extends ProjectFile
 	//==============================================================================================
 
 	@Override
-	protected List< String > findIntermediateDirectoryNames()
+	public List< String > findIntermediateDirectoryNames()
 		throws Exception
 	{
 		// Add the 'Intermediate Directory' names:
 
-		List< String > intermediateDirectories = _parser.findXmlTags( "//IntDir" );
+		List< String > intermediateDirectories = findXmlTags( "//IntDir" );
 		if ( !intermediateDirectories.isEmpty() )
 			return intermediateDirectories;
 		else
@@ -117,18 +117,18 @@ public class CPlusPlusProjectFile extends ProjectFile
 	//==============================================================================================
 
 	@Override
-	protected List<String> findPreBuildCommands()
+	public List<String> findPreBuildCommands()
 		throws Exception
 	{
-		return _parser.findXmlLines( "//PreBuildEvent/Command" );
+		return findXmlLines( "//PreBuildEvent/Command" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	protected List<String> findPostBuildCommands()
+	public List<String> findPostBuildCommands()
 		throws Exception
 	{
-		return _parser.findXmlLines( "//PostBuildEvent/Command" );
+		return findXmlLines( "//PostBuildEvent/Command" );
 	}
 }

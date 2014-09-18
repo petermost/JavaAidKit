@@ -22,13 +22,13 @@ import static org.junit.Assert.*;
 import java.util.*;
 import org.junit.*;
 
-public abstract class ProjectFileTest
+public abstract class ProjectFileParserTest
 {
-	private ProjectFile _projectFile;
+	private ProjectFileParser _projectFileParser;
 
-	public ProjectFileTest( ProjectFile projectFile )
+	public ProjectFileParserTest( ProjectFileParser projectFileParser )
 	{
-		_projectFile = projectFile;
+		_projectFileParser = projectFileParser;
 	}
 
 	//==============================================================================================
@@ -70,9 +70,9 @@ public abstract class ProjectFileTest
 	protected void assertPlatformNames( List< String > expectedPlatformNames )
 		throws Exception
 	{
-		List< String > buildConfigurationNames = _projectFile.findBuildConfigurationNames();
+		List< String > buildConfigurationNames = _projectFileParser.findBuildConfigurationNames();
 		for ( String buildConfigurationName : buildConfigurationNames ) {
-			List< String > actualPlatformNames = _projectFile.findPlatformNames( buildConfigurationName );
+			List< String > actualPlatformNames = _projectFileParser.findPlatformNames( buildConfigurationName );
 			assertThat( actualPlatformNames, is( expectedPlatformNames ));
 		}
 	}
@@ -82,7 +82,7 @@ public abstract class ProjectFileTest
 	protected void assertBuildConfigurationNames( List< String > expectedBuildConfigurationNames )
 		throws Exception
 	{
-		List< String > actualBuildConfigurationNames = _projectFile.findBuildConfigurationNames();
+		List< String > actualBuildConfigurationNames = _projectFileParser.findBuildConfigurationNames();
 		assertThat( actualBuildConfigurationNames, is( expectedBuildConfigurationNames ));
 	}
 
@@ -91,7 +91,7 @@ public abstract class ProjectFileTest
 	protected void assertIntermediateDirectoryNames( List< String > expectedIntermediateDirectoryNames )
 		throws Exception
 	{
-		List< String > actualIntermediateDirectoryNames = _projectFile.findIntermediateDirectoryNames();
+		List< String > actualIntermediateDirectoryNames = _projectFileParser.findIntermediateDirectoryNames();
 		assertThat( actualIntermediateDirectoryNames, is( expectedIntermediateDirectoryNames ));
 	}
 
@@ -100,7 +100,7 @@ public abstract class ProjectFileTest
 	protected void assertTargetName( String expectedTargetName )
 		throws Exception
 	{
-		String actualTargetName = _projectFile.findTargetName();
+		String actualTargetName = _projectFileParser.findTargetName();
 		assertThat( actualTargetName, is( expectedTargetName ));
 	}
 
@@ -109,7 +109,7 @@ public abstract class ProjectFileTest
 	protected void assertOutputDirectoryNames( List< String > expectedOutputDirectoryNames )
 		throws Exception
 	{
-		List< String > actualOutputDirectoryNames = _projectFile.findOutputDirectoryNames();
+		List< String > actualOutputDirectoryNames = _projectFileParser.findOutputDirectoryNames();
 		assertThat( actualOutputDirectoryNames, is( expectedOutputDirectoryNames ));
 	}
 
@@ -118,7 +118,7 @@ public abstract class ProjectFileTest
 	protected void assertPreBuildCommands( List< String > expectedBuildCommands )
 		throws Exception
 	{
-		List< String > actualBuildEvents = _projectFile.findPreBuildCommands();
+		List< String > actualBuildEvents = _projectFileParser.findPreBuildCommands();
 		assertThat( actualBuildEvents, is( expectedBuildCommands ));
 	}
 
@@ -127,7 +127,7 @@ public abstract class ProjectFileTest
 	protected void assertPostBuildCommands( List< String > expectedBuildCommands )
 		throws Exception
 	{
-		List< String > actualBuildEvents = _projectFile.findPostBuildCommands();
+		List< String > actualBuildEvents = _projectFileParser.findPostBuildCommands();
 		assertThat( actualBuildEvents, is( expectedBuildCommands ));
 	}
 
@@ -136,7 +136,7 @@ public abstract class ProjectFileTest
 	protected void assertDeployDirectoryNames( List< String > expectedDeployDirectories )
 		throws Exception
 	{
-		List< String > actualDeployDirectories = _projectFile.findCopyDirectoryNames();
+		List< String > actualDeployDirectories = _projectFileParser.findCopyDirectoryNames();
 		assertThat( actualDeployDirectories, is( expectedDeployDirectories ));
 	}
 }

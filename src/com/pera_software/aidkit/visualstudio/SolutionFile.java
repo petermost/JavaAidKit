@@ -49,14 +49,14 @@ public class SolutionFile
 
 	public static boolean isCPlusPlusProjectFilePath( Path projectFilePath )
 	{
-		return hasExtension( projectFilePath, CPlusPlusProjectFile.EXTENSION );
+		return hasExtension( projectFilePath, CPlusPlusProjectFileParser.EXTENSION );
 	}
 
 	//==============================================================================================
 
 	public static boolean isCSharpProjectFilePath( Path projectFilePath )
 	{
-		return hasExtension( projectFilePath, CSharpProjectFile.EXTENSION );
+		return hasExtension( projectFilePath, CSharpProjectFileParser.EXTENSION );
 	}
 
 	//==============================================================================================
@@ -73,9 +73,9 @@ public class SolutionFile
 				Path projectPath = Paths.get( matcher.group( 1 ));
 				projectPath = _path.resolveSibling( projectPath );
 				if ( isCPlusPlusProjectFilePath( projectPath ))
-					projects.add( new CPlusPlusProjectFile( projectPath ));
+					projects.add( new ProjectFile( new CPlusPlusProjectFileParser( projectPath )));
 				else if ( isCSharpProjectFilePath( projectPath ))
-					projects.add( new CSharpProjectFile( projectPath ));
+					projects.add( new ProjectFile( new CSharpProjectFileParser( projectPath )));
 			}
 		}
 		return projects;

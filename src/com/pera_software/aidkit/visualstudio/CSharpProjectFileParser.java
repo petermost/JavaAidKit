@@ -17,90 +17,91 @@
 
 package com.pera_software.aidkit.visualstudio;
 
+import java.nio.file.*;
 import java.util.*;
-import org.junit.runner.*;
-import org.junit.runners.*;
-import org.junit.runners.Parameterized.Parameters;
 
 //##################################################################################################
 
-@RunWith( Parameterized.class )
-public final class DefaultCSharpProjectFileTest extends CSharpProjectFileTest
+public class CSharpProjectFileParser extends ProjectFileParser
 {
-	@Parameters
-	public static Iterable< Object[] > loadProjectFiles()
+	public static final String EXTENSION = ".csproj";
+
+	//==============================================================================================
+
+	public CSharpProjectFileParser( Path projectFilePath )
 		throws Exception
 	{
-		return Arrays.asList( new Object[][] {
-			{ new CSharpProjectFile( Resource.getPath( DefaultCSharpProjectFileTest.class,  "2010/CSharpProjectWithDefaultOutputDirectories.csproj" )) },
-			{ new CSharpProjectFile( Resource.getPath( DefaultCSharpProjectFileTest.class,  "2013/CSharpProjectWithDefaultOutputDirectories.csproj" )) }
-		});
-	}
-
-	//==============================================================================================
-
-	public DefaultCSharpProjectFileTest( ProjectFile projectFile )
-	{
-		super( projectFile );
+		super( projectFilePath );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindIntermediateDirectoryNames()
+	public String findTargetName()
 		throws Exception
 	{
-		assertIntermediateDirectoryNames( Arrays.asList( "obj" ));
+		return findAssemblyName();
 	}
 
 	//==============================================================================================
 
-	@Override
-	public void testFindTargetName()
+	public String findAssemblyName()
 		throws Exception
 	{
-		assertTargetName( "CSharpProjectWithDefaultOutputDirectories" );
+		List< String > assemblyNames = findXmlTags( "//AssemblyName" );
+		if ( !assemblyNames.isEmpty() )
+			return assemblyNames.get( 0 );
+		else
+			return "";
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindBuildConfigurationNames()
+	public List< String > findOutputDirectoryNames()
 		throws Exception
 	{
-		assertBuildConfigurationNames( Arrays.asList( "Debug", "Release" ));
+		return findXmlTags( "//OutputPath" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindOutputDirectoryNames() throws Exception
-	{
-		assertOutputDirectoryNames( Arrays.asList( "bin\\Debug\\", "bin\\Release\\" ));
-	}
-
-	//==============================================================================================
-
-	@Override
-	public void testFindPreBuildCommands()
+	public List< String > findOutputFileNames()
 		throws Exception
 	{
-		assertPostBuildCommands( Arrays.asList() );
+		return Arrays.asList();
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindPostBuildCommands() throws Exception
-	{
-		assertPostBuildCommands( Arrays.asList() );
-	}
-	//==============================================================================================
-
-	@Override
-	public void testFindDeployDirectoryNames()
+	public List<String> findIntermediateDirectoryNames()
 		throws Exception
 	{
-		assertDeployDirectoryNames( Arrays.asList() );
+		// C# projects don't allow to define an intermediate directory so we use hard coded
+		// values.
+		// Note: Beneath the 'obj' directory there is a 'x86/Debug' and 'x86/Release' directory. But
+		// we only want to delete the directories, so this additional information isn't needed.
+
+		return Arrays.asList( "obj" );
+	}
+
+	//==============================================================================================
+
+	@Override
+	public List<String> findPreBuildCommands()
+		throws Exception
+	{
+		return findXmlLines( "//PreBuildEvent" );
+	}
+
+	//==============================================================================================
+
+	@Override
+	public List<String> findPostBuildCommands()
+		throws Exception
+	{
+		return findXmlLines( "//PostBuildEvent" );
 	}
 }

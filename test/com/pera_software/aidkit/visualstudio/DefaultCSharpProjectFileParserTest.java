@@ -20,28 +20,46 @@ package com.pera_software.aidkit.visualstudio;
 import java.util.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
-import org.junit.runners.Parameterized.*;
+import org.junit.runners.Parameterized.Parameters;
 
 //##################################################################################################
 
 @RunWith( Parameterized.class )
-public final class DefaultCPlusPlusProjectFileTest extends CPlusPlusProjectFileTest
+public final class DefaultCSharpProjectFileParserTest extends CSharpProjectFileParserTest
 {
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles()
 		throws Exception
 	{
 		return Arrays.asList( new Object[][] {
-			{ new CPlusPlusProjectFile( Resource.getPath( DefaultCPlusPlusProjectFileTest.class,  "2010/CPlusPlusProjectWithDefaultOutputDirectories.vcxproj" )) },
-			{ new CPlusPlusProjectFile( Resource.getPath( DefaultCPlusPlusProjectFileTest.class,  "2013/CPlusPlusProjectWithDefaultOutputDirectories.vcxproj" )) }
+			{ new CSharpProjectFileParser( Resource.getPath( DefaultCSharpProjectFileParserTest.class,  "2010/CSharpProjectWithDefaultOutputDirectories.csproj" )) },
+			{ new CSharpProjectFileParser( Resource.getPath( DefaultCSharpProjectFileParserTest.class,  "2013/CSharpProjectWithDefaultOutputDirectories.csproj" )) }
 		});
 	}
 
 	//==============================================================================================
 
-	public DefaultCPlusPlusProjectFileTest( ProjectFile projectFile )
+	public DefaultCSharpProjectFileParserTest( ProjectFileParser projectFileParser )
 	{
-		super( projectFile );
+		super( projectFileParser );
+	}
+
+	//==============================================================================================
+
+	@Override
+	public void testFindIntermediateDirectoryNames()
+		throws Exception
+	{
+		assertIntermediateDirectoryNames( Arrays.asList( "obj" ));
+	}
+
+	//==============================================================================================
+
+	@Override
+	public void testFindTargetName()
+		throws Exception
+	{
+		assertTargetName( "CSharpProjectWithDefaultOutputDirectories" );
 	}
 
 	//==============================================================================================
@@ -56,28 +74,9 @@ public final class DefaultCPlusPlusProjectFileTest extends CPlusPlusProjectFileT
 	//==============================================================================================
 
 	@Override
-	public void testFindIntermediateDirectoryNames()
-		throws Exception
+	public void testFindOutputDirectoryNames() throws Exception
 	{
-		assertIntermediateDirectoryNames( Arrays.asList( "$(Configuration)\\" ));
-	}
-
-	//==============================================================================================
-
-	@Override
-	public void testFindTargetName()
-		throws Exception
-	{
-		assertTargetName( "CPlusPlusProjectWithDefaultOutputDirectories" );
-	}
-
-	//==============================================================================================
-
-	@Override
-	public void testFindOutputDirectoryNames()
-		throws Exception
-	{
-		assertOutputDirectoryNames( Arrays.asList( "$(SolutionDir)..\\deploy\\$(Configuration)\\lib\\" ));
+		assertOutputDirectoryNames( Arrays.asList( "bin\\Debug\\", "bin\\Release\\" ));
 	}
 
 	//==============================================================================================
@@ -92,12 +91,10 @@ public final class DefaultCPlusPlusProjectFileTest extends CPlusPlusProjectFileT
 	//==============================================================================================
 
 	@Override
-	public void testFindPostBuildCommands()
-		throws Exception
+	public void testFindPostBuildCommands() throws Exception
 	{
 		assertPostBuildCommands( Arrays.asList() );
 	}
-
 	//==============================================================================================
 
 	@Override

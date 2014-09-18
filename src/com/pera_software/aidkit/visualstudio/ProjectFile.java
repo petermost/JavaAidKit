@@ -27,46 +27,25 @@ import com.pera_software.aidkit.nio.file.Paths;
 
 //##################################################################################################
 
-public abstract class ProjectFile
+public class ProjectFile
 {
 	private Path _projectFilePath;
 	protected ProjectFileParser _parser;
 
 	//==============================================================================================
 
-	public ProjectFile( Path projectFilePath )
+	public ProjectFile( ProjectFileParser parser )
 		throws Exception
 	{
-		_projectFilePath = projectFilePath;
-		_parser = new ProjectFileParser( projectFilePath );
+		_parser = parser;
 	}
-
-	//==============================================================================================
-
-	protected abstract List< String > findOutputFileNames()
-		throws Exception;
-
-	protected abstract List< String > findIntermediateDirectoryNames()
-		throws Exception;
-
-	protected abstract List< String > findOutputDirectoryNames()
-		throws Exception;
-
-	protected abstract String findTargetName()
-		throws Exception;
-
-	protected abstract List< String > findPreBuildCommands()
-		throws Exception;
-
-	protected abstract List< String > findPostBuildCommands()
-		throws Exception;
 
 	//==============================================================================================
 
 	public List< Path > findOutputFiles( Path solutionFilePath )
 		throws Exception
 	{
-		List< String > outputFileNames = findOutputFileNames();
+		List< String > outputFileNames = _parser.findOutputFileNames();
 		List< Path > outputFiles = convertOutputDirectoryNames( solutionFilePath, outputFileNames );
 
 		return outputFiles;
@@ -77,7 +56,7 @@ public abstract class ProjectFile
 	public OutputDirectory findIntermediateDirectories( Path solutionFilePath )
 		throws Exception
 	{
-		List< String > intermediateDirectoryNames = findIntermediateDirectoryNames();
+		List< String > intermediateDirectoryNames = _parser.findIntermediateDirectoryNames();
 		List< Path > intermediateDirectories = convertOutputDirectoryNames( solutionFilePath, intermediateDirectoryNames );
 
 		return new OutputDirectory( "intermediate", intermediateDirectories );
@@ -88,7 +67,7 @@ public abstract class ProjectFile
 	public OutputDirectory findOutputDirectories( Path solutionFilePath )
 		throws Exception
 	{
-		List< String > outputDirectoryNames = findOutputDirectoryNames();
+		List< String > outputDirectoryNames = _parser.findOutputDirectoryNames();
 		List< Path > outputDirectories = convertOutputDirectoryNames( solutionFilePath, outputDirectoryNames );
 
 		return new OutputDirectory( "output", outputDirectories );
@@ -101,8 +80,8 @@ public abstract class ProjectFile
 	{
 		List< String > prePostBuildCommands = new ArrayList<>();
 
-		prePostBuildCommands.addAll( findPreBuildCommands() );
-		prePostBuildCommands.addAll( findPostBuildCommands() );
+		prePostBuildCommands.addAll( _parser.findPreBuildCommands() );
+		prePostBuildCommands.addAll( _parser.findPostBuildCommands() );
 
 		return CopyCommandParser.findDestinationDirectoryNames( prePostBuildCommands );
 	}
@@ -225,9 +204,9 @@ public abstract class ProjectFile
 	private List< String > replaceBuildVariables( String pathName, Path solutionFilePath )
 		throws Exception
 	{
-		final String targetName = findTargetName();
+		final String targetName = _parser.findTargetName();
 		final List< String > buildConfigurationNames = findBuildConfigurationNames();
-		final List< String > intermediateDirectoryNames = findIntermediateDirectoryNames();
+		final List< String > intermediateDirectoryNames = _parser.findIntermediateDirectoryNames();
 		final String solutionDirectoryName = solutionFilePath.getParent().toString() + File.separatorChar;
 
 		// Replace the build variables with the actual values:

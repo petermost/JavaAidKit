@@ -25,23 +25,23 @@ import org.junit.runners.Parameterized.*;
 //##################################################################################################
 
 @RunWith( Parameterized.class )
-public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFileTest
+public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFileParserTest
 {
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles()
 		throws Exception
 	{
 		return Arrays.asList( new Object[][] {
-			{ new CPlusPlusProjectFile( Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
-			{ new CPlusPlusProjectFile( Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
+			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
+			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
 		});
 	}
 
 	//==============================================================================================
 
-	public CustomCPlusPlusProjectFileTest( ProjectFile projectFile )
+	public CustomCPlusPlusProjectFileTest( ProjectFileParser projectFileParser )
 	{
-		super( projectFile );
+		super( projectFileParser );
 	}
 
 	//==============================================================================================

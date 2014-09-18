@@ -17,91 +17,93 @@
 
 package com.pera_software.aidkit.visualstudio;
 
-import java.nio.file.*;
 import java.util.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
 
 //##################################################################################################
 
-public class CSharpProjectFile extends ProjectFile
+@RunWith( Parameterized.class )
+public final class DefaultCPlusPlusProjectFileParserTest extends CPlusPlusProjectFileParserTest
 {
-	public static final String EXTENSION = ".csproj";
+	@Parameters
+	public static Iterable< Object[] > loadProjectFiles()
+		throws Exception
+	{
+		return Arrays.asList( new Object[][] {
+			{ new CPlusPlusProjectFileParser( Resource.getPath( DefaultCPlusPlusProjectFileParserTest.class,  "2010/CPlusPlusProjectWithDefaultOutputDirectories.vcxproj" )) },
+			{ new CPlusPlusProjectFileParser( Resource.getPath( DefaultCPlusPlusProjectFileParserTest.class,  "2013/CPlusPlusProjectWithDefaultOutputDirectories.vcxproj" )) }
+		});
+	}
 
 	//==============================================================================================
 
-	public CSharpProjectFile( Path projectFilePath )
-		throws Exception
+	public DefaultCPlusPlusProjectFileParserTest( ProjectFileParser projectFileParser )
 	{
-		super( projectFilePath );
+		super( projectFileParser );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public String findTargetName()
+	public void testFindBuildConfigurationNames()
 		throws Exception
 	{
-		return findAssemblyName();
-	}
-
-	//==============================================================================================
-
-	public String findAssemblyName()
-		throws Exception
-	{
-		List< String > assemblyNames = _parser.findXmlTags( "//AssemblyName" );
-		if ( !assemblyNames.isEmpty() )
-			return assemblyNames.get( 0 );
-		else
-			return "";
+		assertBuildConfigurationNames( Arrays.asList( "Debug", "Release" ));
 	}
 
 	//==============================================================================================
 
 	@Override
-	protected List< String > findOutputDirectoryNames()
+	public void testFindIntermediateDirectoryNames()
 		throws Exception
 	{
-		return _parser.findXmlTags( "//OutputPath" );
+		assertIntermediateDirectoryNames( Arrays.asList( "$(Configuration)\\" ));
 	}
 
 	//==============================================================================================
 
 	@Override
-	protected List< String > findOutputFileNames()
+	public void testFindTargetName()
 		throws Exception
 	{
-		return Arrays.asList();
+		assertTargetName( "CPlusPlusProjectWithDefaultOutputDirectories" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	protected List<String> findIntermediateDirectoryNames()
+	public void testFindOutputDirectoryNames()
 		throws Exception
 	{
-		// C# projects don't allow to define an intermediate directory so we use hard coded
-		// values.
-		// Note: Beneath the 'obj' directory there is a 'x86/Debug' and 'x86/Release' directory. But
-		// we only want to delete the directories, so this additional information isn't needed.
-
-		return Arrays.asList( "obj" );
+		assertOutputDirectoryNames( Arrays.asList( "$(SolutionDir)..\\deploy\\$(Configuration)\\lib\\" ));
 	}
 
 	//==============================================================================================
 
 	@Override
-	protected List<String> findPreBuildCommands()
+	public void testFindPreBuildCommands()
 		throws Exception
 	{
-		return _parser.findXmlLines( "//PreBuildEvent" );
+		assertPostBuildCommands( Arrays.asList() );
 	}
 
 	//==============================================================================================
 
 	@Override
-	protected List<String> findPostBuildCommands()
+	public void testFindPostBuildCommands()
 		throws Exception
 	{
-		return _parser.findXmlLines( "//PostBuildEvent" );
+		assertPostBuildCommands( Arrays.asList() );
+	}
+
+	//==============================================================================================
+
+	@Override
+	public void testFindDeployDirectoryNames()
+		throws Exception
+	{
+		assertDeployDirectoryNames( Arrays.asList() );
 	}
 }
