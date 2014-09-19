@@ -87,7 +87,7 @@ public abstract class ProjectFileParser
 
 	//==============================================================================================
 
-	private List< BuildConfiguration > findBuildConfigurations()
+	public List< BuildConfiguration > findBuildConfigurations()
 		throws Exception
 	{
 		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
@@ -116,36 +116,6 @@ public abstract class ProjectFileParser
 
 	//==============================================================================================
 
-	public List< String > findBuildConfigurationNames()
-		throws Exception
-	{
-		List< BuildConfiguration > buildConfigurations = findBuildConfigurations();
-
-		List< String > buildConfigurationNames = new ArrayList<>();
-		buildConfigurations.forEach( configuration -> {
-			buildConfigurationNames.add( configuration.name() );
-		});
-		return buildConfigurationNames;
-	}
-
-	//==============================================================================================
-
-	public List< String > findPlatformNames( String buildConfigurationName )
-		throws Exception
-	{
-		List< BuildConfiguration > buildConfigurations = findBuildConfigurations();
-
-		List< String > platformNames = new ArrayList<>();
-		buildConfigurations.forEach( configuration -> {
-			if ( configuration.name().equals( buildConfigurationName )) {
-				platformNames.add( configuration.platformName() );
-			}
-		});
-		return platformNames;
-	}
-
-	//==============================================================================================
-
 	private NodeList findNodes( String nodeName )
 		throws Exception
 	{
@@ -156,7 +126,7 @@ public abstract class ProjectFileParser
 
 	//==============================================================================================
 
-	public List< String > findXmlTags( String nodeName )
+	protected List< String > findXmlTags( String nodeName )
 		throws Exception
 	{
 		List< String > texts = new ArrayList<>();
@@ -171,7 +141,7 @@ public abstract class ProjectFileParser
 	}
 	//==============================================================================================
 
-	public List< String > findXmlLines( String nodeName )
+	protected List< String > findXmlLines( String nodeName )
 		throws Exception
 	{
 		List< String > xmlLines = new ArrayList<>();

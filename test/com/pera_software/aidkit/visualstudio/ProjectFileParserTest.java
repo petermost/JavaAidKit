@@ -42,11 +42,7 @@ public abstract class ProjectFileParserTest
 		throws Exception;
 
 	@Test
-	public abstract void testFindBuildConfigurationNames()
-		throws Exception;
-
-	@Test
-	public abstract void testFindPlatformNames()
+	public abstract void testFindBuildConfigurations()
 		throws Exception;
 
 	@Test
@@ -67,23 +63,11 @@ public abstract class ProjectFileParserTest
 
 	//==============================================================================================
 
-	protected void assertPlatformNames( List< String > expectedPlatformNames )
+	protected void assertBuildConfigurations( List< BuildConfiguration > expectedBuildConfigurations )
 		throws Exception
 	{
-		List< String > buildConfigurationNames = _projectFileParser.findBuildConfigurationNames();
-		for ( String buildConfigurationName : buildConfigurationNames ) {
-			List< String > actualPlatformNames = _projectFileParser.findPlatformNames( buildConfigurationName );
-			assertThat( actualPlatformNames, is( expectedPlatformNames ));
-		}
-	}
-
-	//==============================================================================================
-
-	protected void assertBuildConfigurationNames( List< String > expectedBuildConfigurationNames )
-		throws Exception
-	{
-		List< String > actualBuildConfigurationNames = _projectFileParser.findBuildConfigurationNames();
-		assertThat( actualBuildConfigurationNames, is( expectedBuildConfigurationNames ));
+		List< BuildConfiguration > actualBuildConfigurations = _projectFileParser.findBuildConfigurations();
+		assertThat( actualBuildConfigurations, is( expectedBuildConfigurations ));
 	}
 
 	//==============================================================================================

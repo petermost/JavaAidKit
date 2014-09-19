@@ -65,10 +65,13 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 
 	@Override
-	public void testFindBuildConfigurationNames()
+	public void testFindBuildConfigurations()
 		throws Exception
 	{
-		assertBuildConfigurationNames( Arrays.asList( "Debug", "Release" ));
+		assertBuildConfigurations( Arrays.asList(
+			new BuildConfiguration( "Debug", "x86" ),
+			new BuildConfiguration( "Release", "x86" )
+		));
 	}
 
 	//==============================================================================================

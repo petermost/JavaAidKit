@@ -47,10 +47,13 @@ public final class DefaultCPlusPlusProjectFileParserTest extends CPlusPlusProjec
 	//==============================================================================================
 
 	@Override
-	public void testFindBuildConfigurationNames()
+	public void testFindBuildConfigurations()
 		throws Exception
 	{
-		assertBuildConfigurationNames( Arrays.asList( "Debug", "Release" ));
+		assertBuildConfigurations( Arrays.asList(
+			new BuildConfiguration( "Debug", "Win32" ),
+			new BuildConfiguration( "Release", "Win32" )
+		));
 	}
 
 	//==============================================================================================

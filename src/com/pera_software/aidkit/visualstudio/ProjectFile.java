@@ -20,16 +20,13 @@ package com.pera_software.aidkit.visualstudio;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-import java.util.regex.*;
 import com.pera_software.aidkit.Console;
-import com.pera_software.aidkit.collection.*;
 import com.pera_software.aidkit.nio.file.Paths;
 
 //##################################################################################################
 
 public class ProjectFile
 {
-	private Path _projectFilePath;
 	protected ProjectFileParser _parser;
 
 	//==============================================================================================
@@ -75,23 +72,10 @@ public class ProjectFile
 
 	//==============================================================================================
 
-	public List< String > findCopyDirectoryNames()
-		throws Exception
-	{
-		List< String > prePostBuildCommands = new ArrayList<>();
-
-		prePostBuildCommands.addAll( _parser.findPreBuildCommands() );
-		prePostBuildCommands.addAll( _parser.findPostBuildCommands() );
-
-		return CopyCommandParser.findDestinationDirectoryNames( prePostBuildCommands );
-	}
-
-	//==============================================================================================
-
 	public OutputDirectory findCopyDirectories( Path solutionFilePath )
 		throws Exception
 	{
-		List< String > copyDirectoryNames = findCopyDirectoryNames();
+		List< String > copyDirectoryNames = _parser.findCopyDirectoryNames();
 		List< Path > copyDirectories = convertOutputDirectoryNames( solutionFilePath, copyDirectoryNames );
 
 		copyDirectories.removeIf( copyDirectory -> !Files.isDirectory( copyDirectory ));
@@ -101,39 +85,10 @@ public class ProjectFile
 
 	//==============================================================================================
 
-	private List< BuildConfiguration > findBuildConfigurations()
-		throws Exception
-	{
-		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
-		// for C++ projects. This search returns:
-		// C++: <'$(Configuration)|$(Platform)'=='Debug|Win32'>
-		// C# : < '$(Configuration)|$(Platform)' == 'Debug|x86' >
-		// without the <> of course. Watch out for the blanks!
-
-		List< String > conditions = _parser.findXmlTags( "//PropertyGroup/@Condition" );
-		conditions = Lists.removeDuplicates( conditions );
-
-		// Extract the configuration- and platform name:
-
-		List< BuildConfiguration > configurations = new ArrayList<>();
-		Pattern conditionPattern = Pattern.compile( ".*'\\$\\(Configuration\\)\\|\\$\\(Platform\\)'.*==.*'(.*)\\|(.*)'.*" );
-		conditions.forEach( condition -> {
-			Matcher matcher = conditionPattern.matcher( condition );
-			if ( matcher.matches() ) {
-				String configurationName = matcher.group( 1 );
-				String platformName = matcher.group( 2 );
-				configurations.add( new BuildConfiguration( configurationName, platformName ));
-			}
-		});
-		return configurations;
-	}
-
-	//==============================================================================================
-
 	public List< String > findBuildConfigurationNames()
 		throws Exception
 	{
-		List< BuildConfiguration > buildConfigurations = findBuildConfigurations();
+		List< BuildConfiguration > buildConfigurations = _parser.findBuildConfigurations();
 
 		List< String > buildConfigurationNames = new ArrayList<>();
 		buildConfigurations.forEach( configuration -> {
@@ -147,7 +102,7 @@ public class ProjectFile
 	public List< String > findPlatformNames( String buildConfigurationName )
 		throws Exception
 	{
-		List< BuildConfiguration > buildConfigurations = findBuildConfigurations();
+		List< BuildConfiguration > buildConfigurations = _parser.findBuildConfigurations();
 
 		List< String > platformNames = new ArrayList<>();
 		buildConfigurations.forEach( configuration -> {
@@ -237,7 +192,7 @@ public class ProjectFile
 	{
 		List< Path > resolvedPaths = new ArrayList<>( paths.size() );
 		for ( Path path : paths ) {
-			Path resolvedPath = _projectFilePath.resolveSibling( path );
+			Path resolvedPath = path().resolveSibling( path );
 			resolvedPaths.add( resolvedPath );
 		}
 		return resolvedPaths;
@@ -247,6 +202,6 @@ public class ProjectFile
 
 	public Path path()
 	{
-		return _projectFilePath;
+		return _parser.path();
 	}
 }

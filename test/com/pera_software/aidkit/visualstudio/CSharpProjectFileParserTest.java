@@ -17,8 +17,6 @@
 
 package com.pera_software.aidkit.visualstudio;
 
-import java.util.*;
-
 //##################################################################################################
 
 public abstract class CSharpProjectFileParserTest extends ProjectFileParserTest
@@ -28,15 +26,6 @@ public abstract class CSharpProjectFileParserTest extends ProjectFileParserTest
 	public CSharpProjectFileParserTest( ProjectFileParser projectFileParser )
 	{
 		super( projectFileParser );
-	}
-
-	//==============================================================================================
-
-	@Override
-	public void testFindPlatformNames()
-		throws Exception
-	{
-		assertPlatformNames( Arrays.asList( "x86" ));
 	}
 }
 

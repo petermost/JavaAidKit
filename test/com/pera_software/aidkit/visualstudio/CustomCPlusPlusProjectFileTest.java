@@ -47,10 +47,14 @@ public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFilePa
 	//==============================================================================================
 
 	@Override
-	public void testFindBuildConfigurationNames()
+	public void testFindBuildConfigurations()
 		throws Exception
 	{
-		assertBuildConfigurationNames( Arrays.asList( "Debug", "Release", "Test" ));
+		assertBuildConfigurations( Arrays.asList(
+			new BuildConfiguration( "Debug", "Win32" ),
+			new BuildConfiguration( "Release", "Win32" ),
+			new BuildConfiguration( "Test", "Win32" )
+		));
 	}
 
 	//==============================================================================================

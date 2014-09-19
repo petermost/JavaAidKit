@@ -178,7 +178,7 @@ public class NioDispatcher
 	 * @see java.lang.Thread#interrupt()
 	 */
 	//=============================================================================
-	@SuppressWarnings( "resource" )
+	@SuppressWarnings({ "resource", "null" })
 	public void dispatch()
 		throws Exception
 	//=============================================================================

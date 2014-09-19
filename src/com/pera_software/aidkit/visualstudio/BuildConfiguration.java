@@ -45,4 +45,14 @@ public class BuildConfiguration
 	{
 		return _platformName;
 	}
+
+	//==============================================================================================
+
+	@Override
+	public boolean equals( Object object )
+	{
+		BuildConfiguration that = ( BuildConfiguration )object;
+
+		return ( _name.equals( that._name ) && _platformName.equals( that._platformName ));
+	}
 }
