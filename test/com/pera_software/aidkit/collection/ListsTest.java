@@ -24,18 +24,31 @@ import org.junit.*;
 
 //##################################################################################################
 
-public class ListsTest
-{
+public class ListsTest {
+
 	//==============================================================================================
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testRemoveDuplicates()
-	{
-		List< String > list = Arrays.asList( "1", "1", "2", "2", "3", "3" );
-		List< String > actualList = Lists.removeDuplicates( list );
-		List< String > expectedList = Arrays.asList( "1", "2", "3" );
+	public void testRemoveDuplicates() {
+		final List< String > expectedUniques = Arrays.asList( "1", "2", "3", "4" );
+		List< String > duplicates = Arrays.asList( "1", "1", "2", "2", "2", "3", "3", "4" );
 
-		assertThat( actualList, is( expectedList ));
+		List< String > actualUniques = Lists.removeDuplicates( duplicates );
+
+		assertThat( actualUniques, is( expectedUniques ));
+	}
+
+	//==============================================================================================
+
+	@Test
+	@SuppressWarnings( "static-method" )
+	public void testFindDuplicates() {
+		final List< String > expectedDuplicates = Arrays.asList( "1", "2", "2", "3" );
+		List< String > duplicates = Arrays.asList( "1", "1", "2", "2", "2", "3", "3", "4" );
+
+		List< String > actualDuplicates = Lists.findDuplicates( duplicates );
+
+		assertThat( actualDuplicates, is( expectedDuplicates ));
 	}
 }

@@ -18,22 +18,35 @@
 package com.pera_software.aidkit.collection;
 
 import java.util.*;
-import java.util.stream.*;
 
 //##################################################################################################
 
-public final class Lists
-{
+public final class Lists {
 	//==============================================================================================
 
-	private Lists()
-	{
+	private Lists() {
 	}
 
 	//==============================================================================================
 
-	public static < T > List< T > removeDuplicates( List< T > elements )
-	{
-		return elements.stream().distinct().collect( Collectors.toList() );
+	public static < T > List< T > removeDuplicates( List< T > list ) {
+		Set< T > uniques = new TreeSet<>();
+
+		uniques.addAll( list );
+
+		return new ArrayList<>( uniques );
+	}
+
+	//==============================================================================================
+
+	public static < T > List< T > findDuplicates( List< T > list ) {
+		List< T > duplicates = new ArrayList<>();
+		Set< T > uniques = new TreeSet<>();
+
+		list.forEach( s -> {
+			if ( !uniques.add( s ))
+				duplicates.add( s );
+		});
+		return duplicates;
 	}
 }
