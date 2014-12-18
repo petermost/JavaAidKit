@@ -163,24 +163,28 @@ public class ProjectFile
 		final List< String > buildConfigurationNames = findBuildConfigurationNames();
 		final List< String > intermediateDirectoryNames = _parser.findIntermediateDirectoryNames();
 		final String solutionDirectoryName = solutionFilePath.getParent().toString() + File.separatorChar;
+		final List< String > outputDirectoryNames = _parser.findOutputDirectoryNames();
 
 		// Replace the build variables with the actual values:
 
 		List< String > pathNames = new ArrayList<>();
 		for ( String buildConfigurationName : buildConfigurationNames ) {
 			for ( String intermediateDirectoryName : intermediateDirectoryNames ) {
-				String replacedPathName = pathName.replace( BuildVariables.SOLUTION_DIR,  solutionDirectoryName );
-				replacedPathName = replacedPathName.replace( BuildVariables.INT_DIR,       intermediateDirectoryName );
-				replacedPathName = replacedPathName.replace( BuildVariables.CONFIGURATION, buildConfigurationName );
-				replacedPathName = replacedPathName.replace( BuildVariables.TARGET_NAME,   targetName );
+				for ( String outputDirectoryName : outputDirectoryNames ) {
+					String replacedPathName =  pathName.replace( BuildVariables.OUT_DIR,       outputDirectoryName );
+					replacedPathName = replacedPathName.replace( BuildVariables.SOLUTION_DIR,  solutionDirectoryName );
+					replacedPathName = replacedPathName.replace( BuildVariables.INT_DIR,       intermediateDirectoryName );
+					replacedPathName = replacedPathName.replace( BuildVariables.CONFIGURATION, buildConfigurationName );
+					replacedPathName = replacedPathName.replace( BuildVariables.TARGET_NAME,   targetName );
 
-				// Check for unknown build variables:
+					// Check for unknown build variables:
 
-				if ( replacedPathName.contains( "$(" )) {
-					Console.printError( "Skipping path with unknown build variable: '%s'", replacedPathName );
-					continue;
+					if ( replacedPathName.contains( "$(" )) {
+						Console.printError( "Skipping path with unknown build variable: '%s'", replacedPathName );
+						continue;
+					}
+					pathNames.add( replacedPathName );
 				}
-				pathNames.add( replacedPathName );
 			}
 		}
 		return pathNames;

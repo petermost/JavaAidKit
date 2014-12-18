@@ -23,6 +23,7 @@ public final class BuildVariables
 	public static final String INT_DIR = "$(IntDir)";
 	public static final String CONFIGURATION = "$(Configuration)";
 	public static final String SOLUTION_DIR = "$(SolutionDir)";
+	public static final String OUT_DIR = "$(OutDir)";
 
 	private BuildVariables() {}
 
