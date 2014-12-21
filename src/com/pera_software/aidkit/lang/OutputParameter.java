@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.util.function;
+package com.pera_software.aidkit.lang;
 
 /**
  * @author P. Most
