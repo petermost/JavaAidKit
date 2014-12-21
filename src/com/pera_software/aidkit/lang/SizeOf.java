@@ -19,8 +19,7 @@ package com.pera_software.aidkit.lang;
 
 //#############################################################################
 
-public final class SizeOf
-{
+public final class SizeOf {
 	//===========================================================================
 
 	public final static int BYTE_SIZE = Byte.SIZE / Byte.SIZE;
@@ -37,24 +36,20 @@ public final class SizeOf
 
 	//===========================================================================
 
-	public static final int sizeof( @SuppressWarnings( "unused" ) byte unused )
-	{
-		return ( BYTE_SIZE );
+	public static final int sizeof( @SuppressWarnings( "unused" ) byte unused ) {
+		return BYTE_SIZE;
 	}
 
-	public static final int sizeof( @SuppressWarnings( "unused" ) short unused )
-	{
-		return ( SHORT_SIZE );
+	public static final int sizeof( @SuppressWarnings( "unused" ) short unused ) {
+		return SHORT_SIZE;
 	}
 
-	public static final int sizeof( @SuppressWarnings( "unused" ) int unused )
-	{
-		return ( INT_SIZE );
+	public static final int sizeof( @SuppressWarnings( "unused" ) int unused ) {
+		return INT_SIZE;
 	}
 
-	public static int sizeof( @SuppressWarnings( "unused" ) long unused )
-	{
-		return ( LONG_SIZE );
+	public static int sizeof( @SuppressWarnings( "unused" ) long unused ) {
+		return LONG_SIZE;
 	}
 
 }
