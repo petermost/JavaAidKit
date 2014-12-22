@@ -17,25 +17,33 @@
 
 package com.pera_software.aidkit.thread;
 
+//##################################################################################################
+
 /**
  * @author P. Most
  */
-public final class Lock< T > implements AutoCloseable {
+public final class SharedResourceLock< T > implements AutoCloseable {
 
-	private Mutex< T > _mutex;
-	private T _instance;
+	private SharedResourceMutex< T > _mutex;
+	private T _resource;
 
-	public Lock( Mutex< T > mutex ) {
+	//==============================================================================================
+
+	public SharedResourceLock( SharedResourceMutex< T > mutex ) {
 		_mutex = mutex;
-		_instance = _mutex.lock();
+		_resource = _mutex.lock();
 	}
+
+	//==============================================================================================
 
 	@Override
 	public void close() throws Exception {
-		_mutex.unlock( _instance );
+		_mutex.unlock( _resource );
 	}
 
+	//==============================================================================================
+
 	public T get() {
-		return _instance;
+		return _resource;
 	}
 }

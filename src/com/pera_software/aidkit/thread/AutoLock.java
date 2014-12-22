@@ -17,23 +17,29 @@
 
 package com.pera_software.aidkit.thread;
 
-import static org.junit.Assert.*;
-import java.util.*;
-import org.junit.*;
+import java.util.concurrent.locks.Lock;
+
+//##################################################################################################
 
 /**
  * @author P. Most
+ *
  */
-public class MutexTest {
+public class AutoLock implements AutoCloseable {
 
-	@Test
-	@SuppressWarnings( "static-method" )
-	public void testLock() throws Exception {
-		Mutex< List< String >> stringListMutex = new Mutex< List< String >>( new ArrayList< String >() );
-		try ( Lock< List< String >> stringListLock = new Lock< List< String >>( stringListMutex )) {
-			assertTrue( stringListMutex.isLocked() );
-			stringListLock.get().add( "first string" );
-			stringListLock.get().add( "second string" );
-		}
+	private Lock _lock;
+
+	//==============================================================================================
+
+	public AutoLock( Lock lock ) {
+		_lock = lock;
+		_lock.lock();
+	}
+
+	//==============================================================================================
+
+	@Override
+	public void close() throws Exception {
+		_lock.unlock();
 	}
 }

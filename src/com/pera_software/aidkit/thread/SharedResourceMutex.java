@@ -20,29 +20,39 @@ package com.pera_software.aidkit.thread;
 import java.util.*;
 import java.util.concurrent.locks.*;
 
+//##################################################################################################
+
 /**
  * @author P. Most
  */
-public final class Mutex< T > {
+public final class SharedResourceMutex< T > {
 
 	private ReentrantLock _lock;
-	private T _instance;
+	private T _resource;
 
-	public Mutex( T instance ) {
+	//==============================================================================================
+
+	public SharedResourceMutex( T resource ) {
 		_lock = new ReentrantLock();
-		_instance = instance;
+		_resource = resource;
 	}
 
-	T lock() {
+	//==============================================================================================
+
+	public T lock() {
 		_lock.lock();
 
-		return _instance;
+		return _resource;
 	}
 
-	void unlock( T instance ) {
-		assert Objects.equals( _instance, instance );
+	//==============================================================================================
+
+	public void unlock( T resource ) {
+		assert Objects.equals( _resource, resource );
 		_lock.unlock();
 	}
+
+	//==============================================================================================
 
 	boolean isLocked() {
 		return _lock.isLocked();
