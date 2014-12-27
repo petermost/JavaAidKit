@@ -22,14 +22,14 @@ package com.pera_software.aidkit.thread;
 /**
  * @author P. Most
  */
-public final class SharedResourceLock< T > implements AutoCloseable {
+public final class MutexLocker< T > implements AutoCloseable {
 
-	private SharedResourceMutex< T > _mutex;
+	private Mutex< T > _mutex;
 	private T _resource;
 
 	//==============================================================================================
 
-	public SharedResourceLock( SharedResourceMutex< T > mutex ) {
+	public MutexLocker( Mutex< T > mutex ) {
 		_mutex = mutex;
 		_resource = _mutex.lock();
 	}

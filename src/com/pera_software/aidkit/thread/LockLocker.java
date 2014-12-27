@@ -25,13 +25,13 @@ import java.util.concurrent.locks.Lock;
  * @author P. Most
  *
  */
-public class AutoLock implements AutoCloseable {
+public class LockLocker implements AutoCloseable {
 
 	private Lock _lock;
 
 	//==============================================================================================
 
-	public AutoLock( Lock lock ) {
+	public LockLocker( Lock lock ) {
 		_lock = lock;
 		_lock.lock();
 	}

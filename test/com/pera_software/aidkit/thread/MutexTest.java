@@ -27,7 +27,8 @@ import org.junit.*;
 /**
  * @author P. Most
  */
-public class SharedResourceMutexTest {
+@SuppressWarnings( "unused" )
+public class MutexTest {
 
 	//==============================================================================================
 
@@ -37,12 +38,12 @@ public class SharedResourceMutexTest {
 
 		// Must not be locked yet:
 
-		SharedResourceMutex< List< String >> stringListMutex = new SharedResourceMutex< List< String >>( new ArrayList< String >() );
+		Mutex< List< String >> stringListMutex = new Mutex< List< String >>( new ArrayList< String >() );
 		assertFalse( stringListMutex.isLocked() );
 
 		// Lock the resource:
 
-		try ( SharedResourceLock< List< String >> stringListLock = new SharedResourceLock< List< String >>( stringListMutex )) {
+		try ( MutexLocker< List< String >> stringListLock = new MutexLocker< List< String >>( stringListMutex )) {
 			assertTrue( stringListMutex.isLocked() );
 			stringListLock.get().add( "first string" );
 			stringListLock.get().add( "second string" );
@@ -60,7 +61,7 @@ public class SharedResourceMutexTest {
 
 		// Must not be locked yet:
 
-		SharedResourceMutex< List< String >> stringListMutex = new SharedResourceMutex< List< String >>( new ArrayList< String >() );
+		Mutex< List< String >> stringListMutex = new Mutex< List< String >>( new ArrayList< String >() );
 		assertFalse( stringListMutex.isLocked() );
 
 		// Lock the resource and get access to it:
@@ -87,7 +88,7 @@ public class SharedResourceMutexTest {
 		ReentrantLock lock = new ReentrantLock();
 		assertFalse( lock.isLocked() );
 
-		try ( AutoLock locker = new AutoLock( lock )) {
+		try ( LockLocker locker = new LockLocker( lock )) {
 			assertTrue( lock.isLocked() );
 		}
 		assertFalse( lock.isLocked() );

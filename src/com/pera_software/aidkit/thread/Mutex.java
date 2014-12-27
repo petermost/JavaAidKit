@@ -25,14 +25,14 @@ import java.util.concurrent.locks.*;
 /**
  * @author P. Most
  */
-public final class SharedResourceMutex< T > {
+public final class Mutex< T > {
 
 	private ReentrantLock _lock;
 	private T _resource;
 
 	//==============================================================================================
 
-	public SharedResourceMutex( T resource ) {
+	public Mutex( T resource ) {
 		_lock = new ReentrantLock();
 		_resource = resource;
 	}
