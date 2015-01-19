@@ -25,31 +25,39 @@ import org.junit.runners.Parameterized.*;
 //##################################################################################################
 
 @RunWith( Parameterized.class )
-public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFileParserTest
-{
+public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFileParserTest {
+
 	@Parameters
-	public static Iterable< Object[] > loadProjectFiles()
-		throws Exception
-	{
+	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
-			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileTest.class, "2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
+			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileTest.class,
+				"2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
+			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileTest.class,
+				"2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
 		});
 	}
 
 	//==============================================================================================
 
-	public CustomCPlusPlusProjectFileTest( ProjectFileParser projectFileParser )
-	{
+	public CustomCPlusPlusProjectFileTest( ProjectFileParser projectFileParser ) {
 		super( projectFileParser );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindBuildConfigurations()
-		throws Exception
-	{
+	public void testFindSourceFileNames() throws Exception {
+		List< String > expectedSourceFileNames = Arrays.asList(
+			"stdafx.h", "targetver.h", // Header
+			"CPlusPlusProjectWithDefaults.cpp", "stdafx.cpp" // Source
+		);
+		assertSourceFileNames( expectedSourceFileNames );
+	}
+
+	//==============================================================================================
+
+	@Override
+	public void testFindBuildConfigurations() throws Exception {
 		assertBuildConfigurations( Arrays.asList(
 			new BuildConfiguration( "Debug", "Win32" ),
 			new BuildConfiguration( "Release", "Win32" ),
@@ -60,9 +68,7 @@ public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFilePa
 	//==============================================================================================
 
 	@Override
-	public void testFindIntermediateDirectoryNames()
-		throws Exception
-	{
+	public void testFindIntermediateDirectoryNames() throws Exception {
 		assertIntermediateDirectoryNames( Arrays.asList(
 			"$(Configuration)\\DebugIntermediateDirectory",
 			"$(Configuration)\\ReleaseIntermediateDirectory",
@@ -73,18 +79,14 @@ public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFilePa
 	//==============================================================================================
 
 	@Override
-	public void testFindTargetName()
-		throws Exception
-	{
+	public void testFindTargetName() throws Exception {
 		assertTargetName( "CPlusPlusWithCustomOutputDirectoriesProjectName" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindOutputDirectoryNames()
-		throws Exception
-	{
+	public void testFindOutputDirectoryNames() throws Exception {
 		assertOutputDirectoryNames( Arrays.asList(
 			"$(SolutionDir)$(Configuration)\\DebugOutputDirectory",
 			"$(SolutionDir)$(Configuration)\\ReleaseOutputDirectory",
@@ -95,9 +97,7 @@ public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFilePa
 	//==============================================================================================
 
 	@Override
-	public void testFindPreBuildCommands()
-		throws Exception
-	{
+	public void testFindPreBuildCommands() throws Exception {
 		assertPreBuildCommands( Arrays.asList(
 			"@ECHO OFF",
 			"ECHO.",
@@ -118,9 +118,7 @@ public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFilePa
 	//==============================================================================================
 
 	@Override
-	public void testFindPostBuildCommands()
-		throws Exception
-	{
+	public void testFindPostBuildCommands() throws Exception {
 		assertPostBuildCommands( Arrays.asList(
 			"xcopy /C /Y /D /S /F \"$(SolutionDir)$(Configuration)\\DebugOutputDirectory\" \"$(SolutionDir)tmp\\$(Configuration)\\\"",
 			"xcopy /C /Y /D /S /F \"$(SolutionDir)$(Configuration)\\ReleaseOutputDirectory\" \"$(SolutionDir)tmp\\$(Configuration)\\\""
@@ -130,9 +128,7 @@ public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFilePa
 	//==============================================================================================
 
 	@Override
-	public void testFindDeployDirectoryNames()
-		throws Exception
-	{
+	public void testFindDeployDirectoryNames() throws Exception {
 		assertDeployDirectoryNames( Arrays.asList(
 
 			// PreBuild deploy directories:

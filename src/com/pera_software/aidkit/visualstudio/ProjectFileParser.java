@@ -54,6 +54,9 @@ public abstract class ProjectFileParser
 
 	//==============================================================================================
 
+	public abstract List< String > findSourceFileNames()
+		throws Exception;
+
 	public abstract List< String > findOutputFileNames()
 		throws Exception;
 

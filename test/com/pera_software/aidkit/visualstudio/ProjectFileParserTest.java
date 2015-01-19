@@ -22,105 +22,92 @@ import static org.junit.Assert.*;
 import java.util.*;
 import org.junit.*;
 
-public abstract class ProjectFileParserTest
-{
+public abstract class ProjectFileParserTest {
 	private ProjectFileParser _projectFileParser;
 
-	public ProjectFileParserTest( ProjectFileParser projectFileParser )
-	{
+	public ProjectFileParserTest( ProjectFileParser projectFileParser ) {
 		_projectFileParser = projectFileParser;
 	}
 
 	//==============================================================================================
 
 	@Test
-	public abstract void testFindIntermediateDirectoryNames()
-		throws Exception;
+	public abstract void testFindSourceFileNames() throws Exception;
 
 	@Test
-	public abstract void testFindTargetName()
-		throws Exception;
+	public abstract void testFindIntermediateDirectoryNames() throws Exception;
 
 	@Test
-	public abstract void testFindBuildConfigurations()
-		throws Exception;
+	public abstract void testFindTargetName() throws Exception;
 
 	@Test
-	public abstract void testFindOutputDirectoryNames()
-		throws Exception;
+	public abstract void testFindBuildConfigurations() throws Exception;
 
 	@Test
-	public abstract void testFindPreBuildCommands()
-		throws Exception;
+	public abstract void testFindOutputDirectoryNames() throws Exception;
 
 	@Test
-	public abstract void testFindPostBuildCommands()
-		throws Exception;
+	public abstract void testFindPreBuildCommands() throws Exception;
 
 	@Test
-	public abstract void testFindDeployDirectoryNames()
-		throws Exception;
+	public abstract void testFindPostBuildCommands() throws Exception;
+
+	@Test
+	public abstract void testFindDeployDirectoryNames() throws Exception;
 
 	//==============================================================================================
 
-	protected void assertBuildConfigurations( List< BuildConfiguration > expectedBuildConfigurations )
-		throws Exception
-	{
+	protected void assertSourceFileNames( List< String > expectedSourceFileNames ) throws Exception {
+		List< String > actualSourceFileNames = _projectFileParser.findSourceFileNames();
+		assertThat( actualSourceFileNames, is( expectedSourceFileNames ) );
+	}
+
+	//==============================================================================================
+
+	protected void assertBuildConfigurations( List< BuildConfiguration > expectedBuildConfigurations ) throws Exception {
 		List< BuildConfiguration > actualBuildConfigurations = _projectFileParser.findBuildConfigurations();
-		assertThat( actualBuildConfigurations, is( expectedBuildConfigurations ));
+		assertThat( actualBuildConfigurations, is( expectedBuildConfigurations ) );
 	}
 
 	//==============================================================================================
 
-	protected void assertIntermediateDirectoryNames( List< String > expectedIntermediateDirectoryNames )
-		throws Exception
-	{
+	protected void assertIntermediateDirectoryNames( List< String > expectedIntermediateDirectoryNames ) throws Exception {
 		List< String > actualIntermediateDirectoryNames = _projectFileParser.findIntermediateDirectoryNames();
-		assertThat( actualIntermediateDirectoryNames, is( expectedIntermediateDirectoryNames ));
+		assertThat( actualIntermediateDirectoryNames, is( expectedIntermediateDirectoryNames ) );
 	}
 
 	//==============================================================================================
 
-	protected void assertTargetName( String expectedTargetName )
-		throws Exception
-	{
+	protected void assertTargetName( String expectedTargetName ) throws Exception {
 		String actualTargetName = _projectFileParser.findTargetName();
-		assertThat( actualTargetName, is( expectedTargetName ));
+		assertThat( actualTargetName, is( expectedTargetName ) );
 	}
 
 	//==============================================================================================
 
-	protected void assertOutputDirectoryNames( List< String > expectedOutputDirectoryNames )
-		throws Exception
-	{
+	protected void assertOutputDirectoryNames( List< String > expectedOutputDirectoryNames ) throws Exception {
 		List< String > actualOutputDirectoryNames = _projectFileParser.findOutputDirectoryNames();
-		assertThat( actualOutputDirectoryNames, is( expectedOutputDirectoryNames ));
+		assertThat( actualOutputDirectoryNames, is( expectedOutputDirectoryNames ) );
 	}
 
 	//==============================================================================================
 
-	protected void assertPreBuildCommands( List< String > expectedBuildCommands )
-		throws Exception
-	{
+	protected void assertPreBuildCommands( List< String > expectedBuildCommands ) throws Exception {
 		List< String > actualBuildEvents = _projectFileParser.findPreBuildCommands();
-		assertThat( actualBuildEvents, is( expectedBuildCommands ));
+		assertThat( actualBuildEvents, is( expectedBuildCommands ) );
 	}
 
 	//==============================================================================================
 
-	protected void assertPostBuildCommands( List< String > expectedBuildCommands )
-		throws Exception
-	{
+	protected void assertPostBuildCommands( List< String > expectedBuildCommands ) throws Exception {
 		List< String > actualBuildEvents = _projectFileParser.findPostBuildCommands();
-		assertThat( actualBuildEvents, is( expectedBuildCommands ));
+		assertThat( actualBuildEvents, is( expectedBuildCommands ) );
 	}
 
 	//==============================================================================================
 
-	protected void assertDeployDirectoryNames( List< String > expectedDeployDirectories )
-		throws Exception
-	{
+	protected void assertDeployDirectoryNames( List< String > expectedDeployDirectories ) throws Exception {
 		List< String > actualDeployDirectories = _projectFileParser.findCopyDirectoryNames();
-		assertThat( actualDeployDirectories, is( expectedDeployDirectories ));
+		assertThat( actualDeployDirectories, is( expectedDeployDirectories ) );
 	}
 }
