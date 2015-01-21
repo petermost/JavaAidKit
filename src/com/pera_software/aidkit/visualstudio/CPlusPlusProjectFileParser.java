@@ -22,32 +22,25 @@ import java.util.*;
 
 //##################################################################################################
 
-public class CPlusPlusProjectFileParser extends ProjectFileParser
-{
+public class CPlusPlusProjectFileParser extends ProjectFileParser {
 	public static final String EXTENSION = ".vcxproj";
 
 	//==============================================================================================
 
-	public CPlusPlusProjectFileParser( Path projectFilePath )
-		throws Exception
-	{
+	public CPlusPlusProjectFileParser( Path projectFilePath ) throws Exception {
 		super( projectFilePath );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public String findTargetName()
-		throws Exception
-	{
+	public String findTargetName() throws Exception {
 		return findProjectName();
 	}
 
 	//==============================================================================================
 
-	public String findProjectName()
-		throws Exception
-	{
+	public String findProjectName() throws Exception {
 		List< String > projectNames = findXmlTags( "//ProjectName" );
 		if ( !projectNames.isEmpty() )
 			return projectNames.get( 0 );
@@ -64,9 +57,19 @@ public class CPlusPlusProjectFileParser extends ProjectFileParser
 	//==============================================================================================
 
 	@Override
-	public List< String > findOutputDirectoryNames()
-		throws Exception
-	{
+	public List< String > findSourceFileNames() throws Exception {
+		List< String > sourceFileNames = new ArrayList<>();
+
+		sourceFileNames.addAll( findXmlTags( "//ClInclude/@Include" ));
+		sourceFileNames.addAll( findXmlTags( "//ClCompile/@Include" ));
+
+		return sourceFileNames;
+	}
+
+	//==============================================================================================
+
+	@Override
+	public List< String > findOutputDirectoryNames() throws Exception {
 		List< String > outputDirectoryNames = new ArrayList<>();
 
 		// Add the 'Output Directory' names:
@@ -83,9 +86,7 @@ public class CPlusPlusProjectFileParser extends ProjectFileParser
 	//==============================================================================================
 
 	@Override
-	public List< String > findOutputFileNames()
-		throws Exception
-	{
+	public List< String > findOutputFileNames() throws Exception {
 		List< String > outputFileNames = new ArrayList<>();
 
 		// Add the 'Precompiled Header Output File' names:
@@ -102,9 +103,7 @@ public class CPlusPlusProjectFileParser extends ProjectFileParser
 	//==============================================================================================
 
 	@Override
-	public List< String > findIntermediateDirectoryNames()
-		throws Exception
-	{
+	public List< String > findIntermediateDirectoryNames() throws Exception {
 		// Add the 'Intermediate Directory' names:
 
 		List< String > intermediateDirectories = findXmlTags( "//IntDir" );
@@ -117,18 +116,15 @@ public class CPlusPlusProjectFileParser extends ProjectFileParser
 	//==============================================================================================
 
 	@Override
-	public List<String> findPreBuildCommands()
-		throws Exception
-	{
+	public List< String > findPreBuildCommands() throws Exception {
 		return findXmlLines( "//PreBuildEvent/Command" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public List<String> findPostBuildCommands()
-		throws Exception
-	{
+	public List< String > findPostBuildCommands() throws Exception {
 		return findXmlLines( "//PostBuildEvent/Command" );
 	}
+
 }

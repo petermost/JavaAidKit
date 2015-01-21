@@ -25,49 +25,54 @@ import org.junit.runners.Parameterized.Parameters;
 //##################################################################################################
 
 @RunWith( Parameterized.class )
-public final class DefaultCSharpProjectFileParserTest extends CSharpProjectFileParserTest
-{
+public final class DefaultCSharpProjectFileParserTest extends CSharpProjectFileParserTest {
+
 	@Parameters
-	public static Iterable< Object[] > loadProjectFiles()
-		throws Exception
-	{
+	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CSharpProjectFileParser( Resource.getPath( DefaultCSharpProjectFileParserTest.class,  "2010/CSharpProjectWithDefaultOutputDirectories.csproj" )) },
-			{ new CSharpProjectFileParser( Resource.getPath( DefaultCSharpProjectFileParserTest.class,  "2013/CSharpProjectWithDefaultOutputDirectories.csproj" )) }
+			{ new CSharpProjectFileParser( Resource.getPath( DefaultCSharpProjectFileParserTest.class,
+				"2010/CSharpProjectWithDefaultOutputDirectories.csproj" )) },
+			{ new CSharpProjectFileParser( Resource.getPath( DefaultCSharpProjectFileParserTest.class,
+				"2013/CSharpProjectWithDefaultOutputDirectories.csproj" )) }
 		});
 	}
 
 	//==============================================================================================
 
-	public DefaultCSharpProjectFileParserTest( ProjectFileParser projectFileParser )
-	{
+	public DefaultCSharpProjectFileParserTest( ProjectFileParser projectFileParser ) {
 		super( projectFileParser );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindIntermediateDirectoryNames()
-		throws Exception
-	{
-		assertIntermediateDirectoryNames( Arrays.asList( "obj" ));
+	public void testFindSourceFileNames() throws Exception {
+		assertSourceFileNames( Arrays.asList(
+			"Class1.cs",
+			"Class2.cs"
+		));
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindTargetName()
-		throws Exception
-	{
+	public void testFindIntermediateDirectoryNames() throws Exception {
+		assertIntermediateDirectoryNames( Arrays.asList(
+			"obj"
+		));
+	}
+
+	//==============================================================================================
+
+	@Override
+	public void testFindTargetName() throws Exception {
 		assertTargetName( "CSharpProjectWithDefaultOutputDirectories" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindBuildConfigurations()
-		throws Exception
-	{
+	public void testFindBuildConfigurations() throws Exception {
 		assertBuildConfigurations( Arrays.asList(
 			new BuildConfiguration( "Debug", "x86" ),
 			new BuildConfiguration( "Release", "x86" )
@@ -77,33 +82,31 @@ public final class DefaultCSharpProjectFileParserTest extends CSharpProjectFileP
 	//==============================================================================================
 
 	@Override
-	public void testFindOutputDirectoryNames() throws Exception
-	{
-		assertOutputDirectoryNames( Arrays.asList( "bin\\Debug\\", "bin\\Release\\" ));
+	public void testFindOutputDirectoryNames() throws Exception {
+		assertOutputDirectoryNames( Arrays.asList(
+			"bin\\Debug\\",
+			"bin\\Release\\"
+		));
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindPreBuildCommands()
-		throws Exception
-	{
+	public void testFindPreBuildCommands() throws Exception {
 		assertPostBuildCommands( Arrays.asList() );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindPostBuildCommands() throws Exception
-	{
+	public void testFindPostBuildCommands() throws Exception {
 		assertPostBuildCommands( Arrays.asList() );
 	}
+
 	//==============================================================================================
 
 	@Override
-	public void testFindDeployDirectoryNames()
-		throws Exception
-	{
+	public void testFindDeployDirectoryNames() throws Exception {
 		assertDeployDirectoryNames( Arrays.asList() );
 	}
 }

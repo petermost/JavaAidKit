@@ -19,12 +19,11 @@ package com.pera_software.aidkit.visualstudio;
 
 //##################################################################################################
 
-public abstract class CPlusPlusProjectFileParserTest extends ProjectFileParserTest
-{
+public abstract class CPlusPlusProjectFileParserTest extends ProjectFileParserTest {
+
 	//==============================================================================================
 
-	public CPlusPlusProjectFileParserTest( ProjectFileParser projectFileParser )
-	{
+	public CPlusPlusProjectFileParserTest( ProjectFileParser projectFileParser ) {
 		super( projectFileParser );
 	}
 }

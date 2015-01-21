@@ -19,13 +19,9 @@ package com.pera_software.aidkit.visualstudio;
 
 //##################################################################################################
 
-public abstract class CSharpProjectFileParserTest extends ProjectFileParserTest
-{
-	//==============================================================================================
+public abstract class CSharpProjectFileParserTest extends ProjectFileParserTest {
 
-	public CSharpProjectFileParserTest( ProjectFileParser projectFileParser )
-	{
+	public CSharpProjectFileParserTest( ProjectFileParser projectFileParser ) {
 		super( projectFileParser );
 	}
 }
-

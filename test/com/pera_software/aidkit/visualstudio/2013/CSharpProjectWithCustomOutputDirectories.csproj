@@ -53,6 +53,13 @@ ECHO Copy pre-requisites
 ECHO.
 cmd /c robocopy /NP /NDL /NJS /MIR "\\hostName\shareName\library2_export\$(Configuration)" "$(SolutionDir)\..\library2_deploy\$(Configuration) " ^&amp; IF %25ERRORLEVEL%25 LEQ 4 exit /B 0</PreBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

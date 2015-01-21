@@ -22,32 +22,25 @@ import java.util.*;
 
 //##################################################################################################
 
-public class CSharpProjectFileParser extends ProjectFileParser
-{
+public class CSharpProjectFileParser extends ProjectFileParser {
 	public static final String EXTENSION = ".csproj";
 
 	//==============================================================================================
 
-	public CSharpProjectFileParser( Path projectFilePath )
-		throws Exception
-	{
+	public CSharpProjectFileParser( Path projectFilePath ) throws Exception {
 		super( projectFilePath );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public String findTargetName()
-		throws Exception
-	{
+	public String findTargetName() throws Exception {
 		return findAssemblyName();
 	}
 
 	//==============================================================================================
 
-	public String findAssemblyName()
-		throws Exception
-	{
+	public String findAssemblyName() throws Exception {
 		List< String > assemblyNames = findXmlTags( "//AssemblyName" );
 		if ( !assemblyNames.isEmpty() )
 			return assemblyNames.get( 0 );
@@ -58,27 +51,32 @@ public class CSharpProjectFileParser extends ProjectFileParser
 	//==============================================================================================
 
 	@Override
-	public List< String > findOutputDirectoryNames()
-		throws Exception
-	{
+	public List< String > findSourceFileNames() throws Exception {
+		List< String > sourceFileNames = new ArrayList<>();
+
+		sourceFileNames.addAll( findXmlTags( "//Compile/@Include" ));
+
+		return sourceFileNames;
+	}
+
+	//==============================================================================================
+
+	@Override
+	public List< String > findOutputDirectoryNames() throws Exception {
 		return findXmlTags( "//OutputPath" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public List< String > findOutputFileNames()
-		throws Exception
-	{
+	public List< String > findOutputFileNames() throws Exception {
 		return Arrays.asList();
 	}
 
 	//==============================================================================================
 
 	@Override
-	public List<String> findIntermediateDirectoryNames()
-		throws Exception
-	{
+	public List< String > findIntermediateDirectoryNames() throws Exception {
 		// C# projects don't allow to define an intermediate directory so we use hard coded
 		// values.
 		// Note: Beneath the 'obj' directory there is a 'x86/Debug' and 'x86/Release' directory. But
@@ -90,18 +88,15 @@ public class CSharpProjectFileParser extends ProjectFileParser
 	//==============================================================================================
 
 	@Override
-	public List<String> findPreBuildCommands()
-		throws Exception
-	{
+	public List< String > findPreBuildCommands() throws Exception {
 		return findXmlLines( "//PreBuildEvent" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public List<String> findPostBuildCommands()
-		throws Exception
-	{
+	public List< String > findPostBuildCommands() throws Exception {
 		return findXmlLines( "//PostBuildEvent" );
 	}
+
 }
