@@ -136,4 +136,13 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 			"$(SolutionDir)tmp\\$(Configuration)\\"
 		));
 	}
+	
+	//==============================================================================================
+	
+	@Override
+	public void testFindReferencesProjectNames() throws Exception {
+		assertReferencedProjectNames( Arrays.asList(
+			"ClassLibrary.csproj"			
+		));
+	}
 }

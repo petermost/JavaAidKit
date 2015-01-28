@@ -109,4 +109,13 @@ public final class DefaultCPlusPlusProjectFileParserTest extends CPlusPlusProjec
 	public void testFindDeployDirectoryNames() throws Exception {
 		assertDeployDirectoryNames( Arrays.asList() );
 	}
+	
+	//==============================================================================================
+	
+	@Override
+	public void testFindReferencesProjectNames() throws Exception {
+		assertReferencedProjectNames( Arrays.asList(
+			"Win32Project.vcxproj"			
+		));
+	}
 }

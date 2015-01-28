@@ -55,6 +55,9 @@ public abstract class ProjectFileParserTest {
 	@Test
 	public abstract void testFindDeployDirectoryNames() throws Exception;
 
+	@Test
+	public abstract void testFindReferencesProjectNames() throws Exception;
+	
 	//==============================================================================================
 
 	protected void assertSourceFileNames( List< String > expectedSourceFileNames ) throws Exception {
@@ -109,5 +112,12 @@ public abstract class ProjectFileParserTest {
 	protected void assertDeployDirectoryNames( List< String > expectedDeployDirectories ) throws Exception {
 		List< String > actualDeployDirectories = _projectFileParser.findCopyDirectoryNames();
 		assertThat( actualDeployDirectories, is( expectedDeployDirectories ) );
+	}
+	
+	//==============================================================================================
+	
+	protected void assertReferencedProjectNames( List< String > expectedReferences ) throws Exception {
+		List< String > actualReferences = _projectFileParser.findProjectReferenceNames();
+		assertThat( actualReferences, is( expectedReferences ));
 	}
 }

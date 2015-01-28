@@ -66,6 +66,7 @@ public abstract class ProjectFileParser
 	public abstract List< String > findOutputDirectoryNames()
 		throws Exception;
 
+	
 	public abstract String findTargetName()
 		throws Exception;
 
@@ -88,6 +89,18 @@ public abstract class ProjectFileParser
 		return CopyCommandParser.findDestinationDirectoryNames( prePostBuildCommands );
 	}
 
+	//==============================================================================================
+	
+	public List< String > findProjectReferenceNames()
+		throws Exception
+	{
+		List< String > projectReferenceNames = new ArrayList<>();
+		
+		projectReferenceNames.addAll( findXmlTags( "//ProjectReference/@Include" ));
+		
+		return projectReferenceNames;
+	}
+	
 	//==============================================================================================
 
 	public List< BuildConfiguration > findBuildConfigurations()

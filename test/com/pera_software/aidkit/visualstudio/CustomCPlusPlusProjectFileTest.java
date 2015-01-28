@@ -143,4 +143,13 @@ public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFilePa
 			"$(SolutionDir)tmp\\$(Configuration)\\"
 		));
 	}
+
+	//==============================================================================================
+	
+	@Override
+	public void testFindReferencesProjectNames() throws Exception {
+		assertReferencedProjectNames( Arrays.asList(
+			"Win32Project.vcxproj"			
+		));
+	}
 }

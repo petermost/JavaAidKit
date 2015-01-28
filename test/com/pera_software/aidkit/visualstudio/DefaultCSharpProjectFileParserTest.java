@@ -109,4 +109,12 @@ public final class DefaultCSharpProjectFileParserTest extends CSharpProjectFileP
 	public void testFindDeployDirectoryNames() throws Exception {
 		assertDeployDirectoryNames( Arrays.asList() );
 	}
+	//==============================================================================================
+	
+	@Override
+	public void testFindReferencesProjectNames() throws Exception {
+		assertReferencedProjectNames( Arrays.asList(
+			"ClassLibrary.csproj"			
+		));
+	}
 }
