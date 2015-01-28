@@ -51,7 +51,7 @@ public final class SolutionFileTest
 	//==============================================================================================
 
 	@Test
-	public void testFindProjectsSize()
+	public void testFindProjects()
 		throws Exception
 	{
 		List< ProjectFile > projectFiles = _solutionFile.findProjects();

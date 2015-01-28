@@ -9,7 +9,7 @@
 //
 // JavaAidKit is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
@@ -17,44 +17,42 @@
 
 package com.pera_software.aidkit.visualstudio;
 
-import java.util.*;
 import java.nio.file.*;
-import java.util.regex.*;
-import java.nio.charset.*;
+import java.util.*;
 
 //##################################################################################################
 
-public class SolutionFile {
-	private List< String > _lines = new ArrayList<>();
-	private Path _path;
+public final class ProjectFileFactory {
 
-	//==============================================================================================
-
-	public SolutionFile( Path solutionFilePath ) throws Exception {
-		_path = solutionFilePath;
-		_lines = Files.readAllLines( solutionFilePath, Charset.defaultCharset() );
+	private ProjectFileFactory() {
 	}
 
 	//==============================================================================================
 
-	public List< ProjectFile > findProjects() throws Exception {
-		List< ProjectFile > projects = new ArrayList<>();
-		Pattern projectPattern = Pattern.compile( "Project\\(\"\\{.*\\}\"\\) = \".*\", \"(.*)\", \"\\{.*\\}\"" );
-
-		for ( String line : _lines ) {
-			Matcher matcher = projectPattern.matcher( line );
-			if ( matcher.matches() ) {
-				Path projectPath = Paths.get( matcher.group( 1 ) );
-				projectPath = _path.resolveSibling( projectPath );
-				ProjectFileFactory.create( projectPath ).ifPresent( projectFile -> projects.add( projectFile ) );
-			}
-		}
-		return projects;
+	private static boolean hasExtension( Path path, String extension ) {
+		return path.toString().endsWith( extension );
 	}
 
 	//==============================================================================================
 
-	public Path path() {
-		return _path;
+	private static boolean isCPlusPlusProjectFilePath( Path projectFilePath ) {
+		return hasExtension( projectFilePath, CPlusPlusProjectFileParser.EXTENSION );
+	}
+
+	//==============================================================================================
+
+	private static boolean isCSharpProjectFilePath( Path projectFilePath ) {
+		return hasExtension( projectFilePath, CSharpProjectFileParser.EXTENSION );
+	}
+
+	//==============================================================================================
+
+	public static Optional< ProjectFile > create( Path projectPath ) throws Exception {
+		if ( isCPlusPlusProjectFilePath( projectPath ) )
+			return Optional.of( new ProjectFile( new CPlusPlusProjectFileParser( projectPath )));
+		else if ( isCSharpProjectFilePath( projectPath ) )
+			return Optional.of( new ProjectFile( new CSharpProjectFileParser( projectPath )));
+		else
+			return Optional.empty();
 	}
 }
