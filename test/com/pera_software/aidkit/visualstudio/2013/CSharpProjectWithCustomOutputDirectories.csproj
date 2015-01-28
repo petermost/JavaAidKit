@@ -60,6 +60,12 @@ cmd /c robocopy /NP /NDL /NJS /MIR "\\hostName\shareName\library2_export\$(Confi
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ClassLibrary.csproj">
+      <Project>{ea7edfe1-07c3-403d-9440-ca52d6454623}</Project>
+      <Name>ClassLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

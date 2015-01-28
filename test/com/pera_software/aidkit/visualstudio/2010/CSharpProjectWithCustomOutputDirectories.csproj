@@ -59,6 +59,13 @@ cmd /c robocopy /NP /NDL /NJS /MIR "\\hostName\shareName\library2_export\$(Confi
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ClassLibrary.csproj">
+      <Project>{073C8518-E303-42AF-9FF1-4E1FC463BB56}</Project>
+      <Name>ClassLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -147,6 +147,11 @@ cmd /c robocopy /NP /NDL /NJS /MIR "\\hostName\shareName\library2_export\$(Confi
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Win32Project.vcxproj">
+      <Project>{c4d89e7d-80f6-4973-b738-a72067c49dfb}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
