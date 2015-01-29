@@ -110,6 +110,25 @@ public class ProjectFile {
 	}
 
 	//==============================================================================================
+	
+	public boolean findTreatWarningsAsErrors() throws Exception {
+		Boolean treatWarningsAsErrors = null;
+		
+		// The XML tag in C++ and C# projects differ slightly ('TreatWarningAsError' vs 'TreatWarningsAsErrors'
+		// note the plural of 'Warning'!) and so we have to delegate it to the subsclasses:
+		
+		List< String > values = _parser.findTreatWarningsAsErrorsValues();
+		
+		for ( String value : values ) {
+			if ( treatWarningsAsErrors == null )
+				treatWarningsAsErrors = Boolean.valueOf( value );
+			else
+				treatWarningsAsErrors = treatWarningsAsErrors == Boolean.valueOf( value );
+		}
+		return treatWarningsAsErrors != null ? treatWarningsAsErrors : false;
+	}
+	
+	//==============================================================================================
 
 	public List< OutputDirectory > collectOutputDirectories( Path solutionFilePath ) throws Exception {
 		// Replace the output files with their parent directory:

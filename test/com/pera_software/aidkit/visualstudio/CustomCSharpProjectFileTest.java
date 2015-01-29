@@ -145,4 +145,13 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 			"ClassLibrary.csproj"			
 		));
 	}
+	//==============================================================================================
+	
+	@Override
+	public void testFindTreatWarningsAsErrors() throws Exception {
+		assertTreatWarningsAsErrors( Arrays.asList( 
+			"true",
+			"true"
+		));
+	}
 }

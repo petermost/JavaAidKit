@@ -127,4 +127,10 @@ public class CPlusPlusProjectFileParser extends ProjectFileParser {
 		return findXmlLines( "//PostBuildEvent/Command" );
 	}
 
+	//==============================================================================================
+	
+	@Override
+	public List< String > findTreatWarningsAsErrorsValues() throws Exception {
+		return findXmlTags( "//TreatWarningAsError" );
+	}
 }

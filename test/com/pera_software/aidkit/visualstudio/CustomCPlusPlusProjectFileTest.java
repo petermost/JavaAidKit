@@ -152,4 +152,15 @@ public final class CustomCPlusPlusProjectFileTest extends CPlusPlusProjectFilePa
 			"Win32Project.vcxproj"			
 		));
 	}
+
+	//==============================================================================================
+	
+	@Override
+	public void testFindTreatWarningsAsErrors() throws Exception {
+		assertTreatWarningsAsErrors( Arrays.asList( 
+			"true",
+			"true",
+			"true"
+		));
+	}
 }

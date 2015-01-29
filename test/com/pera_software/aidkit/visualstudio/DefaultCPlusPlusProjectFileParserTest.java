@@ -118,4 +118,10 @@ public final class DefaultCPlusPlusProjectFileParserTest extends CPlusPlusProjec
 			"Win32Project.vcxproj"			
 		));
 	}
+	//==============================================================================================
+	
+	@Override
+	public void testFindTreatWarningsAsErrors() throws Exception {
+		assertTreatWarningsAsErrors( Arrays.asList() ); 
+	}
 }

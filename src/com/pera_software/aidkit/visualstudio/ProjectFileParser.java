@@ -27,17 +27,15 @@ import com.pera_software.aidkit.collection.*;
 
 //##################################################################################################
 
-public abstract class ProjectFileParser
-{
+public abstract class ProjectFileParser {
+	
 	private Path _projectFilePath;
 	private Document _document;
 	private XPath _xpath;
 
 	//==============================================================================================
 
-	public ProjectFileParser( Path projectFilePath )
-		throws Exception
-	{
+	public ProjectFileParser( Path projectFilePath ) throws Exception {
 		_projectFilePath = projectFilePath;
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -54,33 +52,25 @@ public abstract class ProjectFileParser
 
 	//==============================================================================================
 
-	public abstract List< String > findSourceFileNames()
-		throws Exception;
+	public abstract List< String > findSourceFileNames() throws Exception;
 
-	public abstract List< String > findOutputFileNames()
-		throws Exception;
+	public abstract List< String > findOutputFileNames() throws Exception;
 
-	public abstract List< String > findIntermediateDirectoryNames()
-		throws Exception;
+	public abstract List< String > findIntermediateDirectoryNames() throws Exception;
 
-	public abstract List< String > findOutputDirectoryNames()
-		throws Exception;
+	public abstract List< String > findOutputDirectoryNames() throws Exception;
 
+	public abstract String findTargetName() throws Exception;
+
+	public abstract List< String > findPreBuildCommands() throws Exception;
+
+	public abstract List< String > findPostBuildCommands() throws Exception;
+
+	public abstract List< String > findTreatWarningsAsErrorsValues() throws Exception;
 	
-	public abstract String findTargetName()
-		throws Exception;
-
-	public abstract List< String > findPreBuildCommands()
-		throws Exception;
-
-	public abstract List< String > findPostBuildCommands()
-		throws Exception;
-
 	//==============================================================================================
 
-	public List< String > findCopyDirectoryNames()
-		throws Exception
-	{
+	public List< String > findCopyDirectoryNames() throws Exception {
 		List< String > prePostBuildCommands = new ArrayList<>();
 
 		prePostBuildCommands.addAll( findPreBuildCommands() );
@@ -91,21 +81,17 @@ public abstract class ProjectFileParser
 
 	//==============================================================================================
 	
-	public List< String > findProjectReferenceNames()
-		throws Exception
-	{
+	public List< String > findProjectReferenceNames() throws Exception {
 		List< String > projectReferenceNames = new ArrayList<>();
-		
-		projectReferenceNames.addAll( findXmlTags( "//ProjectReference/@Include" ));
-		
+
+		projectReferenceNames.addAll( findXmlTags( "//ProjectReference/@Include" ) );
+
 		return projectReferenceNames;
 	}
 	
 	//==============================================================================================
 
-	public List< BuildConfiguration > findBuildConfigurations()
-		throws Exception
-	{
+	public List< BuildConfiguration > findBuildConfigurations() throws Exception {
 		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
 		// for C++ projects. This search returns:
 		// C++: <'$(Configuration)|$(Platform)'=='Debug|Win32'>
@@ -132,9 +118,7 @@ public abstract class ProjectFileParser
 
 	//==============================================================================================
 
-	private NodeList findNodes( String nodeName )
-		throws Exception
-	{
+	private NodeList findNodes( String nodeName ) throws Exception {
 		XPathExpression xpathExpression = _xpath.compile( nodeName );
 		NodeList nodes = ( NodeList )xpathExpression.evaluate( _document, XPathConstants.NODESET );
 		return nodes;
@@ -142,9 +126,7 @@ public abstract class ProjectFileParser
 
 	//==============================================================================================
 
-	protected List< String > findXmlTags( String nodeName )
-		throws Exception
-	{
+	protected List< String > findXmlTags( String nodeName ) throws Exception {
 		List< String > texts = new ArrayList<>();
 		NodeList nodes = findNodes( nodeName );
 		if ( nodes != null ) {
@@ -155,22 +137,21 @@ public abstract class ProjectFileParser
 		}
 		return texts;
 	}
+
 	//==============================================================================================
 
-	protected List< String > findXmlLines( String nodeName )
-		throws Exception
-	{
+	protected List< String > findXmlLines( String nodeName ) throws Exception {
 		List< String > xmlLines = new ArrayList<>();
 		List< String > xmlTags = findXmlTags( nodeName );
 		for ( String xmlTag : xmlTags ) {
-			xmlLines.addAll( Arrays.asList( xmlTag.split( "\n" )));
+			xmlLines.addAll( Arrays.asList( xmlTag.split( "\n" ) ) );
 		}
 		return xmlLines;
 	}
+
 	//==============================================================================================
 
-	public Path path()
-	{
+	public Path path() {
 		return _projectFilePath;
 	}
 }

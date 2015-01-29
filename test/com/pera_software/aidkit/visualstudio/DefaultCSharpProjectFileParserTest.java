@@ -117,4 +117,10 @@ public final class DefaultCSharpProjectFileParserTest extends CSharpProjectFileP
 			"ClassLibrary.csproj"			
 		));
 	}
+	//==============================================================================================
+	
+	@Override
+	public void testFindTreatWarningsAsErrors() throws Exception {
+		assertTreatWarningsAsErrors( Arrays.asList() ); 
+	}
 }

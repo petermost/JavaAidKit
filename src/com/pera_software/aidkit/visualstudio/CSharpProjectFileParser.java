@@ -99,4 +99,10 @@ public class CSharpProjectFileParser extends ProjectFileParser {
 		return findXmlLines( "//PostBuildEvent" );
 	}
 
+	//==============================================================================================
+
+	@Override
+	public List< String > findTreatWarningsAsErrorsValues() throws Exception {
+		return findXmlTags( "//TreatWarningsAsErrors" );
+	}
 }
