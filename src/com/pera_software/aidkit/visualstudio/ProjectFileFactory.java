@@ -49,9 +49,9 @@ public final class ProjectFileFactory {
 
 	public static Optional< ProjectFile > create( Path projectPath ) throws Exception {
 		if ( isCPlusPlusProjectFilePath( projectPath ) )
-			return Optional.of( new ProjectFile( new CPlusPlusProjectFileParser( projectPath )));
+			return Optional.of( new CPlusPlusProjectFile( projectPath ));
 		else if ( isCSharpProjectFilePath( projectPath ) )
-			return Optional.of( new ProjectFile( new CSharpProjectFileParser( projectPath )));
+			return Optional.of( new CSharpProjectFile( projectPath ));
 		else
 			return Optional.empty();
 	}

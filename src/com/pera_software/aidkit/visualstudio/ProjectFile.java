@@ -31,7 +31,7 @@ public class ProjectFile {
 
 	//==============================================================================================
 
-	public ProjectFile( ProjectFileParser parser ) throws Exception {
+	protected ProjectFile( ProjectFileParser parser ) throws Exception {
 		_parser = parser;
 	}
 
