@@ -21,6 +21,7 @@ import java.util.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
+import static com.pera_software.aidkit.visualstudio.ProjectFileParserAssert.*;
 
 //##################################################################################################
 
@@ -46,8 +47,8 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 
 	@Override
-	public void testFindSourceFileNames() throws Exception {
-		assertSourceFileNames( Arrays.asList(
+	public void doTestFindSourceFileNames(ProjectFileParser parser ) throws Exception {
+		assertSourceFileNames( parser, Arrays.asList(
 			"Class1.cs",
 			"Class2.cs"
 		));
@@ -56,8 +57,8 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 
 	@Override
-	public void testFindIntermediateDirectoryNames() throws Exception {
-		assertIntermediateDirectoryNames( Arrays.asList(
+	public void doTestFindIntermediateDirectoryNames(ProjectFileParser parser ) throws Exception {
+		assertIntermediateDirectoryNames( parser, Arrays.asList(
 			"obj"
 		));
 	}
@@ -65,15 +66,15 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 
 	@Override
-	public void testFindTargetName() throws Exception {
-		assertTargetName( "CSharpWithCustomOutputDirectoriesProjectName" );
+	public void doTestFindTargetName(ProjectFileParser parser ) throws Exception {
+		assertTargetName( parser, "CSharpWithCustomOutputDirectoriesProjectName" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public void testFindBuildConfigurations() throws Exception {
-		assertBuildConfigurations( Arrays.asList(
+	public void doTestFindBuildConfigurations(ProjectFileParser parser ) throws Exception {
+		assertBuildConfigurations( parser, Arrays.asList(
 			new BuildConfiguration( "Debug", "x86" ),
 			new BuildConfiguration( "Release", "x86" )
 		));
@@ -82,8 +83,8 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 
 	@Override
-	public void testFindOutputDirectoryNames() throws Exception {
-		assertOutputDirectoryNames( Arrays.asList(
+	public void doTestFindOutputDirectoryNames(ProjectFileParser parser ) throws Exception {
+		assertOutputDirectoryNames( parser, Arrays.asList(
 			"deploy\\Debug\\",
 			"deploy\\Release\\"
 		));
@@ -92,8 +93,8 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 
 	@Override
-	public void testFindPreBuildCommands() throws Exception {
-		assertPreBuildCommands( Arrays.asList(
+	public void doTestFindPreBuildCommands(ProjectFileParser parser ) throws Exception {
+		assertPreBuildCommands( parser, Arrays.asList(
 			"@ECHO OFF",
 			"ECHO.",
 			"ECHO Copy pre-requisites",
@@ -113,8 +114,8 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 
 	@Override
-	public void testFindPostBuildCommands() throws Exception {
-		assertPostBuildCommands( Arrays.asList(
+	public void doTestFindPostBuildCommands(ProjectFileParser parser ) throws Exception {
+		assertPostBuildCommands( parser, Arrays.asList(
 			"xcopy /C /Y /D /S /F \"$(SolutionDir)$(Configuration)\\ReleaseOutputDirectory\" \"$(SolutionDir)tmp\\$(Configuration)\\\""
 		));
 	}
@@ -122,8 +123,8 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 
 	@Override
-	public void testFindDeployDirectoryNames() throws Exception {
-		assertDeployDirectoryNames( Arrays.asList(
+	public void doTestFindDeployDirectoryNames(ProjectFileParser parser ) throws Exception {
+		assertDeployDirectoryNames( parser, Arrays.asList(
 
 			// PreBuild deploy directories:
 
@@ -140,16 +141,16 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	//==============================================================================================
 	
 	@Override
-	public void testFindReferencesProjectNames() throws Exception {
-		assertReferencedProjectNames( Arrays.asList(
+	public void doTestFindReferencesProjectNames(ProjectFileParser parser ) throws Exception {
+		assertReferencedProjectNames( parser, Arrays.asList(
 			"ClassLibrary.csproj"			
 		));
 	}
 	//==============================================================================================
 	
 	@Override
-	public void testFindTreatWarningsAsErrors() throws Exception {
-		assertTreatWarningsAsErrors( Arrays.asList( 
+	public void doTestFindTreatWarningsAsErrors(ProjectFileParser parser ) throws Exception {
+		assertTreatWarningsAsErrors( parser, Arrays.asList( 
 			"true",
 			"true"
 		));
