@@ -17,32 +17,38 @@
 
 package com.pera_software.aidkit.visualstudio;
 
-//import static org.junit.Assert.*;
-//import java.util.*;
-//import org.junit.*;
-//import org.junit.runner.*;
-//import org.junit.runners.*;
-//import org.junit.runners.Parameterized.*;
-//
-//@RunWith( Parameterized.class )
-//public class CustomProjectFileTest {
-//
-//	@Parameters
-//	public static Iterable< Object[] > loadProjectFiels() throws Exception {
-//		return Arrays.asList( new Object[][] {
-//			{ new CPlusPlusProjectFile( Resource.getPath( CustomCPlusPlusProjectFileTest.class,
-//				"2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
-//			{ new CPlusPlusProjectFile( Resource.getPath( CustomCPlusPlusProjectFileTest.class,
-//				"2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
-//		});
-//	}
-//	
-//	public CustomProjectFileTest( ProjectFile projectFile ) {
-//		
-//	}
-//	@Test
-//	public void testFindTreatWarningsAsErrors() {
-//		fail( "Not yet implemented" );
-//	}
-//
-//}
+import static org.junit.Assert.*;
+import java.util.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
+import org.junit.runners.Parameterized.*;
+
+@RunWith( Parameterized.class )
+public class CustomProjectFileTest extends ProjectFileTest {
+
+	@Parameters
+	public static Iterable< Object[] > loadProjectFiles() throws Exception {
+		return Arrays.asList( new Object[][] {
+			{ new CPlusPlusProjectFile( Resource.getPath( CustomProjectFileTest.class,
+				"2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
+				
+			{ new CPlusPlusProjectFile( Resource.getPath( CustomProjectFileTest.class,
+				"2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
+				
+			{ new CSharpProjectFile( Resource.getPath( CustomProjectFileTest.class,
+				"2010/CSharpProjectWithCustomOutputDirectories.csproj" )) },
+				
+			{ new CSharpProjectFile( Resource.getPath( CustomProjectFileTest.class,
+				"2013/CSharpProjectWithCustomOutputDirectories.csproj" )) }
+		});
+	}
+	
+	public CustomProjectFileTest( ProjectFile projectFile ) {
+		super( projectFile );
+	}
+
+	@Override
+	public void doTestFindTreatWarningsAsErrors( ProjectFile project ) throws Exception {
+		assertTrue( project.findTreatWarningsAsErrors() );
+	}
+}

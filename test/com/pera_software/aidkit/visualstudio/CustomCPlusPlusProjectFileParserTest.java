@@ -26,21 +26,21 @@ import static com.pera_software.aidkit.visualstudio.ProjectFileParserAssert.*;
 //##################################################################################################
 
 @RunWith( Parameterized.class )
-public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTest {
+public final class CustomCPlusPlusProjectFileParserTest extends CPlusPlusProjectFileParserTest {
 
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CSharpProjectFileParser( Resource.getPath( CustomCSharpProjectFileTest.class,
-				"2010/CSharpProjectWithCustomOutputDirectories.csproj" )) },
-			{ new CSharpProjectFileParser( Resource.getPath( CustomCSharpProjectFileTest.class,
-				"2013/CSharpProjectWithCustomOutputDirectories.csproj" )) }
+			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileParserTest.class,
+				"2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
+			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileParserTest.class,
+				"2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
 		});
 	}
 
 	//==============================================================================================
 
-	public CustomCSharpProjectFileTest( ProjectFileParser projectFileParser ) {
+	public CustomCPlusPlusProjectFileParserTest( ProjectFileParser projectFileParser ) {
 		super( projectFileParser );
 	}
 
@@ -48,9 +48,21 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 
 	@Override
 	public void doTestFindSourceFileNames(ProjectFileParser parser ) throws Exception {
-		assertSourceFileNames( parser, Arrays.asList(
-			"Class1.cs",
-			"Class2.cs"
+		List< String > expectedSourceFileNames = Arrays.asList(
+			"stdafx.h", "targetver.h", // Header
+			"CPlusPlusProjectWithDefaults.cpp", "stdafx.cpp" // Source
+		);
+		assertSourceFileNames( parser, expectedSourceFileNames );
+	}
+
+	//==============================================================================================
+
+	@Override
+	public void doTestFindBuildConfigurations(ProjectFileParser parser ) throws Exception {
+		assertBuildConfigurations( parser, Arrays.asList(
+			new BuildConfiguration( "Debug", "Win32" ),
+			new BuildConfiguration( "Release", "Win32" ),
+			new BuildConfiguration( "Test", "Win32" )
 		));
 	}
 
@@ -59,7 +71,9 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	@Override
 	public void doTestFindIntermediateDirectoryNames(ProjectFileParser parser ) throws Exception {
 		assertIntermediateDirectoryNames( parser, Arrays.asList(
-			"obj"
+			"$(Configuration)\\DebugIntermediateDirectory",
+			"$(Configuration)\\ReleaseIntermediateDirectory",
+			"$(Configuration)\\TestIntermediateDirectory"
 		));
 	}
 
@@ -67,17 +81,7 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 
 	@Override
 	public void doTestFindTargetName(ProjectFileParser parser ) throws Exception {
-		assertTargetName( parser, "CSharpWithCustomOutputDirectoriesProjectName" );
-	}
-
-	//==============================================================================================
-
-	@Override
-	public void doTestFindBuildConfigurations(ProjectFileParser parser ) throws Exception {
-		assertBuildConfigurations( parser, Arrays.asList(
-			new BuildConfiguration( "Debug", "x86" ),
-			new BuildConfiguration( "Release", "x86" )
-		));
+		assertTargetName( parser, "CPlusPlusWithCustomOutputDirectoriesProjectName" );
 	}
 
 	//==============================================================================================
@@ -85,8 +89,9 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	@Override
 	public void doTestFindOutputDirectoryNames(ProjectFileParser parser ) throws Exception {
 		assertOutputDirectoryNames( parser, Arrays.asList(
-			"deploy\\Debug\\",
-			"deploy\\Release\\"
+			"$(SolutionDir)$(Configuration)\\DebugOutputDirectory",
+			"$(SolutionDir)$(Configuration)\\ReleaseOutputDirectory",
+			"$(SolutionDir)$(Configuration)\\TestOutputDirectory"
 		));
 	}
 
@@ -99,15 +104,15 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 			"ECHO.",
 			"ECHO Copy pre-requisites",
 			"ECHO.",
-			"cmd /c robocopy /NP /NDL /NJS /MIR \"\\\\hostName\\shareName\\framework\\$(Configuration)\" \"$(SolutionDir)\\..\\framework_deploy\\$(Configuration) \" ^& IF %25ERRORLEVEL%25 LEQ 4 exit /B 0",
+			"cmd /c robocopy /NP /NDL /NJS /MIR \"\\\\hostName\\shareName\\framework\\$(Configuration)\" \"$(SolutionDir)\\..\\framework_deploy\\$(Configuration) \" ^& IF %ERRORLEVEL% LEQ 4 exit /B 0",
 			"ECHO.",
 			"ECHO Copy pre-requisites",
 			"ECHO.",
-			"cmd /c robocopy /NP /NDL /NJS /MIR \"\\\\hostName\\shareName\\library1_export\\$(Configuration)\" \"$(SolutionDir)\\..\\library1_deploy\\$(Configuration) \" \"*Shared*.*\" ^& IF %25ERRORLEVEL%25 LEQ 4 exit /B 0",
+			"cmd /c robocopy /NP /NDL /NJS /MIR \"\\\\hostName\\shareName\\library1_export\\$(Configuration)\" \"$(SolutionDir)\\..\\library1_deploy\\$(Configuration) \" \"*Shared*.*\" ^& IF %ERRORLEVEL% LEQ 4 exit /B 0",
 			"ECHO.",
 			"ECHO Copy pre-requisites",
 			"ECHO.",
-			"cmd /c robocopy /NP /NDL /NJS /MIR \"\\\\hostName\\shareName\\library2_export\\$(Configuration)\" \"$(SolutionDir)\\..\\library2_deploy\\$(Configuration) \" ^& IF %25ERRORLEVEL%25 LEQ 4 exit /B 0"
+			"cmd /c robocopy /NP /NDL /NJS /MIR \"\\\\hostName\\shareName\\library2_export\\$(Configuration)\" \"$(SolutionDir)\\..\\library2_deploy\\$(Configuration) \" ^& IF %ERRORLEVEL% LEQ 4 exit /B 0"
 		));
 	}
 
@@ -116,6 +121,7 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 	@Override
 	public void doTestFindPostBuildCommands(ProjectFileParser parser ) throws Exception {
 		assertPostBuildCommands( parser, Arrays.asList(
+			"xcopy /C /Y /D /S /F \"$(SolutionDir)$(Configuration)\\DebugOutputDirectory\" \"$(SolutionDir)tmp\\$(Configuration)\\\"",
 			"xcopy /C /Y /D /S /F \"$(SolutionDir)$(Configuration)\\ReleaseOutputDirectory\" \"$(SolutionDir)tmp\\$(Configuration)\\\""
 		));
 	}
@@ -134,23 +140,26 @@ public final class CustomCSharpProjectFileTest extends CSharpProjectFileParserTe
 
 			// PostBuild deploy directories:
 
+			"$(SolutionDir)tmp\\$(Configuration)\\",
 			"$(SolutionDir)tmp\\$(Configuration)\\"
 		));
 	}
-	
+
 	//==============================================================================================
 	
 	@Override
 	public void doTestFindReferencesProjectNames(ProjectFileParser parser ) throws Exception {
 		assertReferencedProjectNames( parser, Arrays.asList(
-			"ClassLibrary.csproj"			
+			"Win32Project.vcxproj"			
 		));
 	}
+
 	//==============================================================================================
 	
 	@Override
 	public void doTestFindTreatWarningsAsErrors(ProjectFileParser parser ) throws Exception {
 		assertTreatWarningsAsErrors( parser, Arrays.asList( 
+			"true",
 			"true",
 			"true"
 		));
