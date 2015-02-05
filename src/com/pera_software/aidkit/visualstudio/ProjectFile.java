@@ -37,7 +37,7 @@ public class ProjectFile {
 
 	//==============================================================================================
 
-	public List< Path > findSourceFiles() throws Exception {
+	public List< Path > getSourceFiles() throws Exception {
 		List< String > sourceFileNames = _parser.findSourceFileNames();
 
 		List< Path > sourceFiles = convertFileNames( sourceFileNames );
@@ -47,7 +47,7 @@ public class ProjectFile {
 
 	//==============================================================================================
 
-	public List< Path > findOutputFiles( Path solutionFilePath ) throws Exception {
+	public List< Path > getOutputFiles( Path solutionFilePath ) throws Exception {
 		List< String > outputFileNames = _parser.findOutputFileNames();
 		List< Path > outputFiles = convertDirectoryNames( solutionFilePath, outputFileNames );
 
@@ -56,7 +56,7 @@ public class ProjectFile {
 
 	//==============================================================================================
 
-	public OutputDirectory findIntermediateDirectories( Path solutionFilePath ) throws Exception {
+	public OutputDirectory getIntermediateDirectories( Path solutionFilePath ) throws Exception {
 		List< String > intermediateDirectoryNames = _parser.findIntermediateDirectoryNames();
 		List< Path > intermediateDirectories = convertDirectoryNames( solutionFilePath, intermediateDirectoryNames );
 
@@ -65,7 +65,7 @@ public class ProjectFile {
 
 	//==============================================================================================
 
-	public OutputDirectory findOutputDirectories( Path solutionFilePath ) throws Exception {
+	public OutputDirectory getOutputDirectories( Path solutionFilePath ) throws Exception {
 		List< String > outputDirectoryNames = _parser.findOutputDirectoryNames();
 		List< Path > outputDirectories = convertDirectoryNames( solutionFilePath, outputDirectoryNames );
 
@@ -74,7 +74,7 @@ public class ProjectFile {
 
 	//==============================================================================================
 
-	public OutputDirectory findCopyDirectories( Path solutionFilePath ) throws Exception {
+	public OutputDirectory getCopyDirectories( Path solutionFilePath ) throws Exception {
 		List< String > copyDirectoryNames = _parser.findCopyDirectoryNames();
 		List< Path > copyDirectories = convertDirectoryNames( solutionFilePath, copyDirectoryNames );
 
@@ -85,7 +85,7 @@ public class ProjectFile {
 
 	//==============================================================================================
 
-	public List< String > findBuildConfigurationNames() throws Exception {
+	public List< String > getBuildConfigurationNames() throws Exception {
 		List< BuildConfiguration > buildConfigurations = _parser.findBuildConfigurations();
 
 		List< String > buildConfigurationNames = new ArrayList<>();
@@ -97,7 +97,7 @@ public class ProjectFile {
 
 	//==============================================================================================
 
-	public List< String > findPlatformNames( String buildConfigurationName ) throws Exception {
+	public List< String > getPlatformNames( String buildConfigurationName ) throws Exception {
 		List< BuildConfiguration > buildConfigurations = _parser.findBuildConfigurations();
 
 		List< String > platformNames = new ArrayList<>();
@@ -111,13 +111,15 @@ public class ProjectFile {
 
 	//==============================================================================================
 	
-	public boolean findTreatWarningsAsErrors() throws Exception {
+	public boolean getTreatWarningsAsErrors() throws Exception {
 		Boolean treatWarningsAsErrors = null;
 		
 		// The XML tag in C++ and C# projects differ slightly ('TreatWarningAsError' vs 'TreatWarningsAsErrors'
 		// note the plural of 'Warning'!) and so we have to delegate it to the subsclasses:
 		
 		List< String > values = _parser.findTreatWarningsAsErrorsValues();
+		
+		// The switch is set if all configurations have set the switch to the same value:
 		
 		for ( String value : values ) {
 			if ( treatWarningsAsErrors == null )
@@ -133,16 +135,16 @@ public class ProjectFile {
 	public List< OutputDirectory > collectOutputDirectories( Path solutionFilePath ) throws Exception {
 		// Replace the output files with their parent directory:
 
-		List< Path > outputFiles = findOutputFiles( solutionFilePath );
+		List< Path > outputFiles = getOutputFiles( solutionFilePath );
 		List< Path > outputFileDirectories = new ArrayList<>();
 		for ( Path outputFile : outputFiles ) {
 			outputFileDirectories.add( outputFile.getParent() );
 		}
 		List< OutputDirectory > outputDirectories = new ArrayList<>();
 		outputDirectories.add( new OutputDirectory( "files", outputFileDirectories ) );
-		outputDirectories.add( findIntermediateDirectories( solutionFilePath ) );
-		outputDirectories.add( findOutputDirectories( solutionFilePath ) );
-		outputDirectories.add( findCopyDirectories( solutionFilePath ) );
+		outputDirectories.add( getIntermediateDirectories( solutionFilePath ) );
+		outputDirectories.add( getOutputDirectories( solutionFilePath ) );
+		outputDirectories.add( getCopyDirectories( solutionFilePath ) );
 
 		return outputDirectories;
 	}
@@ -180,7 +182,7 @@ public class ProjectFile {
 
 	private List< String > replaceBuildVariables( String pathName, Path solutionFilePath ) throws Exception {
 		final String targetName = _parser.findTargetName();
-		final List< String > buildConfigurationNames = findBuildConfigurationNames();
+		final List< String > buildConfigurationNames = getBuildConfigurationNames();
 		final List< String > intermediateDirectoryNames = _parser.findIntermediateDirectoryNames();
 		final String solutionDirectoryName = solutionFilePath.getParent().toString() + File.separatorChar;
 		final List< String > outputDirectoryNames = _parser.findOutputDirectoryNames();

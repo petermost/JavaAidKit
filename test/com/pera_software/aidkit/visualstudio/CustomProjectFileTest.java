@@ -49,6 +49,6 @@ public class CustomProjectFileTest extends ProjectFileTest {
 
 	@Override
 	public void doTestFindTreatWarningsAsErrors( ProjectFile project ) throws Exception {
-		assertTrue( project.findTreatWarningsAsErrors() );
+		assertTrue( project.getTreatWarningsAsErrors() );
 	}
 }
