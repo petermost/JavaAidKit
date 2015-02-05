@@ -44,7 +44,7 @@ public abstract class ProjectFileParser {
 		// factory.setNamespaceAware( true );
 
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		_document = builder.parse( projectFilePath.toString() );
+		_document = builder.parse( _projectFilePath.toUri().toURL().openStream() );
 
 		XPathFactory xpathFactory = XPathFactory.newInstance();
 		_xpath = xpathFactory.newXPath();

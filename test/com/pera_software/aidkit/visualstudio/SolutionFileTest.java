@@ -23,6 +23,7 @@ import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
+import com.pera_software.aidkit.io.*;
 
 //##################################################################################################
 
@@ -36,8 +37,8 @@ public final class SolutionFileTest
 		throws Exception
 	{
 		return Arrays.asList( new Object[][] {
-			{ new SolutionFile( Resource.getPath(SolutionFileTest.class, "2010/Solution.sln" )) },
-			{ new SolutionFile( Resource.getPath(SolutionFileTest.class, "2013/Solution.sln" )) }
+			{ new SolutionFile( Resources.getPath(SolutionFileTest.class, "2010/Solution.sln" )) },
+			{ new SolutionFile( Resources.getPath(SolutionFileTest.class, "2013/Solution.sln" )) }
 		});
 	}
 

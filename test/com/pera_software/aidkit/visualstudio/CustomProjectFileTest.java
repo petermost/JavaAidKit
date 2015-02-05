@@ -22,6 +22,7 @@ import java.util.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
+import com.pera_software.aidkit.io.*;
 
 @RunWith( Parameterized.class )
 public class CustomProjectFileTest extends ProjectFileTest {
@@ -29,16 +30,16 @@ public class CustomProjectFileTest extends ProjectFileTest {
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CPlusPlusProjectFile( Resource.getPath( CustomProjectFileTest.class,
+			{ new CPlusPlusProjectFile( Resources.getPath( CustomProjectFileTest.class,
 				"2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
 				
-			{ new CPlusPlusProjectFile( Resource.getPath( CustomProjectFileTest.class,
+			{ new CPlusPlusProjectFile( Resources.getPath( CustomProjectFileTest.class,
 				"2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
 				
-			{ new CSharpProjectFile( Resource.getPath( CustomProjectFileTest.class,
+			{ new CSharpProjectFile( Resources.getPath( CustomProjectFileTest.class,
 				"2010/CSharpProjectWithCustomOutputDirectories.csproj" )) },
 				
-			{ new CSharpProjectFile( Resource.getPath( CustomProjectFileTest.class,
+			{ new CSharpProjectFile( Resources.getPath( CustomProjectFileTest.class,
 				"2013/CSharpProjectWithCustomOutputDirectories.csproj" )) }
 		});
 	}

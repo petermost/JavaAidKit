@@ -21,6 +21,7 @@ import java.util.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
+import com.pera_software.aidkit.io.*;
 import static com.pera_software.aidkit.visualstudio.ProjectFileParserAssert.*;
 
 //##################################################################################################
@@ -31,9 +32,9 @@ public final class CustomCPlusPlusProjectFileParserTest extends CPlusPlusProject
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileParserTest.class,
+			{ new CPlusPlusProjectFileParser( Resources.getPath( CustomCPlusPlusProjectFileParserTest.class,
 				"2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
-			{ new CPlusPlusProjectFileParser( Resource.getPath( CustomCPlusPlusProjectFileParserTest.class,
+			{ new CPlusPlusProjectFileParser( Resources.getPath( CustomCPlusPlusProjectFileParserTest.class,
 				"2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
 		});
 	}

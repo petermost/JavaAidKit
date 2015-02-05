@@ -21,6 +21,7 @@ import java.util.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
+import com.pera_software.aidkit.io.*;
 import static com.pera_software.aidkit.visualstudio.ProjectFileParserAssert.*;
 
 //##################################################################################################
@@ -31,9 +32,9 @@ public final class DefaultCSharpProjectFileParserTest extends CSharpProjectFileP
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CSharpProjectFileParser( Resource.getPath( DefaultCSharpProjectFileParserTest.class,
+			{ new CSharpProjectFileParser( Resources.getPath( DefaultCSharpProjectFileParserTest.class,
 				"2010/CSharpProjectWithDefaultOutputDirectories.csproj" )) },
-			{ new CSharpProjectFileParser( Resource.getPath( DefaultCSharpProjectFileParserTest.class,
+			{ new CSharpProjectFileParser( Resources.getPath( DefaultCSharpProjectFileParserTest.class,
 				"2013/CSharpProjectWithDefaultOutputDirectories.csproj" )) }
 		});
 	}
