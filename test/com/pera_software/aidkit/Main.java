@@ -17,15 +17,18 @@
 
 package com.pera_software.aidkit;
 
-import java.util.*;
-import org.junit.*;
-import org.junit.runner.*;
-import java.lang.reflect.*;
-import com.google.common.collect.*;
-import com.google.common.reflect.*;
-import com.google.common.reflect.ClassPath.ClassInfo;
-import com.pera_software.aidkit.lang.*;
+//import java.util.*;
+//import org.junit.*;
+//import org.junit.runner.*;
+//import java.lang.reflect.*;
+//import com.google.common.collect.*;
+//import com.google.common.reflect.*;
+//import com.google.common.reflect.ClassPath.ClassInfo;
+//import com.pera_software.aidkit.lang.*;
 
+/**
+ * This is an attempt to have self executing unit tests
+ */
 public final class Main {
 
 //	private static ImmutableSet< ClassInfo > getAllClasses() throws Exception {
