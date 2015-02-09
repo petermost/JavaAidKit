@@ -131,6 +131,22 @@ public class ProjectFile {
 	}
 	
 	//==============================================================================================
+	
+	public List< ProjectFile > getProjectReferences( ) throws Exception {
+		Path projectDirectory = path().getParent();
+		List< ProjectFile > projectReferences = new ArrayList<>();
+		
+		List< String > projectReferenceNames = _parser.findProjectReferenceNames();
+		for ( String projectReferenceName : projectReferenceNames ) {
+			Path projectFilePath = Paths.get( projectReferenceName );
+			projectFilePath = projectDirectory.resolve( projectFilePath );
+			Optional< ProjectFile > optionalProjectFile = ProjectFileFactory.create( projectFilePath );
+			optionalProjectFile.ifPresent( projectFile -> projectReferences.add( projectFile ));
+		}
+		return projectReferences;
+	}
+	
+	//==============================================================================================
 
 	public List< OutputDirectory > collectOutputDirectories( Path solutionFilePath ) throws Exception {
 		// Replace the output files with their parent directory:

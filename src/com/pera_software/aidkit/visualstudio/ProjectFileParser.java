@@ -68,8 +68,6 @@ public abstract class ProjectFileParser {
 
 	public abstract List< String > findTreatWarningsAsErrorsValues() throws Exception;
 	
-	//==============================================================================================
-
 	public List< String > findCopyDirectoryNames() throws Exception {
 		List< String > prePostBuildCommands = new ArrayList<>();
 
@@ -79,8 +77,6 @@ public abstract class ProjectFileParser {
 		return CopyCommandParser.findDestinationDirectoryNames( prePostBuildCommands );
 	}
 
-	//==============================================================================================
-	
 	public List< String > findProjectReferenceNames() throws Exception {
 		List< String > projectReferenceNames = new ArrayList<>();
 
@@ -89,8 +85,6 @@ public abstract class ProjectFileParser {
 		return projectReferenceNames;
 	}
 	
-	//==============================================================================================
-
 	public List< BuildConfiguration > findBuildConfigurations() throws Exception {
 		// We don't search for '//ProjectConfiguration/Configuration' because this would only work
 		// for C++ projects. This search returns:
