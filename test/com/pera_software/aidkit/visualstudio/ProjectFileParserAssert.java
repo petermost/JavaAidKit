@@ -83,8 +83,15 @@ public final class ProjectFileParserAssert {
 	
 	//==============================================================================================
 	
-	public static void assertReferencedProjectNames( ProjectFileParser parser , List< String > expectedReferences  ) throws Exception {
+	public static void assertProjectReferenceNames( ProjectFileParser parser , List< String > expectedReferences  ) throws Exception {
 		List< String > actualReferences = parser.findProjectReferenceNames();
+		assertThat( actualReferences, is( expectedReferences ));
+	}
+	
+	//==============================================================================================
+	
+	public static void assertLibraryReferenceNames( ProjectFileParser parser, List< String > expectedReferences ) throws Exception {
+		List< String > actualReferences = parser.findLibraryReferenceNames();
 		assertThat( actualReferences, is( expectedReferences ));
 	}
 	

@@ -44,7 +44,9 @@ public abstract class ProjectFileParserTest {
 	
 	public abstract void doTestFindDeployDirectoryNames(ProjectFileParser parser ) throws Exception;
 	
-	public abstract void doTestFindReferencesProjectNames(ProjectFileParser parser ) throws Exception;
+	public abstract void doTestFindProjectReferenceNames(ProjectFileParser parser ) throws Exception;
+	
+	public abstract void doTestFindLibraryReferenceNames( ProjectFileParser parser ) throws Exception;
 	
 	public abstract void doTestFindTreatWarningsAsErrors(ProjectFileParser parser ) throws Exception;
 	
@@ -89,8 +91,13 @@ public abstract class ProjectFileParserTest {
 	}
 
 	@Test
-	public void testFindReferencesProjectNames() throws Exception {
-		doTestFindReferencesProjectNames(_projectFileParser);
+	public void testFindProjectReferenceNames() throws Exception {
+		doTestFindProjectReferenceNames(_projectFileParser);
+	}
+	
+	@Test
+	public void testFindLibraryReferenceNames() throws Exception {
+		doTestFindLibraryReferenceNames( _projectFileParser );
 	}
 	
 	@Test

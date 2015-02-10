@@ -37,12 +37,6 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Class2.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="ClassLibrary.csproj">
-      <Project>{073C8518-E303-42AF-9FF1-4E1FC463BB56}</Project>
-      <Name>ClassLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

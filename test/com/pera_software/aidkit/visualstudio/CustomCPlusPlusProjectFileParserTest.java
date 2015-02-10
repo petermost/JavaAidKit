@@ -149,12 +149,19 @@ public final class CustomCPlusPlusProjectFileParserTest extends CPlusPlusProject
 	//==============================================================================================
 	
 	@Override
-	public void doTestFindReferencesProjectNames(ProjectFileParser parser ) throws Exception {
-		assertReferencedProjectNames( parser, Arrays.asList(
+	public void doTestFindProjectReferenceNames(ProjectFileParser parser ) throws Exception {
+		assertProjectReferenceNames( parser, Arrays.asList(
 			"Win32Project.vcxproj"			
 		));
 	}
 
+	//==============================================================================================
+	
+	@Override
+	public void doTestFindLibraryReferenceNames( ProjectFileParser parser ) throws Exception {
+		assertLibraryReferenceNames( parser, Arrays.asList() );
+	}
+	
 	//==============================================================================================
 	
 	@Override

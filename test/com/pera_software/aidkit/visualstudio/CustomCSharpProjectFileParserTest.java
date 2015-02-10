@@ -142,15 +142,26 @@ public final class CustomCSharpProjectFileParserTest extends CSharpProjectFilePa
 	//==============================================================================================
 	
 	@Override
-	public void doTestFindReferencesProjectNames(ProjectFileParser parser ) throws Exception {
-		assertReferencedProjectNames( parser, Arrays.asList(
+	public void doTestFindProjectReferenceNames(ProjectFileParser parser ) throws Exception {
+		assertProjectReferenceNames( parser, Arrays.asList(
 			"ClassLibrary.csproj"			
 		));
 	}
+
 	//==============================================================================================
 	
 	@Override
-	public void doTestFindTreatWarningsAsErrors(ProjectFileParser parser ) throws Exception {
+	public void doTestFindLibraryReferenceNames( ProjectFileParser parser ) throws Exception {
+		assertLibraryReferenceNames( parser, Arrays.asList(
+			"System",
+			"System.Windows.Forms"
+		));
+	}
+	
+	//==============================================================================================
+	
+	@Override
+	public void doTestFindTreatWarningsAsErrors( ProjectFileParser parser ) throws Exception {
 		assertTreatWarningsAsErrors( parser, Arrays.asList( 
 			"true",
 			"true"

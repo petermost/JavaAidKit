@@ -78,11 +78,11 @@ public abstract class ProjectFileParser {
 	}
 
 	public List< String > findProjectReferenceNames() throws Exception {
-		List< String > projectReferenceNames = new ArrayList<>();
-
-		projectReferenceNames.addAll( findXmlTags( "//ProjectReference/@Include" ) );
-
-		return projectReferenceNames;
+		return findXmlTags( "//ProjectReference/@Include" );
+	}
+	
+	public List< String > findLibraryReferenceNames() throws Exception {
+		return findXmlTags( "//Reference/@Include" );
 	}
 	
 	public List< BuildConfiguration > findBuildConfigurations() throws Exception {
