@@ -147,6 +147,12 @@ public class ProjectFile {
 	}
 	
 	//==============================================================================================
+	
+	public List< String > getLibraryReferences() throws Exception {
+		return _parser.findLibraryReferenceNames();
+	}
+	
+	//==============================================================================================
 
 	public List< OutputDirectory > collectOutputDirectories( Path solutionFilePath ) throws Exception {
 		// Replace the output files with their parent directory:
