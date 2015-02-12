@@ -132,16 +132,15 @@ public class ProjectFile {
 	
 	//==============================================================================================
 	
-	public List< ProjectFile > getProjectReferences( ) throws Exception {
+	public List< Path > getProjectReferences( ) throws Exception {
 		Path projectDirectory = path().getParent();
-		List< ProjectFile > projectReferences = new ArrayList<>();
+		List< Path > projectReferences = new ArrayList<>();
 		
 		List< String > projectReferenceNames = _parser.findProjectReferenceNames();
 		for ( String projectReferenceName : projectReferenceNames ) {
 			Path projectFilePath = Paths.get( projectReferenceName );
 			projectFilePath = projectDirectory.resolve( projectFilePath );
-			Optional< ProjectFile > optionalProjectFile = ProjectFileFactory.create( projectFilePath );
-			optionalProjectFile.ifPresent( projectFile -> projectReferences.add( projectFile ));
+			projectReferences.add( projectFilePath );
 		}
 		return projectReferences;
 	}

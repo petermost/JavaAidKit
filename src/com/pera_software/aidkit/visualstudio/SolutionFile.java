@@ -25,8 +25,9 @@ import java.nio.charset.*;
 //##################################################################################################
 
 public class SolutionFile {
-	private List< String > _lines = new ArrayList<>();
 	private Path _path;
+	private List< String > _lines = new ArrayList<>();
+	private Map< Path, ProjectFile > _projects = new HashMap<>();
 
 	//==============================================================================================
 
@@ -37,21 +38,35 @@ public class SolutionFile {
 
 	//==============================================================================================
 
-	public List< ProjectFile > findProjects() throws Exception {
-		List< ProjectFile > projects = new ArrayList<>();
-		Pattern projectPattern = Pattern.compile( "Project\\(\"\\{.*\\}\"\\) = \".*\", \"(.*)\", \"\\{.*\\}\"" );
-
-		for ( String line : _lines ) {
-			Matcher matcher = projectPattern.matcher( line );
-			if ( matcher.matches() ) {
-				Path projectPath = Paths.get( matcher.group( 1 ) );
-				projectPath = _path.resolveSibling( projectPath );
-				ProjectFileFactory.create( projectPath ).ifPresent( projectFile -> projects.add( projectFile ) );
+	public List< ProjectFile > loadProjects() throws Exception {
+		if ( _projects.isEmpty() ) {
+			Pattern projectPattern = Pattern.compile( "Project\\(\"\\{.*\\}\"\\) = \".*\", \"(.*)\", \"\\{.*\\}\"" );
+	
+			for ( String line : _lines ) {
+				Matcher matcher = projectPattern.matcher( line );
+				if ( matcher.matches() ) {
+					Path projectPath = Paths.get( matcher.group( 1 ));
+					projectPath = _path.resolveSibling( projectPath );
+					Optional< ProjectFile > optionalProjectFile = ProjectFileFactory.create( projectPath );
+					if ( optionalProjectFile.isPresent() )
+						_projects.put( projectPath.normalize(), optionalProjectFile.get() );
+				}
 			}
 		}
-		return projects;
+		return new ArrayList<>( _projects.values() );
 	}
 
+	//==============================================================================================
+	
+	public ProjectFile findProject( Path projectPath ) {
+		Path normalizedProjectPath = projectPath.normalize();
+		ProjectFile projectFile = _projects.get( normalizedProjectPath );
+		if ( projectFile == null )
+			return projectFile;
+		else
+			return projectFile;
+	}
+	
 	//==============================================================================================
 
 	public Path path() {
