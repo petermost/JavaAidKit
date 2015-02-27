@@ -27,7 +27,7 @@ import java.nio.charset.*;
 public class SolutionFile {
 	private Path _path;
 	private List< String > _lines = new ArrayList<>();
-	private Map< Path, ProjectFile > _projects = new HashMap<>();
+	private Map< Path, ProjectFile > _projects = new TreeMap<>();
 
 	//==============================================================================================
 
