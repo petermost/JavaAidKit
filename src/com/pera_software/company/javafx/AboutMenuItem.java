@@ -18,24 +18,17 @@
 package com.pera_software.company.javafx;
 
 import com.pera_software.company.*;
-import javafx.application.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.layout.*;
 
-public class AboutDialog extends Dialog< ButtonType > {
+/**
+ * @author P. Most
+ *
+ */
+public class AboutMenuItem extends MenuItem {
 
-	public AboutDialog( HostServices hostServices ) {
-
-		Hyperlink hyperlink = new Hyperlink( PERA.FULL_DOMAIN_NAME );
-		hyperlink.setOnAction( event -> hostServices.showDocument( hyperlink.getText() ));
-
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(
-			new ImageView( PERA.logo() ),
-			hyperlink
-		);
-		getDialogPane().getButtonTypes().add( ButtonType.OK );
-		getDialogPane().setContent( vbox );
+	public AboutMenuItem() {
+		super( "About _" + PERA.SHORT_NAME + "..." );
+		setGraphic( new ImageView( PERA.icon() )); 
 	}
 }

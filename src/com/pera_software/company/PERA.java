@@ -25,21 +25,23 @@ import javafx.scene.image.*;
  */
 public final class PERA {
 
-	public static final String NAME      = "PERA Software Solutions";
-	public static final String FULL_NAME = NAME + " GmbH";
+	public static final String SHORT_NAME = "PERA";
+	public static final String NAME       = SHORT_NAME + " Software Solutions";
+	public static final String FULL_NAME  = NAME + " GmbH";
+	
 	public static final String STREET = "Ulrich-Nanshaimer-Straße 29";
-	public static final String CITY = "85652 Landsham";
+	public static final String CITY   = "85652 Landsham";
 
 	public static final String PHONE = "089 / 909 692 48";
 	public static final String FAX   = "089 / 909 692 49";
 	
-	public static final String DOMAIN_NAME = "PERA-Software.com";
+	public static final String DOMAIN_NAME      = "PERA-Software.com";
 	public static final String FULL_DOMAIN_NAME = "http://www." + DOMAIN_NAME;
 	
 	public static final String COPYRIGHT_LINE = "(c) by " + FULL_NAME;
 	
-	private static final String ICON_NAME = "PERA-Icon.png";
-	private static final String LOGO_NAME = "PERA-Logo.png";
+	public static final String ICON_NAME = "PERA-Icon.png";
+	public static final String LOGO_NAME = "PERA-Logo.png";
 	
 	private PERA() {
 	}

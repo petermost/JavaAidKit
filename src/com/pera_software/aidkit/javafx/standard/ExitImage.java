@@ -15,27 +15,17 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.company.javafx;
+package com.pera_software.aidkit.javafx.standard;
 
-import com.pera_software.company.*;
-import javafx.application.*;
-import javafx.scene.control.*;
+import com.pera_software.*;
 import javafx.scene.image.*;
-import javafx.scene.layout.*;
 
-public class AboutDialog extends Dialog< ButtonType > {
-
-	public AboutDialog( HostServices hostServices ) {
-
-		Hyperlink hyperlink = new Hyperlink( PERA.FULL_DOMAIN_NAME );
-		hyperlink.setOnAction( event -> hostServices.showDocument( hyperlink.getText() ));
-
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(
-			new ImageView( PERA.logo() ),
-			hyperlink
-		);
-		getDialogPane().getButtonTypes().add( ButtonType.OK );
-		getDialogPane().setContent( vbox );
+/**
+ * @author P. Most
+ *
+ */
+public class ExitImage extends Image {
+	public ExitImage() {
+		super( ExitImage.class.getResourceAsStream( ResourceNames.APPLICATION_EXIT_ICON ));
 	}
 }
