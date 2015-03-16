@@ -17,7 +17,7 @@
 
 package com.pera_software.aidkit.javafx.standard;
 
-import com.pera_software.*;
+import com.pera_software.aidkit.*;
 import javafx.scene.image.*;
 
 /**
@@ -26,6 +26,6 @@ import javafx.scene.image.*;
  */
 public class OpenImage extends Image {
 	public OpenImage() {
-		super( OpenImage.class.getResourceAsStream( ResourceNames.DOCUMENT_OPEN_ICON ));
+		super( AidKit.getResourceAsStream( AidKit.DOCUMENT_OPEN_ICON ));
 	}
 }

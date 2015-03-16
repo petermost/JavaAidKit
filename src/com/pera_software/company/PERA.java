@@ -17,7 +17,7 @@
 
 package com.pera_software.company;
 
-import javafx.scene.image.*;
+import java.io.*;
 
 /**
  * @author P. Most
@@ -46,11 +46,7 @@ public final class PERA {
 	private PERA() {
 	}
 	
-	public static Image icon() {
-		return new Image( PERA.class.getResourceAsStream( ICON_NAME ));	
-	}
-	
-	public static Image logo() {
-		return new Image( PERA.class.getResourceAsStream( LOGO_NAME ));
+	public static InputStream getResourceAsStream( String resourceName ) {
+		return PERA.class.getResourceAsStream( resourceName );	
 	}
 }

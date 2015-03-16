@@ -17,7 +17,7 @@
 
 package com.pera_software.aidkit.javafx.standard;
 
-import com.pera_software.*;
+import com.pera_software.aidkit.*;
 import javafx.scene.image.*;
 
 /**
@@ -26,6 +26,6 @@ import javafx.scene.image.*;
  */
 public class ExitImage extends Image {
 	public ExitImage() {
-		super( ExitImage.class.getResourceAsStream( ResourceNames.APPLICATION_EXIT_ICON ));
+		super( AidKit.getResourceAsStream( AidKit.APPLICATION_EXIT_ICON ));
 	}
 }

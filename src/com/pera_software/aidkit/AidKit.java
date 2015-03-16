@@ -15,27 +15,26 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.company.javafx;
+package com.pera_software.aidkit;
 
-import com.pera_software.company.*;
-import javafx.application.*;
-import javafx.scene.control.*;
-import javafx.scene.image.*;
-import javafx.scene.layout.*;
+import java.io.*;
 
-public class AboutDialog extends Dialog< ButtonType > {
+/**
+ * @author P. Most
+ *
+ */
+public final class AidKit {
+	private static final String PACKAGE_NAME = "/com/pera_software/aidkit/icons16x16/";
 
-	public AboutDialog( HostServices hostServices ) {
+	// The resource names must be valid Java identifiers!!!
 
-		Hyperlink hyperlink = new Hyperlink( PERA.FULL_DOMAIN_NAME );
-		hyperlink.setOnAction( event -> hostServices.showDocument( hyperlink.getText() ));
-
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(
-			new ImageView( new Image( PERA.getResourceAsStream( PERA.LOGO_NAME ))),
-			hyperlink
-		);
-		getDialogPane().getButtonTypes().add( ButtonType.OK );
-		getDialogPane().setContent( vbox );
+	public static final String APPLICATION_EXIT_ICON = PACKAGE_NAME + "application_exit.png";
+	public static final String DOCUMENT_OPEN_ICON    = PACKAGE_NAME + "document_open.png";
+	
+	private AidKit() {
+	}
+	
+	public static InputStream getResourceAsStream( String resourceName ) {
+		return AidKit.class.getResourceAsStream( resourceName );
 	}
 }

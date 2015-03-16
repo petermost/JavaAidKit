@@ -15,20 +15,23 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software;
+package com.pera_software.aidkit;
+
+import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  * @author P. Most
  *
  */
-public final class ResourceNames {
-	private static final String PACKAGE_NAME = "/com/pera_software/aidkit/icons16x16/";
+public class AidKitTest {
 
-	// The resource names must be valid Java identifiers!!!
-
-	public static final String APPLICATION_EXIT_ICON = PACKAGE_NAME + "application_exit.png";
-	public static final String DOCUMENT_OPEN_ICON    = PACKAGE_NAME + "document_open.png";
-	
-	private ResourceNames() {
+	@Test
+	@SuppressWarnings( "static-method" )
+	public void testGetResourceAsStream() {
+		// We are just interested whether we can load a resource, so if one works, then we assume
+		// the others will too:
+		
+		assertNotNull( AidKit.getResourceAsStream( AidKit.APPLICATION_EXIT_ICON ));
 	}
 }

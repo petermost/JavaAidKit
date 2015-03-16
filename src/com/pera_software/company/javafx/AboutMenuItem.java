@@ -29,6 +29,6 @@ public class AboutMenuItem extends MenuItem {
 
 	public AboutMenuItem() {
 		super( "About _" + PERA.SHORT_NAME + "..." );
-		setGraphic( new ImageView( PERA.icon() )); 
+		setGraphic( new ImageView( new Image( PERA.getResourceAsStream( PERA.ICON_NAME )))); 
 	}
 }

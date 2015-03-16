@@ -15,27 +15,22 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.company.javafx;
+package com.pera_software.company;
 
-import com.pera_software.company.*;
-import javafx.application.*;
-import javafx.scene.control.*;
-import javafx.scene.image.*;
-import javafx.scene.layout.*;
+import static org.junit.Assert.*;
+import org.junit.*;
 
-public class AboutDialog extends Dialog< ButtonType > {
+/**
+ * @author P. Most
+ *
+ */
+public class PERATest {
 
-	public AboutDialog( HostServices hostServices ) {
-
-		Hyperlink hyperlink = new Hyperlink( PERA.FULL_DOMAIN_NAME );
-		hyperlink.setOnAction( event -> hostServices.showDocument( hyperlink.getText() ));
-
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(
-			new ImageView( new Image( PERA.getResourceAsStream( PERA.LOGO_NAME ))),
-			hyperlink
-		);
-		getDialogPane().getButtonTypes().add( ButtonType.OK );
-		getDialogPane().setContent( vbox );
+	@Test
+	@SuppressWarnings( "static-method" )
+	public void testGetResourceAsStream() {
+		// We are just interested whether we can load a resource, so if one works, then we assume
+		// the others will too:
+		assertNotNull( PERA.getResourceAsStream( PERA.ICON_NAME ));
 	}
 }
