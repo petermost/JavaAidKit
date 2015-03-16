@@ -15,17 +15,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.javafx.standard;
-
-import com.pera_software.aidkit.*;
-import javafx.scene.image.*;
-
 /**
  * @author P. Most
  *
  */
-public class ExitImage extends Image {
-	public ExitImage() {
-		super( AidKit.getResourceAsStream( AidKit.APPLICATION_EXIT_ICON ));
-	}
-}
+@org.eclipse.jdt.annotation.NonNullByDefault
+package com.pera_software.aidkit.javafx.scene.image;

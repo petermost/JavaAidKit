@@ -15,19 +15,17 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.javafx.standard;
+package com.pera_software.aidkit.javafx.scene.image;
 
-import javafx.scene.control.*;
+import com.pera_software.aidkit.*;
 import javafx.scene.image.*;
 
 /**
  * @author P. Most
  *
  */
-public class OpenMenuItem extends MenuItem {
-
-	public OpenMenuItem() {
-		super( "_Open..." );
-		setGraphic( new ImageView( new OpenImage() ));
+public class OpenImage extends Image {
+	public OpenImage() {
+		super( AidKit.getResourceAsStream( AidKit.DOCUMENT_OPEN_ICON ));
 	}
 }
