@@ -18,6 +18,7 @@
 package com.pera_software.company;
 
 import java.io.*;
+import java.util.*;
 
 /**
  * @author P. Most
@@ -46,7 +47,8 @@ public final class PERA {
 	private PERA() {
 	}
 	
+	@SuppressWarnings( "null" )
 	public static InputStream getResourceAsStream( String resourceName ) {
-		return PERA.class.getResourceAsStream( resourceName );	
+		return Objects.requireNonNull( PERA.class.getResourceAsStream( resourceName ));	
 	}
 }

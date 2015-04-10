@@ -1,4 +1,4 @@
-// Copyright 2014 Peter Most, PERA Software Solutions GmbH
+// Copyright 2015 Peter Most, PERA Software Solutions GmbH
 //
 // This file is part of the JavaAidKit library.
 //
@@ -20,63 +20,72 @@ package com.pera_software.aidkit.javafx.scene;
 import org.controlsfx.control.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.image.*;
 import javafx.scene.layout.*;
-import javafx.stage.*;
+import javafx.scene.paint.*;
 
 /**
  * @author P. Most
  *
  */
+@SuppressWarnings( "null" )
 public class MainScene extends Scene {
 
-	private Stage _stage;
 	private MenuBar _menuBar;
 	private StatusBar _statusBar;
-	
-	@SuppressWarnings( "null" )
-	public MainScene( Stage stage ) {
+	private BorderPane _borderPane;
+
+	public MainScene() {
 		super( new BorderPane() );
-		_stage = stage;
+		setupMenuAndStatusBar();
+	}
+
+	public MainScene( Paint fill ) {
+		super( new BorderPane(), fill );
+		setupMenuAndStatusBar();
+	}
+
+	public MainScene( double width, double height ) {
+		super( new BorderPane(), width, height );
+		setupMenuAndStatusBar();
+	}
+
+	public MainScene( double width, double height, Paint fill ) {
+		super( new BorderPane(), width, height, fill );
+		setupMenuAndStatusBar();
+	}
+
+	public MainScene( double width, double height, boolean depthBuffer ) {
+		super( new BorderPane(), width, height, depthBuffer );
+		setupMenuAndStatusBar();
+	}
+
+	public MainScene( double width, double height, boolean depthBuffer, SceneAntialiasing antiAliasing ) {
+		super( new BorderPane(), width, height, depthBuffer, antiAliasing );
+		setupMenuAndStatusBar();
 	}
 	
-	public void setWindowTitle( String title ) {
-		_stage.setTitle( title );
+	private void setupMenuAndStatusBar() {
+	
+		// We setup the border pane immediately because if we do it lazily then the height calculation
+		// from the menu bar gets messed up.
+		
+		_menuBar = new MenuBar();
+		_statusBar = new StatusBar();
+		_borderPane = ( BorderPane )getRoot();
+		
+		_borderPane.setTop( _menuBar );
+		_borderPane.setBottom( _statusBar );
 	}
 	
-	public void setWindowIcon( Image icon ) {
-		_stage.getIcons().add( icon );
-	}
-	
-	@SuppressWarnings({ "null" })
-	private BorderPane borderPane() {
-		return ( BorderPane )getRoot();
-	}
-	
-	@SuppressWarnings({ "null", "unused" })
 	public MenuBar menuBar() {
-		if ( _menuBar == null ) {
-			_menuBar = new MenuBar();
-			borderPane().setTop( _menuBar );
-		}
 		return _menuBar;
 	}
 	
-	@SuppressWarnings({ "null", "unused" })
 	public StatusBar statusBar() {
-		if ( _statusBar == null ) {
-			_statusBar = new StatusBar();
-			borderPane().setBottom( _statusBar );
-		}
 		return _statusBar;
 	}
 	
 	public void setCentralNode( Node node ) {
-		borderPane().setCenter( node );
-	}
-
-	public void show() {
-		_stage.setScene( this );
-		_stage.show();
+		_borderPane.setCenter( node );
 	}
 }
