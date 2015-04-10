@@ -18,6 +18,7 @@
 package com.pera_software.aidkit;
 
 import java.io.*;
+import java.util.*;
 
 /**
  * @author P. Most
@@ -34,7 +35,8 @@ public final class AidKit {
 	private AidKit() {
 	}
 	
+	@SuppressWarnings( "null" )
 	public static InputStream getResourceAsStream( String resourceName ) {
-		return AidKit.class.getResourceAsStream( resourceName );
+		return Objects.requireNonNull( AidKit.class.getResourceAsStream( resourceName ));
 	}
 }
