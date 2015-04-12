@@ -1,4 +1,4 @@
-// Copyright 2014 Peter Most, PERA Software Solutions GmbH
+// Copyright 2015 Peter Most, PERA Software Solutions GmbH
 //
 // This file is part of the JavaAidKit library.
 //
@@ -15,28 +15,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit;
-
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
-import java.io.*;
-
 /**
  * @author P. Most
  *
  */
-public final class AidKit {
-	private static final String PACKAGE_NAME = "/com/pera_software/aidkit/icons16x16/";
-
-	// The resource names must be valid Java identifiers!!!
-
-	public static final String APPLICATION_EXIT_ICON = PACKAGE_NAME + "application_exit.png";
-	public static final String DOCUMENT_OPEN_ICON    = PACKAGE_NAME + "document_open.png";
-	
-	private AidKit() {
-	}
-	
-	
-	public static InputStream getResourceAsStream( String resourceName ) {
-		return requireNonNull( AidKit.class.getResourceAsStream( resourceName ));
-	}
-}
+@org.eclipse.jdt.annotation.NonNullByDefault
+package com.pera_software.aidkit.eclipse;

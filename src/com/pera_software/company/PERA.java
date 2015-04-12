@@ -17,8 +17,8 @@
 
 package com.pera_software.company;
 
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 import java.io.*;
-import java.util.*;
 
 /**
  * @author P. Most
@@ -47,8 +47,7 @@ public final class PERA {
 	private PERA() {
 	}
 	
-	@SuppressWarnings( "null" )
 	public static InputStream getResourceAsStream( String resourceName ) {
-		return Objects.requireNonNull( PERA.class.getResourceAsStream( resourceName ));	
+		return requireNonNull( PERA.class.getResourceAsStream( resourceName ));	
 	}
 }
