@@ -20,61 +20,55 @@ package com.pera_software.aidkit.javafx.scene.control;
 import javafx.scene.*;
 import javafx.scene.control.*;
 
-public class Label extends javafx.scene.control.Label
-{
+public class Label extends javafx.scene.control.Label {
 	// These are just forwarding constructor:
 
-	public Label()
-	{
+	public Label() {
 		super();
 
-		setDefaults( null );
+		setDefaults();
 	}
 
-	public Label( String text )
-	{
+	public Label( String text ) {
 		super( text );
 
-		setDefaults( null );
+		setDefaults();
 	}
 
-
-	public Label( String text, Node graphic )
-	{
+	public Label( String text, Node graphic ) {
 		super( text, graphic );
 
-		setDefaults( null );
+		setDefaults();
 	}
 
 	// These are the enhanced constructors which allow you to immediately label a control:
 
-	public Label( String text, Control labeledControl )
-	{
+	public Label( String text, Control labeledControl ) {
 		super( text );
 
 		setDefaults( labeledControl );
 	}
 
-	public Label( String text, Node graphic, Control labeledControl )
-	{
+	public Label( String text, Node graphic, Control labeledControl ) {
 		super( text, graphic );
 
 		setDefaults( labeledControl );
 	}
 
-	private void setDefaults( Control labeledControl  )
-	{
+	private void setDefaults() {
 		setMnemonicParsing( true );
-
+		
 		// Prevent the label from shrinking bellow its preferred size:
-
+		
 		setMinWidth( USE_PREF_SIZE );
-
+		
 		// We don't want the label to grow with its parent, so we don't do:
 		// setMaxWidth( Double.MAX_VALUE );
 		// HBox.setHgrow( this, Priority.ALWAYS );
-
-		if ( labeledControl != null )
-			setLabelFor( labeledControl );
+	}
+	
+	private void setDefaults( Control labeledControl ) {
+		setDefaults();
+		setLabelFor( labeledControl );
 	}
 }

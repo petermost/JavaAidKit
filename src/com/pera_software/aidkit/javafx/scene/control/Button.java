@@ -20,36 +20,30 @@ package com.pera_software.aidkit.javafx.scene.control;
 import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
+public class Button extends javafx.scene.control.Button {
+	private KeyCombination _accelerator = requireNonNull( KeyCombination.NO_MATCH );
 
-public class Button extends javafx.scene.control.Button
-{
-	private KeyCombination _accelerator;
-
-	public Button()
-	{
+	public Button() {
 		super();
 
 		setDefaults();
 	}
 
-	public Button( String text )
-	{
+	public Button( String text ) {
 		super( text );
 
 		setDefaults();
 	}
 
-	public Button( String text, Node graphic )
-	{
+	public Button( String text, Node graphic ) {
 		super( text, graphic );
 
 		setDefaults();
 	}
 
-
-	private void setDefaults()
-	{
+	private void setDefaults() {
 		// Prevent the button from shrinking bellow its preferred size:
 
 		setMinWidth( USE_PREF_SIZE );
@@ -60,29 +54,27 @@ public class Button extends javafx.scene.control.Button
 		HBox.setHgrow( this, Priority.ALWAYS );
 	}
 
-	public final void setAccelerator( KeyCombination accelerator )
-	{
+	public final void setAccelerator( KeyCombination accelerator ) {
 		_accelerator = accelerator;
 
 		Scene scene = getScene();
 		if ( scene != null ) {
 			scene.addEventHandler( KeyEvent.KEY_PRESSED, ( KeyEvent event ) -> {
-				if ( _accelerator.match( event )) {
+				if ( _accelerator.match( event ) ) {
 					arm();
 				}
-			});
+			} );
 			scene.addEventHandler( KeyEvent.KEY_RELEASED, ( KeyEvent event ) -> {
-				if ( _accelerator.match( event )) {
+				if ( _accelerator.match( event ) ) {
 					fire();
 					disarm();
 				}
-			});
+			} );
 		}
 
 	}
 
-	public final KeyCombination getAccelerator()
-	{
+	public final KeyCombination getAccelerator() {
 		return _accelerator;
 	}
 }

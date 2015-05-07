@@ -17,6 +17,7 @@
 
 package com.pera_software.aidkit.javafx.log;
 
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 import javafx.beans.property.*;
 import javafx.scene.image.*;
 
@@ -24,14 +25,13 @@ import javafx.scene.image.*;
  * @author P. Most
  *
  */
-public class LogMessage
-{
+public class LogMessage {
 	private static final Image IMAGES[] = {
-		Images.loadImage( Images.TRACE ),
-		Images.loadImage( Images.DEBUG_2 ),
-		Images.loadImage( Images.INFO ),
-		Images.loadImage( Images.WARN ),
-		Images.loadImage( Images.ERROR ),
+		Images.loadImage( Images.TRACE ), 
+		Images.loadImage( Images.DEBUG_2 ), 
+		Images.loadImage( Images.INFO ), 
+		Images.loadImage( Images.WARN ), 
+		Images.loadImage( Images.ERROR ), 
 		Images.loadImage( Images.ERROR )
 	};
 
@@ -40,52 +40,43 @@ public class LogMessage
 	private ReadOnlyStringWrapper _name = new ReadOnlyStringWrapper();
 	private ReadOnlyStringWrapper _text = new ReadOnlyStringWrapper();
 
-	public LogMessage( LogLevel level, String name, String text )
-	{
-		_image.set( IMAGES[ level.ordinal() ]);
+	public LogMessage( LogLevel level, String name, String text ) {
+		_image.set( requireNonNull( IMAGES[ level.ordinal() ] ));
 		_level.set( level );
 		_name.set( name );
 		_text.set( text );
 
 	}
 
-	public final ReadOnlyObjectProperty< Image > imageProperty()
-	{
-		return _image.getReadOnlyProperty();
+	public final ReadOnlyObjectProperty< Image > imageProperty() {
+		return requireNonNull( _image.getReadOnlyProperty() );
 	}
 
-	public final Image getImage()
-	{
+	public final Image getImage() {
 		return imageProperty().get();
 	}
 
-	public final ReadOnlyObjectProperty< LogLevel > levelProperty()
-	{
-		return _level.getReadOnlyProperty();
+	public final ReadOnlyObjectProperty< LogLevel > levelProperty() {
+		return requireNonNull( _level.getReadOnlyProperty() );
 	}
 
-	public final LogLevel getLevel()
-	{
+	public final LogLevel getLevel() {
 		return levelProperty().get();
 	}
 
-	public final ReadOnlyStringProperty nameProperty()
-	{
-		return _name.getReadOnlyProperty();
+	public final ReadOnlyStringProperty nameProperty() {
+		return requireNonNull( _name.getReadOnlyProperty() );
 	}
 
-	public final String getName()
-	{
-		return nameProperty().get();
+	public final String getName() {
+		return requireNonNull( nameProperty().get() );
 	}
 
-	public final ReadOnlyStringProperty textProperty()
-	{
-		return _text.getReadOnlyProperty();
+	public final ReadOnlyStringProperty textProperty() {
+		return requireNonNull( _text.getReadOnlyProperty() );
 	}
 
-	public final String getText()
-	{
-		return textProperty().get();
+	public final String getText() {
+		return requireNonNull( textProperty().get() );
 	}
 }

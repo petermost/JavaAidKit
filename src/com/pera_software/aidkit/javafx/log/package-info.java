@@ -15,20 +15,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.javafx.util.converter;
-
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
-import org.eclipse.jdt.annotation.*;
-import javafx.util.*;
-
-public class IntegerStringConverter extends StringConverter< Number > {
-	@Override
-	public String toString( Number number ) {
-		return requireNonNull( number.toString() );
-	}
-
-	@Override
-	public Number fromString( @Nullable String string ) {
-		return requireNonNull( Integer.parseInt( string ));
-	}
-}
+/**
+ * @author P. Most
+ *
+ */
+@org.eclipse.jdt.annotation.NonNullByDefault
+package com.pera_software.aidkit.javafx.log;

@@ -22,53 +22,49 @@ import javafx.collections.*;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 
-
 /**
  * @author P. Most
  *
  */
-public class LogView extends TableView< LogMessage >
-{
-	public LogView()
-	{
+public class LogView extends TableView< LogMessage > {
+	public LogView() {
 		super();
 
 		init();
 	}
 
-	public LogView( ObservableList< LogMessage > items )
-	{
+	public LogView( ObservableList< LogMessage > items ) {
 		super( items );
 
 		init();
 	}
 
-	private void init()
-	{
+	private void init() {
 		createColumns();
 	}
 
-	@SuppressWarnings({ "unchecked" })
-	private void createColumns()
-	{
-//		TableColumn< LogMessage, Image > iconColumn = new TableColumn<>( "Icon" );
-//		iconColumn.setCellFactory( new ImageTableCellFactory< LogMessage >() );
-//		iconColumn.setCellValueFactory( cell -> cell.getValue().imageProperty() );
-
+	@SuppressWarnings( "unchecked" )
+	private void createColumns() {
+		// Create the columns for the level icon:
+		
 		TableColumn< LogMessage, ImageTextCellValue > iconLevelColumn = new TableColumn<>( "Level" );
 		iconLevelColumn.setCellFactory( new ImageTextTableCellFactory< LogMessage >() );
-		iconLevelColumn.setCellValueFactory( cell -> new ImageTextCellValue( cell.getValue().getImage(), cell.getValue().getLevel().toString() ) );
+		iconLevelColumn.setCellValueFactory( cell -> new ImageTextCellValue( cell.getValue().getImage(), 
+			cell.getValue().getLevel().toString() ) );
 
-		TableColumn< LogMessage, String > nameColumn = new TableColumn< >( "Name" );
-		nameColumn.setCellValueFactory(( CellDataFeatures< LogMessage, String > p ) -> p.getValue().nameProperty() );
+		// Create the column for the name:
+		
+		TableColumn< LogMessage, String > nameColumn = new TableColumn<>( "Name" );
+		nameColumn.setCellValueFactory( ( CellDataFeatures< LogMessage, String > p ) -> p.getValue().nameProperty() );
 
-		TableColumn< LogMessage, String > textColumn = new TableColumn< >( "Text" );
-		textColumn.setCellValueFactory(( CellDataFeatures< LogMessage, String > p ) -> p.getValue().textProperty() );
+		// Create the column for the text:
+		
+		TableColumn< LogMessage, String > textColumn = new TableColumn<>( "Text" );
+		textColumn.setCellValueFactory( ( CellDataFeatures< LogMessage, String > p ) -> p.getValue().textProperty() );
 
 		getColumns().addAll( iconLevelColumn, nameColumn, textColumn );
 
 		// setColumnResizePolicy(( ResizeFeatures features ) -> Boolean.TRUE );
 	}
-
 
 }
