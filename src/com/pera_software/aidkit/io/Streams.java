@@ -18,17 +18,16 @@
 package com.pera_software.aidkit.io;
 
 import java.io.*;
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 //##################################################################################################
 
-public final class Streams
-{
+public final class Streams {
 	private static final int BUFFER_SIZE = 8192;
 
 	//==============================================================================================
 
-	private Streams()
-	{
+	private Streams() {
 	}
 
 	//==============================================================================================
@@ -36,9 +35,7 @@ public final class Streams
 	/**
 	 * Copy the content of one stream to another stream.
 	 */
-	public static void copy( InputStream inputStream, OutputStream outputStream )
-		throws IOException
-	{
+	public static void copy( InputStream inputStream, OutputStream outputStream ) throws IOException {
 		int length;
 		byte buffer[] = new byte[ BUFFER_SIZE ];
 		while ( ( length = inputStream.read( buffer ) ) > 0 ) {
@@ -51,9 +48,7 @@ public final class Streams
 	/**
 	 * Read the complete content from the stream.
 	 */
-	public static String read( InputStream inputStream )
-		throws IOException
-	{
+	public static String read( InputStream inputStream ) throws IOException {
 		int length;
 
 		char buffer[] = new char[ BUFFER_SIZE ];
@@ -62,7 +57,7 @@ public final class Streams
 		while ( ( length = streamReader.read( buffer ) ) > 0 )
 			content.append( buffer, 0, length );
 
-		return ( content.toString() );
+		return requireNonNull( content.toString() );
 	}
 
 	//==============================================================================================
@@ -70,9 +65,7 @@ public final class Streams
 	/**
 	 * Write the content to the stream.
 	 */
-	public static void write( OutputStream outputStream, String content )
-		throws IOException
-	{
+	public static void write( OutputStream outputStream, String content ) throws IOException {
 		OutputStreamWriter streamWriter = new OutputStreamWriter( outputStream );
 		streamWriter.write( content );
 		streamWriter.flush();

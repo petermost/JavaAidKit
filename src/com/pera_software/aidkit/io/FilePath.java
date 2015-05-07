@@ -19,24 +19,23 @@ package com.pera_software.aidkit.io;
 
 import java.util.*;
 import com.pera_software.aidkit.collection.*;
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 //##################################################################################################
 
-public class FilePath
-{
-	private static final char DRIVE_SEPARATOR     = ':';
+public class FilePath {
+	private static final char DRIVE_SEPARATOR = ':';
 	private static final char DIRECTORY_SEPARATOR = '/'; // Works on all platforms.
 	private static final char EXTENSION_SEPARATOR = '.';
 
-	private String _drive = null;
+	private String _drive = "";
 	private CyclicList< String > _directories = new CyclicList<>( new ArrayList< String >() );
-	private String _name = null;
+	private String _name = "";
 	private CyclicList< String > _extensions = new CyclicList<>( new ArrayList< String >() );
 
 	//==============================================================================================
 
-	public FilePath( String path )
-	{
+	public FilePath( String path ) {
 		final char WINDOWS_DIRECTORY_SEPARATOR = '\\';
 		final char UNIX_DIRECTORY_SEPARATOR = '/';
 
@@ -47,38 +46,32 @@ public class FilePath
 		// Extract the drive and the directories:
 
 		for ( end = 0; end < path.length(); ++end ) {
-			if (( c = path.charAt( end )) == DRIVE_SEPARATOR ) {
-				setDrive( path.substring( begin, end + 1 ));
+			if ( ( c = path.charAt( end ) ) == DRIVE_SEPARATOR ) {
+				setDrive( requireNonNull( path.substring( begin, end + 1 ) ) );
 				begin = end + 1;
 			} else if ( c == UNIX_DIRECTORY_SEPARATOR || c == WINDOWS_DIRECTORY_SEPARATOR ) {
-				addDirectory( path.substring( begin, end + 1 ));
+				addDirectory( requireNonNull( path.substring( begin, end + 1 ) ) );
 				begin = end + 1;
 			}
 		}
-		if ( getDrive() == null )
-			setDrive( "" );
-
 		// Extract the name and the extensions:
 
 		for ( end = begin; end < path.length(); ++end ) {
-			if (( isEnd = ( end == path.length() - 1 )) || ( c = path.charAt( end )) == EXTENSION_SEPARATOR ) {
-				if ( getName() == null )
-					setName( path.substring( begin, isEnd ? end + 1 : end ) );
+			if ( ( isEnd = ( end == path.length() - 1 ) ) || ( c = path.charAt( end ) ) == EXTENSION_SEPARATOR ) {
+				if ( getName().isEmpty() )
+					setName( requireNonNull( path.substring( begin, isEnd ? end + 1 : end )));
 				else
-					addExtension( path.substring( begin, isEnd ? end + 1 : end ) );
+					addExtension( requireNonNull( path.substring( begin, isEnd ? end + 1 : end )));
 
 				begin = end;
 			}
 		}
-		if ( getName() == null )
-			setName( "" );
 	}
 
 	//==============================================================================================
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		StringBuilder path = new StringBuilder();
 
 		path.append( _drive );
@@ -90,21 +83,19 @@ public class FilePath
 		for ( String extension : _extensions )
 			path.append( extension );
 
-		return ( path.toString() );
+		return ( requireNonNull( path.toString() ) );
 	}
 
 	//==============================================================================================
 
-	private static String addPrefixSeparator( String string, char separator )
-	{
+	private static String addPrefixSeparator( String string, char separator ) {
 		if ( !string.isEmpty() && string.charAt( 0 ) != separator )
 			return ( separator + string );
 		else
 			return ( string );
 	}
 
-	private static String addPostfixSeparator( String string, char separator )
-	{
+	private static String addPostfixSeparator( String string, char separator ) {
 		if ( !string.isEmpty() && string.charAt( string.length() - 1 ) != separator )
 			return ( string + separator );
 		else
@@ -113,121 +104,99 @@ public class FilePath
 
 	//==============================================================================================
 
-	private static String addDriveSeparator( String device )
-	{
+	private static String addDriveSeparator( String device ) {
 		return ( addPostfixSeparator( device, DRIVE_SEPARATOR ) );
 	}
 
-	public void setDrive( String drive )
-	{
+	public void setDrive( String drive ) {
 		_drive = addDriveSeparator( drive );
 	}
 
-	public String getDrive()
-	{
+	public String getDrive() {
 		return ( _drive );
 	}
 
-	public void removeDrive()
-	{
+	public void removeDrive() {
 		_drive = "";
 	}
 
 	//==============================================================================================
 
-	private static String addDirectorySeparator( String directory )
-	{
+	private static String addDirectorySeparator( String directory ) {
 		return ( addPostfixSeparator( directory, DIRECTORY_SEPARATOR ) );
 	}
 
-	public void addDirectory( String directory )
-	{
+	public void addDirectory( String directory ) {
 		_directories.add( addDirectorySeparator( directory ) );
 	}
 
-	public void addDirectory( int index, String directory )
-	{
+	public void addDirectory( int index, String directory ) {
 		_directories.add( index, addDirectorySeparator( directory ) );
 	}
 
-	public void setDirectory( int index, String directory )
-	{
+	public void setDirectory( int index, String directory ) {
 		_directories.set( index, addDirectorySeparator( directory ) );
 	}
 
-	public String getDirectory( int index )
-	{
+	public String getDirectory( int index ) {
 		return ( _directories.get( index, "" ) );
 	}
 
-	public void removeDirectory( int index )
-	{
+	public void removeDirectory( int index ) {
 		_directories.remove( index );
 	}
 
 	//==============================================================================================
 
-	public void addName( String name )
-	{
+	public void addName( String name ) {
 		setName( name );
 	}
 
-	public void setName( String name )
-	{
+	public void setName( String name ) {
 		_name = name;
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return ( _name );
 	}
 
-	public void removeName()
-	{
+	public void removeName() {
 		_name = "";
 	}
 
 	//==============================================================================================
 
-	private static String addExtensionSeparator( String extension )
-	{
+	private static String addExtensionSeparator( String extension ) {
 		return ( addPrefixSeparator( extension, EXTENSION_SEPARATOR ) );
 	}
 
-	public void addExtension( String extension )
-	{
+	public void addExtension( String extension ) {
 		_extensions.add( addExtensionSeparator( extension ) );
 	}
 
-	public void addExtension( int index, String extension )
-	{
+	public void addExtension( int index, String extension ) {
 		_extensions.add( index, addExtensionSeparator( extension ) );
 	}
 
-	public void setExtension( int index, String extension )
-	{
+	public void setExtension( int index, String extension ) {
 		_extensions.set( index, addExtensionSeparator( extension ) );
 	}
 
 	/** Get the last extension: */
-	public String getExtension()
-	{
+	public String getExtension() {
 		return ( getExtension( -1 ) );
 	}
 
-	public String getExtension( int index )
-	{
+	public String getExtension( int index ) {
 		return ( _extensions.get( index, "" ) );
 	}
 
 	/** Remove the last extension: */
-	public void removeExtension()
-	{
+	public void removeExtension() {
 		removeExtension( -1 );
 	}
 
-	public void removeExtension( int index )
-	{
+	public void removeExtension( int index ) {
 		_extensions.remove( index );
 	}
 }

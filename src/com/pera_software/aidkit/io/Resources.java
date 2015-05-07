@@ -19,6 +19,7 @@ package com.pera_software.aidkit.io;
 
 import java.net.*;
 import java.nio.file.*;
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 
 /**
@@ -34,7 +35,7 @@ public final class Resources {
 		try {
 			URL resourceUrl = parentClass.getResource( resourceName );
 			URI resourceUri = resourceUrl.toURI();
-			return Paths.get( resourceUri );
+			return requireNonNull( Paths.get( resourceUri ));
 		} catch ( Exception exception ) {
 			throw new ExceptionInInitializerError( exception );
 		}
