@@ -17,43 +17,37 @@
 
 package com.pera_software.aidkit.lang;
 
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
+
 //##################################################################################################
 /**
  * Central class to query platform specific settings.
  */
-public final class SystemEnvironment
-{
-	private SystemEnvironment()
-	{
+public final class SystemEnvironment {
+	private SystemEnvironment() {
 	}
 
 	//==============================================================================================
 
-	public static String systemDrive()
-	{
-		return System.getenv( "SystemDrive" );
+	public static String systemDrive() {
+		return requireNonNull( System.getenv( "SystemDrive" ));
 	}
 
 	//==============================================================================================
 
-	public static String programsDirectory()
-	{
-		return System.getenv( "ProgramFiles(x86)" );
+	public static String programsDirectory() {
+		return requireNonNull( System.getenv( "ProgramFiles(x86)" ));
 	}
 
 	//==============================================================================================
 
-	public static String settingsDirectory()
-	{
-		return System.getenv( "AppData" );
+	public static String settingsDirectory() {
+		return requireNonNull( System.getenv( "AppData" ));
 	}
 
 	//==============================================================================================
 
-	public static String windowsDirectory()
-	{
-		return System.getenv( "windir" );
+	public static String windowsDirectory() {
+		return requireNonNull( System.getenv( "windir" ));
 	}
-
-
 }

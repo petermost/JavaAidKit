@@ -17,6 +17,9 @@
 
 package com.pera_software.aidkit.lang;
 
+import org.eclipse.jdt.annotation.*;
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
+
 /**
  * @author P. Most
  * {@code}
@@ -32,7 +35,7 @@ package com.pera_software.aidkit.lang;
  * </pre></blockquote>
  */
 public class OutputParameter< T > {
-	private T _value;
+	private @Nullable T _value;
 
 	public OutputParameter() {
 	}
@@ -46,6 +49,6 @@ public class OutputParameter< T > {
 	}
 
 	public T get() {
-		return _value;
+		return requireNonNull( _value );
 	}
 }
