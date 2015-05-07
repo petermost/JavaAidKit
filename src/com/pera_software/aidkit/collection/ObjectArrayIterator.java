@@ -17,8 +17,8 @@
 
 package com.pera_software.aidkit.collection;
 
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
 import java.util.*;
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 //#############################################################################
 
@@ -28,6 +28,7 @@ import java.util.*;
  * like the PrimitiveArrayIterator below does, but this version is more straightforward
  * and hence easier to understand.
  */
+// TODO: Rename to GenericArrayIterator
 public class ObjectArrayIterator< T > implements Iterator< T > {
 	private T _array[];
 	private int _index;

@@ -31,21 +31,27 @@ public final class NullObjects {
 	private NullObjects() {
 	}
 	
-	public static< T > T requireNonNull( @Nullable T obj ) {
-		if ( obj == null )
+	@SuppressWarnings( "null" )
+	public static< T > @NonNull T requireNonNull( @Nullable T obj ) {
+		if ( obj != null )
+			return obj;
+		else
 			throw new NullPointerException();
-		return obj;
 	}
 	
-	public static < T > T requireNonNull( @Nullable T obj, String message ) {
-		if ( obj == null )
+	@SuppressWarnings( "null" )
+	public static < T > @NonNull T requireNonNull( @Nullable T obj, @NonNull String message ) {
+		if ( obj != null )
+			return obj;
+		else
 			throw new NullPointerException( message );
-		return obj;
 	}
 
-	public static < T > T requireNonNull( @Nullable T obj, Supplier< String > messageSupplier ) {
-		if ( obj == null )
+	@SuppressWarnings( "null" )
+	public static < T > @NonNull T requireNonNull( @Nullable T obj, @NonNull Supplier< String > messageSupplier ) {
+		if ( obj != null )
+			return obj;
+		else
 			throw new NullPointerException( messageSupplier.get() );
-		return obj;
 	}
 }

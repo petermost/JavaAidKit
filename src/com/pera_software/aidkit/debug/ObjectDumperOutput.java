@@ -17,10 +17,11 @@
 
 package com.pera_software.aidkit.debug;
 
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
+
 //#############################################################################
 
-public class ObjectDumperOutput implements Cloneable
-{
+public class ObjectDumperOutput implements Cloneable {
 	protected StringBuilder _buffer = new StringBuilder();
 
 	//===========================================================================
@@ -28,8 +29,7 @@ public class ObjectDumperOutput implements Cloneable
 	/**
 	 * Add the name of an attribute or an object to the output.
 	 */
-	public void addName( String name )
-	{
+	public void addName( String name ) {
 		_buffer.append( name ).append( " = " );
 	}
 
@@ -38,8 +38,7 @@ public class ObjectDumperOutput implements Cloneable
 	/**
 	 * Add the value of an attribute to the output.
 	 */
-	public void addValue( Object value )
-	{
+	public void addValue( Object value ) {
 		_buffer.append( '<' ).append( value ).append( '>' );
 	}
 
@@ -48,13 +47,11 @@ public class ObjectDumperOutput implements Cloneable
 	/**
 	 * Add a separator after an attribute or a collection to the output.
 	 */
-	public void addSeparator()
-	{
+	public void addSeparator() {
 		_buffer.append( ", " );
 	}
 
-	public void newLine()
-	{
+	public void newLine() {
 		_buffer.append( "\n" );
 	}
 
@@ -63,8 +60,7 @@ public class ObjectDumperOutput implements Cloneable
 	/**
 	 * Begin a collection in the output.
 	 */
-	public void beginCollection( String name, int length )
-	{
+	public void beginCollection( String name, int length ) {
 		_buffer.append( name ).append( '[' ).append( length ).append( "] = [" );
 	}
 
@@ -73,8 +69,7 @@ public class ObjectDumperOutput implements Cloneable
 	/**
 	 * End the collection in the output.
 	 */
-	public void endCollection()
-	{
+	public void endCollection() {
 		_buffer.append( ']' );
 	}
 
@@ -83,8 +78,7 @@ public class ObjectDumperOutput implements Cloneable
 	/**
 	 * Begin the enumeration of attributes in the output.
 	 */
-	public void beginAttributes()
-	{
+	public void beginAttributes() {
 		_buffer.append( '{' );
 	}
 
@@ -93,24 +87,21 @@ public class ObjectDumperOutput implements Cloneable
 	/**
 	 * End the enumeration of attributes in the output.
 	 */
-	public void endAttributes()
-	{
+	public void endAttributes() {
 		_buffer.append( '}' );
 	}
 
 	//===========================================================================
 
 	@Override
-	public String toString()
-	{
-		return ( _buffer.toString() );
+	public String toString() {
+		return ( requireNonNull( _buffer.toString() ));
 	}
 
 	//===========================================================================
 
 	@Override
-	public ObjectDumperOutput clone()
-	{
+	public ObjectDumperOutput clone() {
 		return ( new ObjectDumperOutput() );
 	}
 }

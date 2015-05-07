@@ -25,16 +25,13 @@ import org.junit.Test;
 
 //#############################################################################
 
-class CustomObject implements Dumpable
-{
-	private static enum Color
-	{
+class CustomObject implements Dumpable {
+	private static enum Color {
 		RED, GREEN, BLUE
 	}
 
 	@Override
-	public void dump( ObjectDumper dumper )
-	{
+	public void dump( ObjectDumper dumper ) {
 		dumper.dump( "One", 1 );
 		dumper.dump( "Colors", Color.values() );
 		dumper.dump( "Two", 2 );
@@ -43,67 +40,54 @@ class CustomObject implements Dumpable
 
 //#############################################################################
 
-public class ObjectDumperTest
-{
-	private ObjectDumper mDumper;
+public class ObjectDumperTest {
+	private ObjectDumper _dumper = new ObjectDumper();
 
 	//===========================================================================
 
 	@Before
-	public void setUp()
-	{
-		mDumper = new ObjectDumper();
+	public void setUp() {
+		_dumper = new ObjectDumper();
 	}
 
 	//===========================================================================
 
 	@Test
-	public void testDumpObject()
-	{
+	public void testDumpObject() {
 		CustomObject object = new CustomObject();
 
-		mDumper.dump( "object", object );
-		assertEquals( "object = {One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}",
-			mDumper.toString() );
-		// System.out.println( mDumper.toString() );
+		_dumper.dump( "object", object );
+		assertEquals( "object = {One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}", _dumper.toString() );
 	}
 
 	//===========================================================================
 
 	@Test
-	public void testDumpObjectArray()
-	{
+	public void testDumpObjectArray() {
 		CustomObject array[] = new CustomObject[] {
-			new CustomObject(), new CustomObject()
+		new CustomObject(), new CustomObject()
 		};
-		mDumper.dump( "array", array );
-		assertEquals( "array[2] = [{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}, "
-			+ "{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}]", mDumper.toString() );
-		// System.out.println( mDumper.toString() );
+		_dumper.dump( "array", array );
+		assertEquals( "array[2] = [{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}, " + "{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}]", _dumper.toString() );
 	}
 
 	//===========================================================================
 
 	@Test
-	public void testDumpPrimitiveArray()
-	{
+	public void testDumpPrimitiveArray() {
 		int array[] = {
-			10, 20, 30
+		10, 20, 30
 		};
-		mDumper.dump( "array", array );
-		assertEquals( "array[3] = [<10>, <20>, <30>]", mDumper.toString() );
-		// System.out.println( mDumper.toString() );
+		_dumper.dump( "array", array );
+		assertEquals( "array[3] = [<10>, <20>, <30>]", _dumper.toString() );
 	}
 
 	//===========================================================================
 
 	@Test
-	public void testDumpList()
-	{
+	public void testDumpList() {
 		List< CustomObject > list = Arrays.asList( new CustomObject(), new CustomObject() );
-		mDumper.dump( "list", list );
-		assertEquals( "list[2] = [{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}, "
-			+ "{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}]", mDumper.toString() );
-		// System.out.println( mDumper.toString() );
+		_dumper.dump( "list", list );
+		assertEquals( "list[2] = [{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}, " + "{One = <1>, Colors[3] = [<RED>, <GREEN>, <BLUE>], Two = <2>}]", _dumper.toString() );
 	}
 }

@@ -17,16 +17,17 @@
 
 package com.pera_software.aidkit.debug;
 
-import java.lang.reflect.*;
 import java.util.*;
+import java.lang.reflect.*;
 import com.pera_software.aidkit.collection.*;
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 //#############################################################################
 
-public class ObjectDumper
-{
+public class ObjectDumper {
 	private static ObjectDumperOutput s_outputProtoType = new ObjectDumperOutput();
 
+	// TODO: Do we really need to clone the output?
 	private final ObjectDumperOutput _output = s_outputProtoType.clone();
 	private int _objectCounter = 0;
 
@@ -36,28 +37,24 @@ public class ObjectDumper
 	 * Set which output to use.
 	 */
 
-	public static void setOutputPrototype( ObjectDumperOutput protoType )
-	{
+	public static void setOutputPrototype( ObjectDumperOutput protoType ) {
 		s_outputProtoType = protoType;
 	}
 
 	//===========================================================================
 
-	private void addSeparator( int counter )
-	{
+	private void addSeparator( int counter ) {
 		if ( counter > 0 )
 			_output.addSeparator();
 	}
 
-	public void newLine()
-	{
+	public void newLine() {
 		_output.newLine();
 	}
 
 	//===========================================================================
 
-	private int swapObjectCounter( int newValue )
-	{
+	private int swapObjectCounter( int newValue ) {
 		int oldValue = _objectCounter;
 		_objectCounter = newValue;
 		return ( oldValue );
@@ -65,8 +62,7 @@ public class ObjectDumper
 
 	//===========================================================================
 
-	private void dumpObject( Object object )
-	{
+	private void dumpObject( Object object ) {
 		if ( object instanceof Dumpable ) {
 			int oldObjectCounter = swapObjectCounter( 0 );
 
@@ -81,26 +77,20 @@ public class ObjectDumper
 
 	//===========================================================================
 
-	private void dumpCollection( String name, Iterator< ? > iterator, int length )
-	{
+	private void dumpCollection( String name, Iterator< ? > iterator, int length ) {
 		addSeparator( _objectCounter++ );
 
 		_output.beginCollection( name, length );
 		for ( int i = 0; iterator.hasNext(); ++i ) {
 			addSeparator( i );
-
-			dumpObject( iterator.next() );
+			dumpObject( requireNonNull( iterator.next() ));
 		}
 		_output.endCollection();
 	}
 
 	//===========================================================================
 
-	public void dump( String name, Object object )
-	{
-		if ( object == null )
-			object = "<null>";
-
+	public void dump( String name, Object object ) {
 		if ( object.getClass().isArray() )
 			dumpCollection( name, new PrimitiveArrayIterator( object ), Array.getLength( object ) );
 		else {
@@ -112,30 +102,26 @@ public class ObjectDumper
 
 	//===========================================================================
 
-	public void dump( String name, Object objects[] )
-	{
+	public void dump( String name, Object objects[] ) {
 		dumpCollection( name, new ObjectArrayIterator<>( objects ), objects.length );
 	}
 
 	//===========================================================================
 
-	public void dump( String name, List< ? > objects )
-	{
-		dumpCollection( name, objects.iterator(), objects.size() );
+	public void dump( String name, List< ? > objects ) {
+		dumpCollection( name, requireNonNull( objects.iterator() ), objects.size() );
 	}
 
 	//===========================================================================
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		_objectCounter = 0;
 
 		return ( _output.toString() );
 	}
 
-	public static String toString( Dumpable dumpable )
-	{
+	public static String toString( Dumpable dumpable ) {
 		ObjectDumper objectDumper = new ObjectDumper();
 		dumpable.dump( objectDumper );
 		return objectDumper.toString();
