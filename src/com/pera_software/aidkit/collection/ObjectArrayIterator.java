@@ -17,6 +17,7 @@
 
 package com.pera_software.aidkit.collection;
 
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 import java.util.*;
 
 //#############################################################################
@@ -27,15 +28,13 @@ import java.util.*;
  * like the PrimitiveArrayIterator below does, but this version is more straightforward
  * and hence easier to understand.
  */
-public class ObjectArrayIterator< T > implements Iterator< T >
-{
+public class ObjectArrayIterator< T > implements Iterator< T > {
 	private T _array[];
 	private int _index;
 
 	//===========================================================================
 
-	public ObjectArrayIterator( T array[] )
-	{
+	public ObjectArrayIterator( T array[] ) {
 		_array = array;
 		_index = 0;
 	}
@@ -43,24 +42,21 @@ public class ObjectArrayIterator< T > implements Iterator< T >
 	//===========================================================================
 
 	@Override
-	public boolean hasNext()
-	{
+	public boolean hasNext() {
 		return _index < _array.length;
 	}
 
 	//===========================================================================
 
 	@Override
-	public T next()
-	{
-		return _array[ _index++ ];
+	public T next() {
+		return requireNonNull( _array[ _index++ ]);
 	}
 
 	//===========================================================================
 
 	@Override
-	public void remove()
-	{
-		throw new UnsupportedOperationException( "ArrayIterator< T >.remove()" );
+	public void remove() {
+		throw new UnsupportedOperationException( "ObjectArrayIterator< T >.remove()" );
 	}
 }

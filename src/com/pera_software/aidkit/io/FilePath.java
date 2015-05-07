@@ -29,9 +29,9 @@ public class FilePath
 	private static final char EXTENSION_SEPARATOR = '.';
 
 	private String _drive = null;
-	private WarpList< String > _directories = new WarpList<>( new ArrayList< String >() );
+	private CyclicList< String > _directories = new CyclicList<>( new ArrayList< String >() );
 	private String _name = null;
-	private WarpList< String > _extensions = new WarpList<>( new ArrayList< String >() );
+	private CyclicList< String > _extensions = new CyclicList<>( new ArrayList< String >() );
 
 	//==============================================================================================
 

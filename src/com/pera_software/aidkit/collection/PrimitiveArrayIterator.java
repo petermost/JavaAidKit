@@ -24,15 +24,13 @@ import java.util.*;
  * Iterator for primitive arrays which uses the java.lang.reflect.Array class
  * to iterate over the elements.
  */
-public class PrimitiveArrayIterator implements Iterator< Object >
-{
+public class PrimitiveArrayIterator implements Iterator< Object > {
 	private Object _array;
 	private int _index;
 
 	//===========================================================================
 
-	public PrimitiveArrayIterator( Object array )
-	{
+	public PrimitiveArrayIterator( Object array ) {
 		_array = array;
 		_index = 0;
 	}
@@ -40,24 +38,22 @@ public class PrimitiveArrayIterator implements Iterator< Object >
 	//===========================================================================
 
 	@Override
-	public boolean hasNext()
-	{
+	public boolean hasNext() {
 		return _index < Array.getLength( _array );
 	}
 
 	//===========================================================================
 
+	@SuppressWarnings( "null" )
 	@Override
-	public Object next()
-	{
+	public Object next() {
 		return Array.get( _array, _index++ );
 	}
 
 	//===========================================================================
 
 	@Override
-	public void remove()
-	{
+	public void remove() {
 		throw new UnsupportedOperationException( "PrimitiveArrayIterator.remove()" );
 	}
 }
