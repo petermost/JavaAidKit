@@ -20,6 +20,8 @@ package com.pera_software.aidkit.net;
 import java.lang.reflect.*;
 import java.net.*;
 import java.util.*;
+import org.eclipse.jdt.annotation.*;
+import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 /*
  * According to this article http://support.microsoft.com/kb/308512 the windows
@@ -39,13 +41,13 @@ import java.util.*;
  * String hostName = InetAddress.getHostName();
  * long after = System.currentTimeMillis();
  */
-//#############################################################################
+//##################################################################################################
 
 public class HostNameResolver
 {
-	private static HashMap< InetAddress, String > s_hostNameCache = new HashMap<>();
+	private static HashMap< @Nullable InetAddress, @Nullable String > s_hostNameCache = new HashMap<>();
 
-	//===========================================================================
+	//==============================================================================================
 
 	public static synchronized String getHostName( InetAddress address )
 	{
@@ -75,6 +77,6 @@ public class HostNameResolver
 
 			hostName = address.getHostName();
 		}
-		return ( hostName );
+		return requireNonNull( hostName );
 	}
 }
