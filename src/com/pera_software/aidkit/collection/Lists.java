@@ -49,4 +49,13 @@ public final class Lists {
 		});
 		return duplicates;
 	}
+
+	//==============================================================================================
+	
+	public static < T > List< T > addAll( List< T > list, T array[] ) {
+		for ( T t : array )
+			list.add( t );
+		
+		return list;
+	}
 }
