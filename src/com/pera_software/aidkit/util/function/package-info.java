@@ -1,4 +1,4 @@
-// Copyright 2014 Peter Most, PERA Software Solutions GmbH
+// Copyright 2015 Peter Most, PERA Software Solutions GmbH
 //
 // This file is part of the JavaAidKit library.
 //
@@ -9,16 +9,15 @@
 //
 // JavaAidKit is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with JavaAidKit.  If not, see <http://www.gnu.org/licenses/>.
+// along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * @author P. Most
+ *
+ */
+@org.eclipse.jdt.annotation.NonNullByDefault
 package com.pera_software.aidkit.util.function;
-
-public interface Callable0
-{
-	void call()
-		throws Exception;
-}

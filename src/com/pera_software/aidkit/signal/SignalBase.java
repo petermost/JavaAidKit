@@ -25,8 +25,7 @@ import com.pera_software.aidkit.util.function.*;
 // An excellent article: "Java theory and practice: Be a good (event) listener"
 // (http://www.ibm.com/developerworks/java/library/j-jtp07265/index.html)
 
-abstract class SignalBase< T > extends Signal
-{
+abstract class SignalBase< T > extends Signal {
 	private List< T > _slots = new CopyOnWriteArrayList<>();
 
 	//==============================================================================================
@@ -35,8 +34,7 @@ abstract class SignalBase< T > extends Signal
 	 * @param slot The slot which gets connected.
 	 * @return Whether the slot was connected.
 	 */
-	public boolean connect( T slot )
-	{
+	public boolean connect( T slot ) {
 		Objects.requireNonNull( slot );
 
 		return _slots.add( slot );
@@ -48,8 +46,7 @@ abstract class SignalBase< T > extends Signal
 	 * @param slot The slot which get disconnected.
 	 * @return Whether the slot was disconnected.
 	 */
-	public boolean disconnect( T slot )
-	{
+	public boolean disconnect( T slot ) {
 		Objects.requireNonNull( slot );
 
 		return _slots.remove( slot );
@@ -57,23 +54,20 @@ abstract class SignalBase< T > extends Signal
 
 	//==============================================================================================
 
-	public int receivers()
-	{
+	public int receivers() {
 		return _slots.size();
 	}
 
 	//==============================================================================================
 	/**
 	 * Apply an action to each slot.
-	 * @param action The action to apply to each slot.
+	 * @param procedure The action to apply to each slot.
 	 */
-	protected void forEach( Callable1< ? super T > action )
-		throws Exception
-	{
-		Objects.requireNonNull( action );
+	protected void forEach( Procedure1< ? super T > procedure ) throws Exception {
+		Objects.requireNonNull( procedure );
 
 		for ( T slot : _slots ) {
-			action.call( slot );
+			procedure.body( slot );
 		}
 	}
 }
