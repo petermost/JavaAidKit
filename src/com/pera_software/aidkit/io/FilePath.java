@@ -17,7 +17,6 @@
 
 package com.pera_software.aidkit.io;
 
-import java.util.*;
 import com.pera_software.aidkit.collection.*;
 import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
@@ -29,9 +28,9 @@ public class FilePath {
 	private static final char EXTENSION_SEPARATOR = '.';
 
 	private String _drive = "";
-	private CyclicList< String > _directories = new CyclicList<>( new ArrayList< String >() );
+	private CyclicList< String > _directories = new CyclicList<>();
 	private String _name = "";
-	private CyclicList< String > _extensions = new CyclicList<>( new ArrayList< String >() );
+	private CyclicList< String > _extensions = new CyclicList<>();
 
 	//==============================================================================================
 

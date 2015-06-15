@@ -27,7 +27,7 @@ import java.util.*;
  * last element -2 the element before that etc.
  */
 public class CyclicList< T > implements Iterable< T > {
-	private List< T > _list;
+	private List< T > _list = new ArrayList<>();
 
 	//==============================================================================================
 
@@ -37,8 +37,7 @@ public class CyclicList< T > implements Iterable< T > {
 
 	//==============================================================================================
 
-	public CyclicList( List< T > list ) {
-		_list = list;
+	public CyclicList() {
 	}
 
 	//==============================================================================================
