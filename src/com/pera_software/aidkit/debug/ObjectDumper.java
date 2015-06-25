@@ -103,7 +103,7 @@ public class ObjectDumper {
 	//===========================================================================
 
 	public void dump( String name, Object objects[] ) {
-		dumpCollection( name, new ObjectArrayIterator<>( objects ), objects.length );
+		dumpCollection( name, new GenericArrayIterator<>( objects ), objects.length );
 	}
 
 	//===========================================================================

@@ -20,6 +20,8 @@ package com.pera_software.aidkit.eclipse;
 import java.util.function.*;
 import org.eclipse.jdt.annotation.*;
 
+//##################################################################################################
+
 /**
  * These methods are basically a copy of {@link java.util.Objects#requireNonNull} but enhanced with the eclipse
  * annotations for null analysis.
@@ -28,27 +30,33 @@ import org.eclipse.jdt.annotation.*;
  * @author P. Most
  */
 public final class NullObjects {
+
+	//==============================================================================================
+	
 	private NullObjects() {
 	}
 	
-	@SuppressWarnings( "null" )
-	public static< T > @NonNull T requireNonNull( @Nullable T obj ) {
+	//==============================================================================================
+	
+	public static< T > T requireNonNull( @Nullable T obj ) {
 		if ( obj != null )
 			return obj;
 		else
 			throw new NullPointerException();
 	}
 	
-	@SuppressWarnings( "null" )
-	public static < T > @NonNull T requireNonNull( @Nullable T obj, @NonNull String message ) {
+	//==============================================================================================
+	
+	public static < T > T requireNonNull( @Nullable T obj, String message ) {
 		if ( obj != null )
 			return obj;
 		else
 			throw new NullPointerException( message );
 	}
 
-	@SuppressWarnings( "null" )
-	public static < T > @NonNull T requireNonNull( @Nullable T obj, @NonNull Supplier< String > messageSupplier ) {
+	//==============================================================================================
+	
+	public static < T > T requireNonNull( @Nullable T obj, Supplier< String > messageSupplier ) {
 		if ( obj != null )
 			return obj;
 		else

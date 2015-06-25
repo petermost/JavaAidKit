@@ -18,7 +18,6 @@
 package com.pera_software.aidkit.nio.channels;
 
 import java.nio.channels.*;
-import org.eclipse.jdt.annotation.*;
 
 /**
  * @author P. Most
@@ -30,17 +29,6 @@ public final class CompletionHandlers {
 	}
 
 	public static < V, A > CompletionHandler< V, A > makeHandler( ChannelCompletionHandler< V, A > handler ) {
-		return new CompletionHandler< V, A >() {
-
-			@Override
-			public void completed( @Nullable V value, @Nullable A attachment ) {
-				handler.handle( value, null, attachment );
-			}
-
-			@Override
-			public void failed( @Nullable Throwable exception, @Nullable A attachment ) {
-				handler.handle( null, exception, attachment );
-			}
-		};
+		return handler;
 	}
 }

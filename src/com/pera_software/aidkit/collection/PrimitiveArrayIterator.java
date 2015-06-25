@@ -47,7 +47,7 @@ public class PrimitiveArrayIterator implements Iterator< Object > {
 
 	@Override
 	public Object next() {
-		return requireNonNull( Array.get( _array, _index++ ) );
+		return requireNonNull( Array.get( _array, _index++ ));
 	}
 
 	//===========================================================================

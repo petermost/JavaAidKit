@@ -18,24 +18,22 @@
 package com.pera_software.aidkit.collection;
 
 import java.util.*;
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 //#############################################################################
 
 /**
- * Iterator for object arrays.
+ * Iterator for generic arrays.
  * Note: This could also be implemented with the java.lang.reflect.Array class
- * like the PrimitiveArrayIterator below does, but this version is more straightforward
+ * like the PrimitiveArrayIterator does, but this version is more straightforward
  * and hence easier to understand.
  */
-// TODO: Rename to GenericArrayIterator
-public class ObjectArrayIterator< T > implements Iterator< T > {
+public class GenericArrayIterator< T > implements Iterator< T > {
 	private T _array[];
 	private int _index;
 
 	//===========================================================================
 
-	public ObjectArrayIterator( T array[] ) {
+	public GenericArrayIterator( T array[] ) {
 		_array = array;
 		_index = 0;
 	}
@@ -51,13 +49,13 @@ public class ObjectArrayIterator< T > implements Iterator< T > {
 
 	@Override
 	public T next() {
-		return requireNonNull( _array[ _index++ ]);
+		return _array[ _index++ ];
 	}
 
 	//===========================================================================
 
 	@Override
 	public void remove() {
-		throw new UnsupportedOperationException( "ObjectArrayIterator< T >.remove()" );
+		throw new UnsupportedOperationException( "GenericArrayIterator< T >.remove()" );
 	}
 }
