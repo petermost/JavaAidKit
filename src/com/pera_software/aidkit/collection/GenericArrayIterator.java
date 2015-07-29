@@ -51,11 +51,4 @@ public class GenericArrayIterator< T > implements Iterator< T > {
 	public T next() {
 		return _array[ _index++ ];
 	}
-
-	//===========================================================================
-
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException( "GenericArrayIterator< T >.remove()" );
-	}
 }
