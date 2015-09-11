@@ -17,7 +17,7 @@
 
 package com.pera_software.aidkit.lang;
 
-import static com.pera_software.aidkit.nullable.NullObjects.*;
+import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 //##################################################################################################
 /**
@@ -30,24 +30,24 @@ public final class SystemEnvironment {
 	//==============================================================================================
 
 	public static String systemDrive() {
-		return requireNonNull( System.getenv( "SystemDrive" ));
+		return ensureNonNull( System.getenv( "SystemDrive" ));
 	}
 
 	//==============================================================================================
 
 	public static String programsDirectory() {
-		return requireNonNull( System.getenv( "ProgramFiles(x86)" ));
+		return ensureNonNull( System.getenv( "ProgramFiles(x86)" ));
 	}
 
 	//==============================================================================================
 
 	public static String settingsDirectory() {
-		return requireNonNull( System.getenv( "AppData" ));
+		return ensureNonNull( System.getenv( "AppData" ));
 	}
 
 	//==============================================================================================
 
 	public static String windowsDirectory() {
-		return requireNonNull( System.getenv( "windir" ));
+		return ensureNonNull( System.getenv( "windir" ));
 	}
 }

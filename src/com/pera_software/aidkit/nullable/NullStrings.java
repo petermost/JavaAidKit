@@ -1,4 +1,4 @@
-// Copyright 2014 Peter Most, PERA Software Solutions GmbH
+// Copyright 2015 Peter Most, PERA Software Solutions GmbH
 //
 // This file is part of the JavaAidKit library.
 //
@@ -15,20 +15,29 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.javafx.util.converter;
+package com.pera_software.aidkit.nullable;
 
 import org.eclipse.jdt.annotation.*;
-import static com.pera_software.aidkit.nullable.NullStrings.*;
-import javafx.util.*;
+import com.pera_software.aidkit.lang.*;
 
-public class IntegerStringConverter extends StringConverter< Number > {
-	@Override
-	public String toString( Number number ) {
-		return ensureNonNull( number.toString() );
+/**
+ * This class is similar to {@link NullObjects} but for strings and instead of throwing an 
+ * exception it returns an empty string.
+ * 
+ * @author P. Most
+ */
+public final class NullStrings {
+
+	private NullStrings() {
 	}
 
-	@Override
-	public Number fromString( @Nullable String string ) {
-		return Integer.parseInt( string );
+	//==============================================================================================
+	
+	public static String ensureNonNull( @Nullable String str ) {
+		if ( str != null )
+			return str;
+		else
+			return Strings.EMPTY;
 	}
+	
 }

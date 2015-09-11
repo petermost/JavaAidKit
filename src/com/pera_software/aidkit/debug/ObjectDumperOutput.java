@@ -17,7 +17,7 @@
 
 package com.pera_software.aidkit.debug;
 
-import static com.pera_software.aidkit.nullable.NullObjects.*;
+import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 //#############################################################################
 
@@ -95,7 +95,7 @@ public class ObjectDumperOutput implements Cloneable {
 
 	@Override
 	public String toString() {
-		return requireNonNull( _buffer.toString() );
+		return ensureNonNull( _buffer.toString() );
 	}
 
 	//===========================================================================

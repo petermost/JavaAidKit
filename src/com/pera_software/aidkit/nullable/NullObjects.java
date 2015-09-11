@@ -19,7 +19,6 @@ package com.pera_software.aidkit.nullable;
 
 import java.util.function.*;
 import org.eclipse.jdt.annotation.*;
-import com.pera_software.aidkit.lang.*;
 
 //##################################################################################################
 
@@ -35,15 +34,6 @@ public final class NullObjects {
 	//==============================================================================================
 	
 	private NullObjects() {
-	}
-	
-	//==============================================================================================
-	
-	public static String requireNonNull( @Nullable String str ) {
-		if ( str != null )
-			return str;
-		else
-			return Strings.EMPTY;
 	}
 	
 	//==============================================================================================

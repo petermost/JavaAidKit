@@ -21,7 +21,7 @@ import java.lang.reflect.*;
 import java.net.*;
 import java.util.*;
 import org.eclipse.jdt.annotation.*;
-import static com.pera_software.aidkit.nullable.NullObjects.*;
+import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 /*
  * According to this article http://support.microsoft.com/kb/308512 the windows
@@ -77,6 +77,6 @@ public class HostNameResolver
 
 			hostName = address.getHostName();
 		}
-		return requireNonNull( hostName );
+		return ensureNonNull( hostName );
 	}
 }
