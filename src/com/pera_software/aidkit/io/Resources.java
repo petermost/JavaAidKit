@@ -19,7 +19,7 @@ package com.pera_software.aidkit.io;
 
 import java.net.*;
 import java.nio.file.*;
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
+import static com.pera_software.aidkit.nullable.NullObjects.*;
 
 
 /**

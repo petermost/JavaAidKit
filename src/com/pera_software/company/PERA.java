@@ -17,7 +17,6 @@
 
 package com.pera_software.company;
 
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
 import java.io.*;
 
 /**
@@ -48,6 +47,6 @@ public final class PERA {
 	}
 	
 	public static InputStream getResourceAsStream( String resourceName ) {
-		return requireNonNull( PERA.class.getResourceAsStream( resourceName ));	
+		return PERA.class.getResourceAsStream( resourceName );	
 	}
 }

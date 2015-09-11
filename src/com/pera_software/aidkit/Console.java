@@ -17,7 +17,6 @@
 
 package com.pera_software.aidkit;
 
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
 import java.io.*;
 
 public final class Console {
@@ -27,11 +26,11 @@ public final class Console {
 	}
 
 	public static void printStatus( String format, Object ... arguments ) {
-		print( requireNonNull( System.out ), format, arguments );
+		print( System.out, format, arguments );
 	}
 
 	public static void printError( String format, Object ... arguments ) {
-		print( requireNonNull( System.err ), format, arguments );
+		print( System.err, format, arguments );
 	}
 
 	private Console() {

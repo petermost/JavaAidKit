@@ -18,7 +18,7 @@
 package com.pera_software.aidkit.io;
 
 import com.pera_software.aidkit.collection.*;
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
+import static com.pera_software.aidkit.nullable.NullObjects.*;
 
 //##################################################################################################
 

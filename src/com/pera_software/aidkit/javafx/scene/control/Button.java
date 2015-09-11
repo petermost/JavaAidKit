@@ -20,10 +20,9 @@ package com.pera_software.aidkit.javafx.scene.control;
 import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 public class Button extends javafx.scene.control.Button {
-	private KeyCombination _accelerator = requireNonNull( KeyCombination.NO_MATCH );
+	private KeyCombination _accelerator = KeyCombination.NO_MATCH;
 
 	public Button() {
 		super();

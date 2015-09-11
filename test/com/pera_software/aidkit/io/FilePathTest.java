@@ -19,6 +19,7 @@ package com.pera_software.aidkit.io;
 
 import static org.junit.Assert.*;
 import org.junit.*;
+import com.pera_software.aidkit.lang.*;
 
 //##################################################################################################
 
@@ -30,16 +31,16 @@ public class FilePathTest
 	@SuppressWarnings( "static-method" )
 	public void testEmptyPath()
 	{
-		FilePath path = new FilePath( "" );
-		assertEquals( "", path.getDrive() );
-		assertEquals( "", path.getDirectory( 0 ) );
-		assertEquals( "", path.getDirectory( 1 ) );
-		assertEquals( "", path.getDirectory( -1 ) );
-		assertEquals( "", path.getName() );
-		assertEquals( "", path.getExtension() );
-		assertEquals( "", path.getExtension( 0 ) );
-		assertEquals( "", path.getExtension( 1 ) );
-		assertEquals( "", path.getExtension( -1 ) );
+		FilePath path = new FilePath( Strings.EMPTY );
+		assertEquals( Strings.EMPTY, path.getDrive() );
+		assertEquals( Strings.EMPTY, path.getDirectory( 0 ) );
+		assertEquals( Strings.EMPTY, path.getDirectory( 1 ) );
+		assertEquals( Strings.EMPTY, path.getDirectory( -1 ) );
+		assertEquals( Strings.EMPTY, path.getName() );
+		assertEquals( Strings.EMPTY, path.getExtension() );
+		assertEquals( Strings.EMPTY, path.getExtension( 0 ) );
+		assertEquals( Strings.EMPTY, path.getExtension( 1 ) );
+		assertEquals( Strings.EMPTY, path.getExtension( -1 ) );
 	}
 
 	//==============================================================================================
@@ -48,7 +49,7 @@ public class FilePathTest
 	@SuppressWarnings( "static-method" )
 	public void testDriveSeparator()
 	{
-		FilePath path = new FilePath( "" );
+		FilePath path = new FilePath( Strings.EMPTY );
 
 		path.setDrive( "Z" );
 		assertEquals( "Z:", path.getDrive() );
@@ -56,11 +57,11 @@ public class FilePathTest
 		path.setDrive( "Z:" );
 		assertEquals( "Z:", path.getDrive() );
 
-		path.setDrive( "" );
-		assertEquals( "", path.getDrive() );
+		path.setDrive( Strings.EMPTY );
+		assertEquals( Strings.EMPTY, path.getDrive() );
 
 		path.removeDrive();
-		assertEquals( "", path.getDrive() );
+		assertEquals( Strings.EMPTY, path.getDrive() );
 	}
 
 	//==============================================================================================
@@ -69,7 +70,7 @@ public class FilePathTest
 	@SuppressWarnings( "static-method" )
 	public void testDirectorySeparator()
 	{
-		FilePath path = new FilePath( "" );
+		FilePath path = new FilePath( Strings.EMPTY );
 
 		path.addDirectory( "dir" );
 		assertEquals( "dir/", path.getDirectory( 0 ) );
@@ -77,11 +78,11 @@ public class FilePathTest
 		path.setDirectory( 0, "dir/" );
 		assertEquals( "dir/", path.getDirectory( 0 ) );
 
-		path.setDirectory( 0, "" );
-		assertEquals( "", path.getDirectory( 0 ) );
+		path.setDirectory( 0, Strings.EMPTY );
+		assertEquals( Strings.EMPTY, path.getDirectory( 0 ) );
 
 		path.removeDirectory( 0 );
-		assertEquals( "", path.getDirectory( 0 ) );
+		assertEquals( Strings.EMPTY, path.getDirectory( 0 ) );
 	}
 
 	//==============================================================================================
@@ -90,7 +91,7 @@ public class FilePathTest
 	@SuppressWarnings( "static-method" )
 	public void testExtensionSeparator()
 	{
-		FilePath path = new FilePath( "" );
+		FilePath path = new FilePath( Strings.EMPTY );
 
 		path.addExtension( "ext" );
 		assertEquals( ".ext", path.getExtension( 0 ) );
@@ -98,11 +99,11 @@ public class FilePathTest
 		path.setExtension( 0, ".ext" );
 		assertEquals( ".ext", path.getExtension( 0 ) );
 
-		path.setExtension( 0, "" );
-		assertEquals( "", path.getExtension( 0 ) );
+		path.setExtension( 0, Strings.EMPTY );
+		assertEquals( Strings.EMPTY, path.getExtension( 0 ) );
 
 		path.removeExtension();
-		assertEquals( "", path.getExtension( 0 ) );
+		assertEquals( Strings.EMPTY, path.getExtension( 0 ) );
 	}
 
 	//==============================================================================================
@@ -142,7 +143,7 @@ public class FilePathTest
 	{
 		FilePath path = new FilePath( ".ext1.ext2" );
 
-		assertEquals( "", path.getName() );
+		assertEquals( Strings.EMPTY, path.getName() );
 
 		assertEquals( ".ext1", path.getExtension( 0 ) );
 		assertEquals( ".ext1", path.getExtension( -2 ) );
@@ -151,9 +152,9 @@ public class FilePathTest
 		assertEquals( ".ext2", path.getExtension( 1 ) );
 		assertEquals( ".ext2", path.getExtension( -1 ) );
 
-		assertEquals( "", path.getExtension( 2 ) );
+		assertEquals( Strings.EMPTY, path.getExtension( 2 ) );
 
-		assertEquals( "", path.getExtension( -3 ) );
+		assertEquals( Strings.EMPTY, path.getExtension( -3 ) );
 	}
 
 	//==============================================================================================
@@ -169,7 +170,7 @@ public class FilePathTest
 		assertEquals( "dir1/", path.getDirectory( 1 ) );
 		assertEquals( "dir2/", path.getDirectory( 2 ) );
 		assertEquals( "name", path.getName() );
-		assertEquals( "", path.getExtension() );
+		assertEquals( Strings.EMPTY, path.getExtension() );
 	}
 
 	//==============================================================================================

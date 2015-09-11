@@ -1,4 +1,4 @@
-// Copyright 2014 Peter Most, PERA Software Solutions GmbH
+// Copyright 2015 Peter Most, PERA Software Solutions GmbH
 //
 // This file is part of the JavaAidKit library.
 //
@@ -15,20 +15,35 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.javafx.util.converter;
+package com.pera_software.aidkit.nullable;
 
-import org.eclipse.jdt.annotation.*;
-import static com.pera_software.aidkit.nullable.NullObjects.*;
-import javafx.util.*;
+import java.util.*;
 
-public class IntegerStringConverter extends StringConverter< Number > {
+/**
+ * A null Iterator<> implementation of the Iterator interface. 
+ * @author P. Most
+ *
+ */
+public class NullIterator< E > implements Iterator< E > {
+
+	/**
+	 * @return false Always since there are no elements.
+	 * @see java.util.Iterator#hasNext()
+	 */
 	@Override
-	public String toString( Number number ) {
-		return requireNonNull( number.toString() );
+	public boolean hasNext() {
+		return false;
 	}
 
+	/**
+	 * Always throws a NoSuchElementException, but in practice this shouldn't matter because when
+	 * hasNext() returned false, you are not suppose to call next()!
+	 * 
+	 * @throws NoSuchElementException Always!
+	 */
 	@Override
-	public Number fromString( @Nullable String string ) {
-		return Integer.parseInt( string );
+	public E next() {
+		throw new NoSuchElementException();
 	}
+
 }

@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.eclipse;
+package com.pera_software.aidkit.nullable;
 
 import java.util.function.*;
 import org.eclipse.jdt.annotation.*;
+import com.pera_software.aidkit.lang.*;
 
 //##################################################################################################
 
@@ -38,28 +39,37 @@ public final class NullObjects {
 	
 	//==============================================================================================
 	
-	public static< T > T requireNonNull( @Nullable T obj ) {
-		if ( obj != null )
-			return obj;
+	public static String requireNonNull( @Nullable String str ) {
+		if ( str != null )
+			return str;
 		else
-			throw new NullPointerException();
+			return Strings.EMPTY;
 	}
 	
 	//==============================================================================================
 	
-	public static < T > T requireNonNull( @Nullable T obj, String message ) {
+	public static< T > T requireNonNull( @Nullable T obj ) throws NullObjectException {
 		if ( obj != null )
 			return obj;
 		else
-			throw new NullPointerException( message );
+			throw new NullObjectException();
+	}
+	
+	//==============================================================================================
+	
+	public static < T > T requireNonNull( @Nullable T obj, String message ) throws NullObjectException {
+		if ( obj != null )
+			return obj;
+		else
+			throw new NullObjectException( message );
 	}
 
 	//==============================================================================================
 	
-	public static < T > T requireNonNull( @Nullable T obj, Supplier< String > messageSupplier ) {
+	public static < T > T requireNonNull( @Nullable T obj, Supplier< String > messageSupplier ) throws NullObjectException {
 		if ( obj != null )
 			return obj;
 		else
-			throw new NullPointerException( messageSupplier.get() );
+			throw new NullObjectException( messageSupplier.get() );
 	}
 }

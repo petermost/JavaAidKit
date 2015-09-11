@@ -1,4 +1,4 @@
-// Copyright 2014 Peter Most, PERA Software Solutions GmbH
+// Copyright 2015 Peter Most, PERA Software Solutions GmbH
 //
 // This file is part of the JavaAidKit library.
 //
@@ -15,27 +15,31 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit;
-
-import java.io.*;
+package com.pera_software.aidkit.nullable;
 
 /**
+ * Represents a null object and is basically the same as a null pointer exception but as a checked
+ * exception.
  * @author P. Most
- *
  */
-public final class AidKit {
-	private static final String PACKAGE_NAME = "/com/pera_software/aidkit/icons16x16/";
+public class NullObjectException extends Exception {
 
-	// The resource names must be valid Java identifiers!!!
-
-	public static final String APPLICATION_EXIT_ICON = PACKAGE_NAME + "application_exit.png";
-	public static final String DOCUMENT_OPEN_ICON    = PACKAGE_NAME + "document_open.png";
-	
-	private AidKit() {
+	public NullObjectException() {
 	}
-	
-	
-	public static InputStream getResourceAsStream( String resourceName ) {
-		return AidKit.class.getResourceAsStream( resourceName );
+
+	public NullObjectException( String message ) {
+		super( message );
+	}
+
+	public NullObjectException( Throwable cause ) {
+		super( cause );
+	}
+
+	public NullObjectException( String message, Throwable cause ) {
+		super( message, cause );
+	}
+
+	public NullObjectException( String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace ) {
+		super( message, cause, enableSuppression, writableStackTrace );
 	}
 }

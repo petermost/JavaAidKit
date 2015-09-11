@@ -19,6 +19,7 @@ package com.pera_software.aidkit.visualstudio;
 
 import java.nio.file.*;
 import java.util.*;
+import java.util.Arrays;
 import java.util.regex.*;
 import javax.xml.parsers.*;
 import javax.xml.xpath.*;

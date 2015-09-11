@@ -19,8 +19,8 @@ package com.pera_software.aidkit.net;
 
 import java.net.*;
 import org.junit.*;
+import static com.pera_software.aidkit.nullable.NullObjects.*;
 import static org.junit.Assert.*;
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
 
 /**
  * @author P. Most

@@ -15,9 +15,22 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
+package com.pera_software.aidkit.collection;
+
+import java.util.*;
+
 /**
  * @author P. Most
  *
  */
-@org.eclipse.jdt.annotation.NonNullByDefault
-package com.pera_software.aidkit.eclipse;
+public final class Arrays {
+	private Arrays() {
+	}
+	
+    @SafeVarargs
+    public static < T > List<T> asList( T... array ) {
+    	List< T > list = new ArrayList<>( array.length );
+    	Lists.addAll( list, array );
+        return list;
+    }
+}

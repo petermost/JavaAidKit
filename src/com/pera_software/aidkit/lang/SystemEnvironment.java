@@ -17,7 +17,7 @@
 
 package com.pera_software.aidkit.lang;
 
-import static com.pera_software.aidkit.eclipse.NullObjects.*;
+import static com.pera_software.aidkit.nullable.NullObjects.*;
 
 //##################################################################################################
 /**
