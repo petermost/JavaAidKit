@@ -18,7 +18,6 @@
 package com.pera_software.aidkit.javafx.log;
 
 import java.util.*;
-import com.pera_software.aidkit.collection.Arrays;
 import javafx.beans.property.*;
 import javafx.scene.image.*;
 

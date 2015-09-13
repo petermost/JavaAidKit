@@ -18,6 +18,7 @@
 package com.pera_software.aidkit.javafx.scene.image;
 
 import com.pera_software.aidkit.*;
+import com.pera_software.aidkit.io.*;
 import javafx.scene.image.*;
 
 /**
@@ -25,7 +26,7 @@ import javafx.scene.image.*;
  *
  */
 public class OpenImage extends Image {
-	public OpenImage() {
+	public OpenImage() throws ResourceNotFoundException {
 		super( AidKit.getResourceAsStream( AidKit.DOCUMENT_OPEN_ICON ));
 	}
 }

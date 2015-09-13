@@ -19,6 +19,7 @@ package com.pera_software.aidkit;
 
 import static org.junit.Assert.*;
 import org.junit.*;
+import com.pera_software.aidkit.io.*;
 
 /**
  * @author P. Most
@@ -28,7 +29,7 @@ public class AidKitTest {
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testGetResourceAsStream() {
+	public void testGetResourceAsStream() throws ResourceNotFoundException {
 		// We are just interested whether we can load a resource, so if one works, then we assume
 		// the others will too:
 		

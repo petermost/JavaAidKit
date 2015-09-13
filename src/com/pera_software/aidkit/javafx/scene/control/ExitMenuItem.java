@@ -17,6 +17,7 @@
 
 package com.pera_software.aidkit.javafx.scene.control;
 
+import com.pera_software.aidkit.io.*;
 import com.pera_software.aidkit.javafx.scene.image.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -27,7 +28,7 @@ import javafx.scene.image.*;
  */
 public class ExitMenuItem extends MenuItem {
 
-	public ExitMenuItem() {
+	public ExitMenuItem() throws ResourceNotFoundException {
 		super( "E_xit" );
 		setGraphic( new ImageView( new ExitImage() ));
 	}

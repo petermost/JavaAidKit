@@ -15,22 +15,21 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.collection;
-
-import java.util.*;
+package com.pera_software.aidkit.io;
 
 /**
  * @author P. Most
  *
  */
-public final class Arrays {
-	private Arrays() {
+public class ResourceNotFoundException extends Exception {
+
+	private String _resourceName;
+
+	public ResourceNotFoundException( String resourceName ) {
+		_resourceName = resourceName;
 	}
-	
-    @SafeVarargs
-    public static < T > List<T> asList( T... array ) {
-    	List< T > list = new ArrayList<>( array.length );
-    	Lists.addAll( list, array );
-        return list;
-    }
+
+	public String resourceName() {
+		return _resourceName;
+	}
 }

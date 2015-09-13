@@ -17,6 +17,7 @@
 
 package com.pera_software.aidkit.javafx.scene.control;
 
+import com.pera_software.aidkit.io.*;
 import com.pera_software.aidkit.javafx.scene.image.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -27,7 +28,7 @@ import javafx.scene.image.*;
  */
 public class OpenMenuItem extends MenuItem {
 
-	public OpenMenuItem() {
+	public OpenMenuItem() throws ResourceNotFoundException {
 		super( "_Open..." );
 		setGraphic( new ImageView( new OpenImage() ));
 	}
