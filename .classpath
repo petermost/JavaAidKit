@@ -23,16 +23,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/JavaAidKit/lib/controlsfx-8.20.8-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="annotations">
-		<attributes>
-			<attribute name="optional" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path=".apt_generated">
-		<attributes>
-			<attribute name="optional" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/org.eclipse.jdt.annotation_2.0.100.v20150311-1658.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
