@@ -23,14 +23,12 @@ import com.pera_software.aidkit.lang.*;
 
 //##################################################################################################
 
-public class FilePathTest
-{
+public class FilePathTest {
 	//==============================================================================================
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testEmptyPath()
-	{
+	public void testEmptyPath() {
 		FilePath path = new FilePath( Strings.EMPTY );
 		assertEquals( Strings.EMPTY, path.getDrive() );
 		assertEquals( Strings.EMPTY, path.getDirectory( 0 ) );
@@ -44,11 +42,21 @@ public class FilePathTest
 	}
 
 	//==============================================================================================
+	
+	@Test
+	@SuppressWarnings( "static-method" )
+	public void testCopyConstructor() {
+		FilePath path = new FilePath( "D:/dir1/dir2/name.ext1.ext2" );
+		FilePath copy = new FilePath( path );
+		
+		assertEquals( path.getDrive(), copy.getDrive() );
+	}
+	
+	//==============================================================================================
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testDriveSeparator()
-	{
+	public void testDriveSeparator() {
 		FilePath path = new FilePath( Strings.EMPTY );
 
 		path.setDrive( "Z" );
@@ -68,8 +76,7 @@ public class FilePathTest
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testDirectorySeparator()
-	{
+	public void testDirectorySeparator() {
 		FilePath path = new FilePath( Strings.EMPTY );
 
 		path.addDirectory( "dir" );
@@ -89,8 +96,7 @@ public class FilePathTest
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testExtensionSeparator()
-	{
+	public void testExtensionSeparator() {
 		FilePath path = new FilePath( Strings.EMPTY );
 
 		path.addExtension( "ext" );
@@ -110,8 +116,7 @@ public class FilePathTest
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testFullPath()
-	{
+	public void testFullPath() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name.ext1.ext2" );
 
 		assertEquals( "D:", path.getDrive() );
@@ -139,8 +144,7 @@ public class FilePathTest
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testEmptyNameMultipleExtensions()
-	{
+	public void testEmptyNameMultipleExtensions() {
 		FilePath path = new FilePath( ".ext1.ext2" );
 
 		assertEquals( Strings.EMPTY, path.getName() );
@@ -161,8 +165,7 @@ public class FilePathTest
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testFileNameWithoutExtension()
-	{
+	public void testFileNameWithoutExtension() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name" );
 
 		assertEquals( "D:", path.getDrive() );
@@ -177,8 +180,7 @@ public class FilePathTest
 
 	@Test
 	@SuppressWarnings( "static-method" )
-	public void testAddingExtension()
-	{
+	public void testAddingExtension() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name.ext" );
 
 		path.setExtension( 0, ".second" );

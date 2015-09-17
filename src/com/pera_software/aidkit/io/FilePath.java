@@ -72,6 +72,15 @@ public class FilePath {
 	}
 
 	//==============================================================================================
+	
+	public FilePath( FilePath other ) {
+		_drive = other._drive;
+		_directories = new CyclicList<>( other._directories );
+		_name = other._name;
+		_extensions = new CyclicList<>( other._extensions );
+	}
+	
+	//==============================================================================================
 
 	@Override
 	public String toString() {
@@ -150,10 +159,6 @@ public class FilePath {
 	}
 
 	//==============================================================================================
-
-	public void addName( String name ) {
-		setName( name );
-	}
 
 	public void setName( String name ) {
 		_name = name;

@@ -23,7 +23,7 @@ import static com.pera_software.aidkit.nullable.NullObjects.*;
 
 //##################################################################################################
 /**
- * When accessing elements via an index, then this list 'warps' negative indices
+ * When accessing elements via an index, then this list 'wraps' negative indices
  * in such a way that the elements are accessed from the end i.e. -1 accesses the
  * last element -2 the element before that etc.
  */
@@ -41,6 +41,12 @@ public class CyclicList< T > implements Iterable< T > {
 	public CyclicList() {
 	}
 
+	//==============================================================================================
+	
+	public CyclicList( CyclicList< T > other ) {
+		_list.addAll( other._list );
+	}
+	
 	//==============================================================================================
 
 	public void add( T element ) {
