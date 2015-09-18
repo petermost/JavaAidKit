@@ -29,7 +29,7 @@ public class FilePathTest {
 	@Test
 	@SuppressWarnings( "static-method" )
 	public void testEmptyPath() {
-		FilePath path = new FilePath( Strings.EMPTY );
+		FilePath path = new FilePath();
 		assertEquals( Strings.EMPTY, path.getDrive() );
 		assertEquals( Strings.EMPTY, path.getDirectory( 0 ) );
 		assertEquals( Strings.EMPTY, path.getDirectory( 1 ) );
@@ -41,6 +41,16 @@ public class FilePathTest {
 		assertEquals( Strings.EMPTY, path.getExtension( -1 ) );
 	}
 
+	//==============================================================================================
+	
+	@Test
+	@SuppressWarnings( "static-method" )
+	public void test() {
+		ImmutableFilePath path = new ImmutableFilePath().setDrive( "c" ).addDirectory( "/" ).addDirectory( "dir" ).setName( "name" ).addExtension( "ext" );
+		
+		assertEquals( "c:/dir/name.ext", path.toString() );
+	}
+	
 	//==============================================================================================
 	
 	@Test

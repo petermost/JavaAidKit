@@ -32,7 +32,7 @@ public class CyclicList< T > implements Iterable< T > {
 
 	//==============================================================================================
 
-	public int wrapIndex( int index ) {
+	private int wrapIndex( int index ) {
 		return index >= 0 ? index : _list.size() + index;
 	}
 

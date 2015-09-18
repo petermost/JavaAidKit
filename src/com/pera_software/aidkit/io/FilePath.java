@@ -23,7 +23,7 @@ import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 //##################################################################################################
 
-public class FilePath {
+public final class FilePath {
 	private static final char DRIVE_SEPARATOR = ':';
 	private static final char DIRECTORY_SEPARATOR = '/'; // Works on all platforms.
 	private static final char EXTENSION_SEPARATOR = '.';
@@ -35,6 +35,10 @@ public class FilePath {
 
 	//==============================================================================================
 
+	public FilePath() {
+		this( Strings.EMPTY );
+	}
+	
 	public FilePath( String path ) {
 		final char WINDOWS_DIRECTORY_SEPARATOR = '\\';
 		final char UNIX_DIRECTORY_SEPARATOR = '/';
@@ -71,8 +75,6 @@ public class FilePath {
 		}
 	}
 
-	//==============================================================================================
-	
 	public FilePath( FilePath other ) {
 		_drive = other._drive;
 		_directories = new CyclicList<>( other._directories );
@@ -120,16 +122,20 @@ public class FilePath {
 		return addPostfixSeparator( device, DRIVE_SEPARATOR );
 	}
 
-	public void setDrive( String drive ) {
+	public FilePath setDrive( String drive ) {
 		_drive = addDriveSeparator( drive );
+		
+		return this;
 	}
 
 	public String getDrive() {
 		return _drive;
 	}
 
-	public void removeDrive() {
+	public FilePath removeDrive() {
 		_drive = Strings.EMPTY;
+		
+		return this;
 	}
 
 	//==============================================================================================
@@ -138,38 +144,50 @@ public class FilePath {
 		return addPostfixSeparator( directory, DIRECTORY_SEPARATOR );
 	}
 
-	public void addDirectory( String directory ) {
+	public FilePath addDirectory( String directory ) {
 		_directories.add( addDirectorySeparator( directory ));
+		
+		return this;
 	}
 
-	public void addDirectory( int index, String directory ) {
+	public FilePath addDirectory( int index, String directory ) {
 		_directories.add( index, addDirectorySeparator( directory ));
+		
+		return this;
 	}
 
-	public void setDirectory( int index, String directory ) {
+	public FilePath setDirectory( int index, String directory ) {
 		_directories.set( index, addDirectorySeparator( directory ));
+		
+		return this;
 	}
 
 	public String getDirectory( int index ) {
 		return _directories.get( index, Strings.EMPTY );
 	}
 
-	public void removeDirectory( int index ) {
+	public FilePath removeDirectory( int index ) {
 		_directories.remove( index );
+		
+		return this;
 	}
 
 	//==============================================================================================
 
-	public void setName( String name ) {
+	public FilePath setName( String name ) {
 		_name = name;
+		
+		return this;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	public void removeName() {
+	public FilePath removeName() {
 		_name = Strings.EMPTY;
+		
+		return this;
 	}
 
 	//==============================================================================================
@@ -178,19 +196,29 @@ public class FilePath {
 		return addPrefixSeparator( extension, EXTENSION_SEPARATOR );
 	}
 
-	public void addExtension( String extension ) {
+	public FilePath addExtension( String extension ) {
 		_extensions.add( addExtensionSeparator( extension ));
+		
+		return this;
 	}
 
-	public void addExtension( int index, String extension ) {
+	public FilePath addExtension( int index, String extension ) {
 		_extensions.add( index, addExtensionSeparator( extension ));
+		
+		return this;
 	}
 
-	public void setExtension( int index, String extension ) {
+	public FilePath setExtension( int index, String extension ) {
 		_extensions.set( index, addExtensionSeparator( extension ));
+		
+		return this;
 	}
 
-	/** Get the last extension: */
+	//==============================================================================================
+	
+	/** 
+	 * Get the last extension: 
+	 */
 	public String getExtension() {
 		return getExtension( -1 );
 	}
@@ -199,12 +227,16 @@ public class FilePath {
 		return _extensions.get( index, Strings.EMPTY );
 	}
 
-	/** Remove the last extension: */
-	public void removeExtension() {
-		removeExtension( -1 );
+	/** 
+	 * Remove the last extension: 
+	 */
+	public FilePath removeExtension() {
+		return removeExtension( -1 );
 	}
 
-	public void removeExtension( int index ) {
+	public FilePath removeExtension( int index ) {
 		_extensions.remove( index );
+		
+		return this;
 	}
 }
