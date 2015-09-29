@@ -24,7 +24,7 @@ import javafx.util.*;
 public class IntegerStringConverter extends StringConverter< Number > {
 	@Override
 	public String toString( Number number ) {
-		return ensureNonNull( number.toString() );
+		return makeNonNull( number.toString() );
 	}
 
 	@Override

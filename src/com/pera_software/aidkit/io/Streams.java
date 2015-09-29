@@ -57,7 +57,7 @@ public final class Streams {
 		while (( length = streamReader.read( buffer ) ) > 0 )
 			content.append( buffer, 0, length );
 
-		return ensureNonNull( content.toString() );
+		return makeNonNull( content.toString() );
 	}
 
 	//==============================================================================================

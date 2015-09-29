@@ -95,7 +95,7 @@ public class ObjectDumperOutput implements Cloneable {
 
 	@Override
 	public String toString() {
-		return ensureNonNull( _buffer.toString() );
+		return makeNonNull( _buffer.toString() );
 	}
 
 	//===========================================================================

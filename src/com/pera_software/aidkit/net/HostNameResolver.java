@@ -77,6 +77,6 @@ public class HostNameResolver
 
 			hostName = address.getHostName();
 		}
-		return ensureNonNull( hostName );
+		return makeNonNull( hostName );
 	}
 }

@@ -40,13 +40,13 @@ public final class SystemProperties {
 	//==============================================================================================
 
 	public static String setClassPath( String classPath ) {
-		return ensureNonNull( System.setProperty( CLASS_PATH_KEY, classPath ));
+		return makeNonNull( System.setProperty( CLASS_PATH_KEY, classPath ));
 	}
 
 	//==============================================================================================
 
 	public static String getClassPath() {
-		return ensureNonNull( System.getProperty( CLASS_PATH_KEY ));
+		return makeNonNull( System.getProperty( CLASS_PATH_KEY ));
 	}
 
 	//==============================================================================================
@@ -54,7 +54,7 @@ public final class SystemProperties {
 	 * @return ":" under UNIX and ";" under Windows
 	 */
 	public static String getPathSeparator() {
-		return ensureNonNull( System.getProperty( PATH_SEPARATOR_KEY ));
+		return makeNonNull( System.getProperty( PATH_SEPARATOR_KEY ));
 	}
 
 	//==============================================================================================
@@ -62,7 +62,7 @@ public final class SystemProperties {
 	 * @return "/" under UNIX and "\" under Windows
 	 */
 	public static String getFileSeparator() {
-		return ensureNonNull( System.getProperty( FILE_SEPARATOR_KEY ));
+		return makeNonNull( System.getProperty( FILE_SEPARATOR_KEY ));
 	}
 
 	//==============================================================================================
@@ -70,18 +70,18 @@ public final class SystemProperties {
 	 * @return "\n" under UNIX and "\r\n" under Windows
 	 */
 	public static String getLineSeparator() {
-		return ensureNonNull( System.getProperty( LINE_SEPARATOR_KEY ));
+		return makeNonNull( System.getProperty( LINE_SEPARATOR_KEY ));
 	}
 
 	//==============================================================================================
 
 	public static String getTmpDir() {
-		return ensureNonNull( System.getProperty( TMP_DIR_KEY ));
+		return makeNonNull( System.getProperty( TMP_DIR_KEY ));
 	}
 
 	//==============================================================================================
 
 	public static String getCurrentWorkingDirectory() {
-		return ensureNonNull( System.getProperty( USER_DIR_KEY ));
+		return makeNonNull( System.getProperty( USER_DIR_KEY ));
 	}
 }

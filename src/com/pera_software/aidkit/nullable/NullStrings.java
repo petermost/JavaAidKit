@@ -33,7 +33,7 @@ public final class NullStrings {
 
 	//==============================================================================================
 	
-	public static String ensureNonNull( @Nullable String str ) {
+	public static String makeNonNull( @Nullable String str ) {
 		if ( str != null )
 			return str;
 		else

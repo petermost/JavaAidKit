@@ -51,10 +51,10 @@ public final class FilePathBuilder {
 
 		for ( end = 0; end < path.length(); ++end ) {
 			if (( c = path.charAt( end )) == DRIVE_SEPARATOR ) {
-				setDrive( ensureNonNull( path.substring( begin, end + 1 )));
+				setDrive( makeNonNull( path.substring( begin, end + 1 )));
 				begin = end + 1;
 			} else if ( c == UNIX_DIRECTORY_SEPARATOR || c == WINDOWS_DIRECTORY_SEPARATOR ) {
-				addDirectory( ensureNonNull( path.substring( begin, end + 1 )));
+				addDirectory( makeNonNull( path.substring( begin, end + 1 )));
 				begin = end + 1;
 			}
 		}
@@ -64,11 +64,11 @@ public final class FilePathBuilder {
 		for ( end = begin; end < path.length(); ++end ) {
 			if (( isEnd = ( end == path.length() - 1 )) || ( c = path.charAt( end )) == EXTENSION_SEPARATOR ) {
 				if ( !hasName ) {
-					setName( ensureNonNull( path.substring( begin, isEnd ? end + 1 : end )));
+					setName( makeNonNull( path.substring( begin, isEnd ? end + 1 : end )));
 					hasName = true;
 				}
 				else
-					addExtension( ensureNonNull( path.substring( begin, isEnd ? end + 1 : end )));
+					addExtension( makeNonNull( path.substring( begin, isEnd ? end + 1 : end )));
 
 				begin = end;
 			}
@@ -97,7 +97,7 @@ public final class FilePathBuilder {
 		for ( String extension : _extensions )
 			path.append( extension );
 
-		return ensureNonNull( path.toString() );
+		return makeNonNull( path.toString() );
 	}
 
 	//==============================================================================================

@@ -30,24 +30,24 @@ public final class SystemEnvironment {
 	//==============================================================================================
 
 	public static String systemDrive() {
-		return ensureNonNull( System.getenv( "SystemDrive" ));
+		return makeNonNull( System.getenv( "SystemDrive" ));
 	}
 
 	//==============================================================================================
 
 	public static String programsDirectory() {
-		return ensureNonNull( System.getenv( "ProgramFiles(x86)" ));
+		return makeNonNull( System.getenv( "ProgramFiles(x86)" ));
 	}
 
 	//==============================================================================================
 
 	public static String settingsDirectory() {
-		return ensureNonNull( System.getenv( "AppData" ));
+		return makeNonNull( System.getenv( "AppData" ));
 	}
 
 	//==============================================================================================
 
 	public static String windowsDirectory() {
-		return ensureNonNull( System.getenv( "windir" ));
+		return makeNonNull( System.getenv( "windir" ));
 	}
 }
