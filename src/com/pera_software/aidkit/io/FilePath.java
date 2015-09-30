@@ -17,155 +17,242 @@
 
 package com.pera_software.aidkit.io;
 
+import com.pera_software.aidkit.lang.*;
+import com.pera_software.aidkit.collection.*;
+import static com.pera_software.aidkit.nullable.NullStrings.*;
+
 //##################################################################################################
 
+/**
+ * This class represents an immutable file path i.e. each 'modifying' method returns a new
+ * FilePath instance.
+ * 
+ * @author P. Most
+ */
 public final class FilePath {
-	private FilePathBuilder _builder;
+	private static final char DRIVE_SEPARATOR = ':';
+	private static final char DIRECTORY_SEPARATOR = '/'; // Works on all platforms.
+	private static final char EXTENSION_SEPARATOR = '.';
+
+	private String _drive = Strings.EMPTY;
+	private CyclicList< String > _directories = new CyclicList<>();
+	private String _name = Strings.EMPTY;
+	private CyclicList< String > _extensions = new CyclicList<>();
 
 	//==============================================================================================
 
 	public FilePath() {
-		_builder = new FilePathBuilder();
+		this( Strings.EMPTY );
 	}
 	
 	public FilePath( String path ) {
-		_builder = new FilePathBuilder( path );
+		final char WINDOWS_DIRECTORY_SEPARATOR = '\\';
+		final char UNIX_DIRECTORY_SEPARATOR = '/';
+
+		char c;
+		boolean isEnd;
+		int begin = 0, end = 0;
+
+		// Extract the drive and the directories:
+
+		for ( end = 0; end < path.length(); ++end ) {
+			if (( c = path.charAt( end )) == DRIVE_SEPARATOR ) {
+				_drive = makeNonNull( path.substring( begin, end + 1 ));
+				begin = end + 1;
+			} else if ( c == UNIX_DIRECTORY_SEPARATOR || c == WINDOWS_DIRECTORY_SEPARATOR ) {
+				_directories.append( makeNonNull( path.substring( begin, end + 1 )));
+				begin = end + 1;
+			}
+		}
+		// Extract the name and the extensions:
+
+		boolean hasName = false;
+		for ( end = begin; end < path.length(); ++end ) {
+			if (( isEnd = ( end == path.length() - 1 )) || ( c = path.charAt( end )) == EXTENSION_SEPARATOR ) {
+				if ( !hasName ) {
+					_name = makeNonNull( path.substring( begin, isEnd ? end + 1 : end ));
+					hasName = true;
+				}
+				else
+					_extensions.append( makeNonNull( path.substring( begin, isEnd ? end + 1 : end )));
+
+				begin = end;
+			}
+		}
 	}
 
 	public FilePath( FilePath other ) {
-		_builder = new FilePathBuilder( other._builder );
-	}
-	
-	private FilePath( FilePathBuilder path ) {
-		_builder = path;
+		_drive = other._drive;
+		_directories = new CyclicList<>( other._directories );
+		_name = other._name;
+		_extensions = new CyclicList<>( other._extensions );
 	}
 	
 	//==============================================================================================
 
 	@Override
 	public String toString() {
-		return _builder.toString();
+		StringBuilder path = new StringBuilder();
+
+		path.append( _drive );
+		for ( String directory : _directories )
+			path.append( directory );
+
+		path.append( _name );
+
+		for ( String extension : _extensions )
+			path.append( extension );
+
+		return makeNonNull( path.toString() );
 	}
 
-	public FilePath setDrive( String drive ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.setDrive( drive );
+	//==============================================================================================
+
+	private static String addPrefixSeparator( String string, char separator ) {
+		if ( !string.isEmpty() && string.charAt( 0 ) != separator )
+			return separator + string;
+		else
+			return string;
+	}
+
+	private static String addPostfixSeparator( String string, char separator ) {
+		if ( !string.isEmpty() && string.charAt( string.length() - 1 ) != separator )
+			return string + separator;
+		else
+			return string;
+	}
+
+	//==============================================================================================
+
+	private static String addDriveSeparator( String device ) {
+		return addPostfixSeparator( device, DRIVE_SEPARATOR );
+	}
+
+	public FilePath replaceDrive( String drive ) {
+		FilePath copy = new FilePath( this );
+		copy._drive = addDriveSeparator( drive );
 		
-		return new FilePath( path );
-	}
-
-	public String getDrive() {
-		return _builder.getDrive();
+		return copy;
 	}
 
 	public FilePath removeDrive() {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.removeDrive();
+		FilePath copy = new FilePath( this );
+		copy._drive = Strings.EMPTY;
 		
-		return new FilePath( path );
+		return copy;
 	}
 
+	public String drive() {
+		return _drive;
+	}
+	
 	//==============================================================================================
 
-	public FilePath addDirectory( String directory ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.addDirectory( directory );
-		
-		return new FilePath( path );
+	private static String addDirectorySeparator( String directory ) {
+		return addPostfixSeparator( directory, DIRECTORY_SEPARATOR );
 	}
 
-	public FilePath addDirectory( int index, String directory ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.addDirectory( index, directory );
+	public FilePath appendDirectory( String directory ) {
+		FilePath copy = new FilePath( this );
+		copy._directories.append( addDirectorySeparator( directory ));
 		
-		return new FilePath( path );
+		return copy;
 	}
 
-	public FilePath setDirectory( int index, String directory ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.setDirectory( index, directory );
+	public FilePath insertDirectory( int index, String directory ) {
+		FilePath copy = new FilePath( this );
+		copy._directories.insert( index, addDirectorySeparator( directory ));
 		
-		return new FilePath( path );
+		return copy;
 	}
 
-	public String getDirectory( int index ) {
-		return _builder.getDirectory( index );
+	public FilePath replaceDirectory( int index, String directory ) {
+		FilePath copy = new FilePath( this );
+		copy._directories.replace( index, addDirectorySeparator( directory ));
+		
+		return copy;
 	}
 
 	public FilePath removeDirectory( int index ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.removeDirectory( index );
+		FilePath copy = new FilePath( this );
+		copy._directories.remove( index );
 		
-		return new FilePath( path );
+		return copy;
 	}
 
+	public String directoryAt( int index ) {
+		return _directories.getAt( index, Strings.EMPTY );
+	}
+	
 	//==============================================================================================
 
-	public FilePath setName( String name ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.setName( name );
+	public FilePath replaceName( String name ) {
+		FilePath copy = new FilePath( this );
+		copy._name = name;
 		
-		return new FilePath( path );
-	}
-
-	public String getName() {
-		return _builder.getName();
+		return copy;
 	}
 
 	public FilePath removeName() {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.removeName();
+		FilePath copy = new FilePath( this );
+		copy._name = Strings.EMPTY;
 		
-		return new FilePath( path );
+		return copy;
 	}
 
+	public String name() {
+		return _name;
+	}
+	
 	//==============================================================================================
 
-	public FilePath addExtension( String extension ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.addExtension( extension );
-		
-		return new FilePath( path );
+	private static String addExtensionSeparator( String extension ) {
+		return addPrefixSeparator( extension, EXTENSION_SEPARATOR );
 	}
 
-	public FilePath addExtension( int index, String extension ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.addExtension( index, extension );
+	public FilePath appendExtension( String extension ) {
+		FilePath copy = new FilePath( this );
+		copy._extensions.append( addExtensionSeparator( extension ));
 		
-		return new FilePath( path );
+		return copy;
 	}
 
-	public FilePath setExtension( int index, String extension ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.setExtension( index, extension );
+	public FilePath insertExtension( int index, String extension ) {
+		FilePath copy = new FilePath( this );
+		copy._extensions.insert( index, addExtensionSeparator( extension ));
 		
-		return new FilePath( path );
+		return copy;
 	}
 
+	public FilePath replaceExtension( int index, String extension ) {
+		FilePath copy = new FilePath( this );
+		copy._extensions.replace( index, addExtensionSeparator( extension ));
+		
+		return copy;
+	}
+	
+	public FilePath removeExtension( int index ) {
+		FilePath copy = new FilePath( this );
+		copy._extensions.remove( index );
+		
+		return copy;
+	}
+
+	public String extensionAt( int index ) {
+		return _extensions.getAt( index, Strings.EMPTY );
+	}
+	
 	//==============================================================================================
 	
-	/** 
-	 * Get the last extension: 
+	/**
+	 * Some convenience methods to access/modify the last index.
 	 */
-	public String getExtension() {
-		return getExtension( -1 );
-	}
-
-	public String getExtension( int index ) {
-		return _builder.getExtension( index );
-	}
-
-	/** 
-	 * Remove the last extension: 
-	 */
-	public FilePath removeExtension() {
+	
+	public FilePath removeLastExtension() {
 		return removeExtension( -1 );
 	}
 
-	public FilePath removeExtension( int index ) {
-		FilePathBuilder path = new FilePathBuilder( _builder );
-		path.removeExtension( index );
-		
-		return new FilePath( path );
+	public String lastExtension() {
+		return extensionAt( -1 );
 	}
 }

@@ -49,25 +49,25 @@ public class CyclicList< T > implements Iterable< T > {
 	
 	//==============================================================================================
 
-	public void add( T element ) {
+	public void append( T element ) {
 		_list.add( element );
 	}
 
 	//==============================================================================================
 
-	public void add( int index, T element ) {
+	public void insert( int index, T element ) {
 		_list.add( wrapIndex( index ), element );
 	}
 
 	//==============================================================================================
 
-	public void set( int index, T element ) {
+	public void replace( int index, T element ) {
 		_list.set( wrapIndex( index ), element );
 	}
 
 	//==============================================================================================
 
-	public T get( int index, T defaultValue ) {
+	public T getAt( int index, T defaultValue ) {
 		try {
 			index = wrapIndex( index );
 			return ( index >= 0 && index < _list.size() ) ? requireNonNull( _list.get( index )) : defaultValue;
