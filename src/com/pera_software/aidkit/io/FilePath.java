@@ -18,6 +18,7 @@
 package com.pera_software.aidkit.io;
 
 import com.pera_software.aidkit.lang.*;
+import java.util.*;
 import com.pera_software.aidkit.collection.*;
 import static com.pera_software.aidkit.nullable.NullStrings.*;
 
@@ -30,6 +31,10 @@ import static com.pera_software.aidkit.nullable.NullStrings.*;
  * @author P. Most
  */
 public final class FilePath {
+	public enum ToStringOptions {
+		Drive, Directories, Name, Extensions
+	}
+	
 	private static final char DRIVE_SEPARATOR = ':';
 	private static final char DIRECTORY_SEPARATOR = '/'; // Works on all platforms.
 	private static final char EXTENSION_SEPARATOR = '.';
@@ -90,20 +95,36 @@ public final class FilePath {
 	
 	//==============================================================================================
 
+	public String toString( EnumSet< ToStringOptions > options ) {
+		StringBuilder builder = new StringBuilder();
+		
+		for ( ToStringOptions option : options ) {
+			switch ( option ) {
+				case Drive:
+					builder.append( _drive );
+					break;
+					
+				case Directories:
+					for ( String directory : _directories )
+						builder.append( directory );
+					break;
+					
+				case Name:
+					builder.append( _name );
+					break;
+					
+				case Extensions:
+					for ( String extension : _extensions )
+						builder.append( extension );
+					break;
+			}
+		}
+		return makeNonNull( builder.toString() );
+	}
+	
 	@Override
 	public String toString() {
-		StringBuilder path = new StringBuilder();
-
-		path.append( _drive );
-		for ( String directory : _directories )
-			path.append( directory );
-
-		path.append( _name );
-
-		for ( String extension : _extensions )
-			path.append( extension );
-
-		return makeNonNull( path.toString() );
+		return toString( EnumSet.of( ToStringOptions.Drive, ToStringOptions.Directories, ToStringOptions.Name, ToStringOptions.Extensions ));
 	}
 
 	//==============================================================================================

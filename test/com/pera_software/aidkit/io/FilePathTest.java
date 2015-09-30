@@ -18,6 +18,7 @@
 package com.pera_software.aidkit.io;
 
 import static org.junit.Assert.*;
+import java.util.*;
 import org.junit.*;
 import com.pera_software.aidkit.lang.*;
 
@@ -191,5 +192,16 @@ public class FilePathTest {
 
 		path = path.replaceExtension( -1, ".third" );
 		assertEquals( "D:/dir1/dir2/name.first.third", path.toString() );
+	}
+	
+	//==============================================================================================
+	
+	@Test
+	@SuppressWarnings( "static-method" )
+	public void testToString() {
+		FilePath path = new FilePath( "D:/dir1/dir2/name.ext" );
+
+		String string = path.toString( EnumSet.of( FilePath.ToStringOptions.Directories, FilePath.ToStringOptions.Name ));
+		assertEquals( "/dir1/dir2/name", string );
 	}
 }
