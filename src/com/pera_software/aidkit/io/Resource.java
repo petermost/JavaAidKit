@@ -1,4 +1,4 @@
-// Copyright 2014 Peter Most, PERA Software Solutions GmbH
+// Copyright 2015 Peter Most, PERA Software Solutions GmbH
 //
 // This file is part of the JavaAidKit library.
 //
@@ -9,7 +9,7 @@
 //
 // JavaAidKit is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
@@ -18,34 +18,41 @@
 package com.pera_software.aidkit.io;
 
 import java.io.*;
+import java.net.*;
 import java.nio.file.*;
 
 /**
- * Allow to load resources without the need to handle exceptions. These methods can be used to
- * initialize a static final variable were you can't handle exceptions.
+ * @author P. Most
+ *
  */
-public final class Resources {
+public class Resource {
 	
-	private Resources() {
+	private Class< ? > _resourceClass;
+	private String _resourceName;
+
+	//==============================================================================================
+	
+	public Resource( Class< ? > resourceClass, String resourceName ) {
+		_resourceClass = resourceClass;
+		_resourceName = resourceName;
+	}
+	
+	//==============================================================================================
+	
+	public Path getAsPath() throws Exception {
+		URL resourceUrl = _resourceClass.getResource( _resourceName );
+		URI resourceUri = resourceUrl.toURI();
+		
+		return Paths.get( resourceUri );
 	}
 
 	//==============================================================================================
 	
-	public static Path getAsPath( Class< ? > parentClass, String resourceName ) {
-		try {
-			return new Resource( parentClass, resourceName ).getAsPath();
-		} catch ( Exception exception ) {
-			throw new ExceptionInInitializerError( exception );
-		}
-	}
-
-	//==============================================================================================
-	
-	public static InputStream getAsStream( Class< ? > resourceClass, String resourceName ) {
-		try {
-			return new Resource( resourceClass, resourceName ).getAsStream();
-		} catch ( Exception exception ) {
-			throw new ExceptionInInitializerError( exception );
-		}
+	public InputStream getAsStream() throws Exception {
+		InputStream inputStream = _resourceClass.getResourceAsStream( _resourceName );
+		if ( inputStream != null )
+			return inputStream;
+		else
+			throw new ResourceNotFoundException( _resourceName );
 	}
 }

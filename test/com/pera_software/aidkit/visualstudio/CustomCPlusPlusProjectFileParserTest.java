@@ -32,9 +32,9 @@ public final class CustomCPlusPlusProjectFileParserTest extends CPlusPlusProject
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CPlusPlusProjectFileParser( Resources.getPath( CustomCPlusPlusProjectFileParserTest.class,
+			{ new CPlusPlusProjectFileParser( Resources.getAsPath( CustomCPlusPlusProjectFileParserTest.class,
 				"2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
-			{ new CPlusPlusProjectFileParser( Resources.getPath( CustomCPlusPlusProjectFileParserTest.class,
+			{ new CPlusPlusProjectFileParser( Resources.getAsPath( CustomCPlusPlusProjectFileParserTest.class,
 				"2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) }
 		});
 	}
