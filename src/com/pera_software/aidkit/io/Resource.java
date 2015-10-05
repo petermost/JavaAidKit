@@ -39,7 +39,7 @@ public class Resource {
 	
 	//==============================================================================================
 	
-	public Path getAsPath() throws Exception {
+	public Path asPath() throws Exception {
 		URL resourceUrl = _resourceClass.getResource( _resourceName );
 		URI resourceUri = resourceUrl.toURI();
 		
@@ -48,7 +48,7 @@ public class Resource {
 
 	//==============================================================================================
 	
-	public InputStream getAsStream() throws Exception {
+	public InputStream asStream() throws Exception {
 		InputStream inputStream = _resourceClass.getResourceAsStream( _resourceName );
 		if ( inputStream != null )
 			return inputStream;

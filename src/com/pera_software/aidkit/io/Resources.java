@@ -31,9 +31,9 @@ public final class Resources {
 
 	//==============================================================================================
 	
-	public static Path getAsPath( Class< ? > parentClass, String resourceName ) {
+	public static Path asPath( Class< ? > parentClass, String resourceName ) {
 		try {
-			return new Resource( parentClass, resourceName ).getAsPath();
+			return new Resource( parentClass, resourceName ).asPath();
 		} catch ( Exception exception ) {
 			throw new ExceptionInInitializerError( exception );
 		}
@@ -41,9 +41,9 @@ public final class Resources {
 
 	//==============================================================================================
 	
-	public static InputStream getAsStream( Class< ? > resourceClass, String resourceName ) {
+	public static InputStream asStream( Class< ? > resourceClass, String resourceName ) {
 		try {
-			return new Resource( resourceClass, resourceName ).getAsStream();
+			return new Resource( resourceClass, resourceName ).asStream();
 		} catch ( Exception exception ) {
 			throw new ExceptionInInitializerError( exception );
 		}

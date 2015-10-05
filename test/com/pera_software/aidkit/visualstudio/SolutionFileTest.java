@@ -37,8 +37,8 @@ public final class SolutionFileTest
 		throws Exception
 	{
 		return Arrays.asList( new Object[][] {
-			{ new SolutionFile( Resources.getAsPath(SolutionFileTest.class, "2010/Solution.sln" )) },
-			{ new SolutionFile( Resources.getAsPath(SolutionFileTest.class, "2013/Solution.sln" )) }
+			{ new SolutionFile( Resources.asPath(SolutionFileTest.class, "2010/Solution.sln" )) },
+			{ new SolutionFile( Resources.asPath(SolutionFileTest.class, "2013/Solution.sln" )) }
 		});
 	}
 

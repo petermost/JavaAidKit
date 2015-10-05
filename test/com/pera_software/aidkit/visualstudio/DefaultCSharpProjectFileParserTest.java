@@ -32,9 +32,9 @@ public final class DefaultCSharpProjectFileParserTest extends CSharpProjectFileP
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CSharpProjectFileParser( Resources.getAsPath( DefaultCSharpProjectFileParserTest.class,
+			{ new CSharpProjectFileParser( Resources.asPath( DefaultCSharpProjectFileParserTest.class,
 				"2010/CSharpProjectWithDefaultOutputDirectories.csproj" )) },
-			{ new CSharpProjectFileParser( Resources.getAsPath( DefaultCSharpProjectFileParserTest.class,
+			{ new CSharpProjectFileParser( Resources.asPath( DefaultCSharpProjectFileParserTest.class,
 				"2013/CSharpProjectWithDefaultOutputDirectories.csproj" )) }
 		});
 	}

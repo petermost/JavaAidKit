@@ -30,16 +30,16 @@ public class CustomProjectFileTest extends ProjectFileTest {
 	@Parameters
 	public static Iterable< Object[] > loadProjectFiles() throws Exception {
 		return Arrays.asList( new Object[][] {
-			{ new CPlusPlusProjectFile( Resources.getAsPath( CustomProjectFileTest.class,
+			{ new CPlusPlusProjectFile( Resources.asPath( CustomProjectFileTest.class,
 				"2010/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
 				
-			{ new CPlusPlusProjectFile( Resources.getAsPath( CustomProjectFileTest.class,
+			{ new CPlusPlusProjectFile( Resources.asPath( CustomProjectFileTest.class,
 				"2013/CPlusPlusProjectWithCustomOutputDirectories.vcxproj" )) },
 				
-			{ new CSharpProjectFile( Resources.getAsPath( CustomProjectFileTest.class,
+			{ new CSharpProjectFile( Resources.asPath( CustomProjectFileTest.class,
 				"2010/CSharpProjectWithCustomOutputDirectories.csproj" )) },
 				
-			{ new CSharpProjectFile( Resources.getAsPath( CustomProjectFileTest.class,
+			{ new CSharpProjectFile( Resources.asPath( CustomProjectFileTest.class,
 				"2013/CSharpProjectWithCustomOutputDirectories.csproj" )) }
 		});
 	}
