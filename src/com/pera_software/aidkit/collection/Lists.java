@@ -53,7 +53,8 @@ public final class Lists {
 
 	//==============================================================================================
 	
-	public static < T > List< T > addAll( List< T > list, T array[] ) {
+	@SafeVarargs
+	public static < T > List< T > addAll( List< T > list, T ...array ) {
 		for ( T t : array )
 			list.add( t );
 		
