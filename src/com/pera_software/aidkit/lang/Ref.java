@@ -21,10 +21,13 @@ import java.util.*;
 import org.eclipse.jdt.annotation.*;
 
 /**
- * @author P. Most
+ * A class which can be used to return an value from a method via a parameter.
+ * Note: It was called Ref instead of Reference because Reference it already used in the JDK
+ * (see: {@link java.lang.ref.Reference})
+ * 
  * {@code}
  * <blockquote><pre>
- * public static boolean splitString( String s, char separator, OutputParameter< String > before, OutputParameter< String > after ) {
+ * public static boolean splitString( String s, char separator, Ref< String > before, Ref< String > after ) {
  *     int index = s.indexOf( separator );
  *     if ( index >= 0 ) {
  *         before.set( s.substring( 0, index ));
@@ -33,14 +36,16 @@ import org.eclipse.jdt.annotation.*;
  *     return index >= 0;
  * }
  * </pre></blockquote>
+ * 
+ * @author P. Most
  */
-public class OutputParameter< T > {
+public class Ref< T > {
 	private @Nullable T _value = null;
 
-	public OutputParameter() {
+	public Ref() {
 	}
 
-	public OutputParameter( T value ) {
+	public Ref( T value ) {
 		set( value );
 	}
 
