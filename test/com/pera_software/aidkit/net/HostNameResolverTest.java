@@ -29,7 +29,6 @@ import static org.junit.Assert.*;
 public class HostNameResolverTest {
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testGetHostName() throws Exception {
 		InetAddress address = InetAddress.getByName( "192.0.0.48" );
 		String hostName = HostNameResolver.getHostName( requireNonNull( address ));

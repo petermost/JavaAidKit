@@ -33,7 +33,6 @@ public class MutexTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testLock() throws Exception {
 
 		// Must not be locked yet:
@@ -56,7 +55,6 @@ public class MutexTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testMutex() {
 
 		// Must not be locked yet:
@@ -82,7 +80,6 @@ public class MutexTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testAutoLock() throws Exception {
 
 		ReentrantLock lock = new ReentrantLock();

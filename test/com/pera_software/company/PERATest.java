@@ -27,7 +27,6 @@ import org.junit.*;
 public class PERATest {
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testGetResourceAsStream() {
 		// We are just interested whether we can load a resource, so if one works, then we assume
 		// the others will too:

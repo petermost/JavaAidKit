@@ -28,7 +28,6 @@ import com.pera_software.aidkit.io.*;
 public class AidKitTest {
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testGetResourceAsStream() throws ResourceNotFoundException {
 		// We are just interested whether we can load a resource, so if one works, then we assume
 		// the others will too:

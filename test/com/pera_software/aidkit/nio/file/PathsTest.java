@@ -26,7 +26,6 @@ import org.junit.*;
 public class PathsTest
 {
 	@Test
-	@SuppressWarnings("static-method")
 	public void testRemoveOverlaps()
 	{
 		final List< Path > expectedDirs = Arrays.asList(

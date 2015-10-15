@@ -27,7 +27,6 @@ public class LongIntTest
 	//===========================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testMake()
 	{
 		long longValue = ( long )Integer.MAX_VALUE + 1;

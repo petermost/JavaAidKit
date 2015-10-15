@@ -28,7 +28,6 @@ import static com.pera_software.aidkit.nullable.NullStrings.*;
 public class RefTest {
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void test() {
 		String email = "pmost@pera-software.com";
 		Ref< String > name = new Ref<>();

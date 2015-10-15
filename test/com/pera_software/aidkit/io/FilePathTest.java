@@ -28,7 +28,6 @@ public class FilePathTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testEmptyPath() {
 		FilePath path = new FilePath();
 		assertEquals( Strings.EMPTY, path.drive() );
@@ -45,7 +44,6 @@ public class FilePathTest {
 	//==============================================================================================
 	
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testCopyConstructor() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name.ext1.ext2" );
 		FilePath copy = new FilePath( path );
@@ -56,7 +54,6 @@ public class FilePathTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testDriveSeparator() {
 		FilePath path = new FilePath();
 
@@ -76,7 +73,6 @@ public class FilePathTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testDirectorySeparator() {
 		FilePath path = new FilePath();
 
@@ -96,7 +92,6 @@ public class FilePathTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testExtensionSeparator() {
 		FilePath path = new FilePath();
 
@@ -116,7 +111,6 @@ public class FilePathTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testFullPath() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name.ext1.ext2" );
 
@@ -144,7 +138,6 @@ public class FilePathTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testEmptyNameMultipleExtensions() {
 		FilePath path = new FilePath( ".ext1.ext2" );
 
@@ -165,7 +158,6 @@ public class FilePathTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testFileNameWithoutExtension() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name" );
 
@@ -180,7 +172,6 @@ public class FilePathTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testAddingExtension() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name.ext" );
 
@@ -197,7 +188,6 @@ public class FilePathTest {
 	//==============================================================================================
 	
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testToString() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name.ext" );
 

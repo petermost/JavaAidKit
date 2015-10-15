@@ -29,7 +29,6 @@ public class ListsTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testRemoveDuplicates() {
 		final List< String > expectedUniques = Arrays.asList( "1", "2", "3", "4" );
 		List< String > duplicates = Arrays.asList( "1", "1", "2", "2", "2", "3", "3", "4" );
@@ -42,7 +41,6 @@ public class ListsTest {
 	//==============================================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testFindDuplicates() {
 		final List< String > expectedDuplicates = Arrays.asList( "1", "2", "2", "3" );
 		List< String > duplicates = Arrays.asList( "1", "1", "2", "2", "2", "3", "3", "4" );

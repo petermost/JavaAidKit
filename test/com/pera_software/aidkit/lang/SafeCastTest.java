@@ -27,7 +27,6 @@ public class SafeCastTest
 	//=============================================================================
 
 	@Test
-	@SuppressWarnings( "static-method" )
 	public void testCasting()
 	{
 		assertEquals( Integer.MAX_VALUE, SafeCast.toInt( Integer.MAX_VALUE ) );
@@ -43,7 +42,6 @@ public class SafeCastTest
 	//=============================================================================
 
 	@Test( expected = OverflowError.class )
-	@SuppressWarnings( "static-method" )
 	public void testToIntOverflow()
 	{
 		SafeCast.toInt( Integer.MAX_VALUE + 1L );
@@ -52,7 +50,6 @@ public class SafeCastTest
 	//=============================================================================
 
 	@Test( expected = UnderflowError.class )
-	@SuppressWarnings( "static-method" )
 	public void testToIntUnderflow()
 	{
 		SafeCast.toInt( Integer.MIN_VALUE - 1L );
@@ -61,7 +58,6 @@ public class SafeCastTest
 	//=============================================================================
 
 	@Test( expected = OverflowError.class )
-	@SuppressWarnings( "static-method" )
 	public void testToShortOverflow()
 	{
 		SafeCast.toShort( Short.MAX_VALUE + 1 );
@@ -70,7 +66,6 @@ public class SafeCastTest
 	//=============================================================================
 
 	@Test( expected = UnderflowError.class )
-	@SuppressWarnings( "static-method" )
 	public void testToShortUnderflow()
 	{
 		SafeCast.toShort( Short.MIN_VALUE - 1 );
@@ -79,7 +74,6 @@ public class SafeCastTest
 	//=============================================================================
 
 	@Test( expected = OverflowError.class )
-	@SuppressWarnings( "static-method" )
 	public void testToByteOverflow()
 	{
 		SafeCast.toByte( Byte.MAX_VALUE + 1 );
@@ -88,7 +82,6 @@ public class SafeCastTest
 	//=============================================================================
 
 	@Test( expected = UnderflowError.class )
-	@SuppressWarnings( "static-method" )
 	public void testToByteUnderflow()
 	{
 		SafeCast.toByte( Byte.MIN_VALUE - 1 );

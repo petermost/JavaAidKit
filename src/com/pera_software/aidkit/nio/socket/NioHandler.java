@@ -118,7 +118,6 @@ public class NioHandler
 	 *
 	 * @see #onRead
 	 */
-	@SuppressWarnings( "static-method" )
 	public int doRead( SocketChannel channel, ByteBuffer buffer )
 		throws Exception, BufferUnderflowException
 	{
@@ -183,7 +182,6 @@ public class NioHandler
 	 *          from the handler.
 	 * @see #onWrite
 	 */
-	@SuppressWarnings( "static-method" )
 	public int doWrite( SocketChannel channel, ByteBuffer buffer )
 		throws Exception, BufferOverflowException
 	{
@@ -219,7 +217,6 @@ public class NioHandler
 	 *  return <code>true</code> otherwise return <code>false</code> which will
 	 *  result in the exception being thrown from <code>dispatch</code>.
 	 */
-	@SuppressWarnings( "static-method" )
 	public boolean onError( NioDispatcher dispatcher, SelectableChannel channel, Exception exception )
 		throws Exception
 	{
