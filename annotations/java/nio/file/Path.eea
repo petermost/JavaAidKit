@@ -1,0 +1,7 @@
+class java/nio/file/Path
+normalize
+ ()Ljava/nio/file/Path;
+ ()L1java/nio/file/Path;
+toFile
+ ()Ljava/io/File;
+ ()L1java/io/File;

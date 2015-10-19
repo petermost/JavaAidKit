@@ -19,40 +19,43 @@ package com.pera_software.aidkit.nio.file;
 
 import java.nio.file.*;
 import java.util.*;
+import org.eclipse.jdt.annotation.*;
 
 //##################################################################################################
 
-public final class Paths
-{
+public final class Paths {
+	
 	//==============================================================================================
 
-	private Paths()
-	{
+	private Paths() {
 	}
 
 	//==============================================================================================
 
-	public static Path get( String first, String... more )
-	{
-		return java.nio.file.Paths.get( first, more );
-	}
+//	public static Path get( String first, String ... more ) {
+//		return java.nio.file.Paths.get( first, more );
+//	}
 
 	//==============================================================================================
 
-	public static List< Path > get( List< String > pathNames )
-	{
-		List< Path > paths = new ArrayList<>( pathNames.size() );
+	/**
+	 * Get a list of Paths for a list of strings
+	 */
+	public static List< Path > get( List< String > pathNames ) {
+		List< Path > paths = new ArrayList< >( pathNames.size() );
 		for ( String pathName : pathNames ) {
-			paths.add( Paths.get( pathName ));
+			paths.add( java.nio.file.Paths.get( pathName ) );
 		}
 		return paths;
 	}
 
 	//==============================================================================================
 
-	public static List< Path > normalize( List< Path > paths )
-	{
-		List< Path > normalizedPaths = new ArrayList<>( paths.size() );
+	/**
+	 * Normalize a list of Paths
+	 */
+	public static List< Path > normalize( List< Path > paths ) {
+		List< Path > normalizedPaths = new ArrayList< >( paths.size() );
 		for ( Path path : paths ) {
 			normalizedPaths.add( path.normalize() );
 		}
@@ -61,26 +64,25 @@ public final class Paths
 
 	//==============================================================================================
 
-	public static List< Path > removeOverlaps( List< Path > paths )
-	{
+	public static List< Path > removeOverlaps( List< Path > paths ) {
 		// Walk through all paths and nullify those which have a parent path:
 
-		List< Path > pathsCopy = new ArrayList<>( paths );
+		List< @Nullable Path > pathsCopy = new ArrayList< >( paths );
 		for ( int path1Idx = 0; path1Idx < pathsCopy.size(); ++path1Idx ) {
 			Path path1 = pathsCopy.get( path1Idx );
 			for ( int path2Idx = path1Idx + 1; path2Idx < pathsCopy.size(); ++path2Idx ) {
 				Path path2 = pathsCopy.get( path2Idx );
 				if ( path1 != null && path2 != null ) {
-					if ( path1.startsWith( path2 ))
+					if ( path1.startsWith( path2 ) )
 						pathsCopy.set( path1Idx, null );
-					else if ( path2.startsWith( path1 ))
-						pathsCopy.set( path2Idx,  null );
+					else if ( path2.startsWith( path1 ) )
+						pathsCopy.set( path2Idx, null );
 				}
 			}
 		}
 		// Copy the remaining paths:
 
-		List< Path > nonOverlappingPaths = new ArrayList<>();
+		List< Path > nonOverlappingPaths = new ArrayList< >();
 		for ( Path path : pathsCopy ) {
 			if ( path != null )
 				nonOverlappingPaths.add( path );

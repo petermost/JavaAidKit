@@ -21,7 +21,6 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import com.pera_software.aidkit.Console;
-import com.pera_software.aidkit.nio.file.Paths;
 
 //##################################################################################################
 
@@ -193,7 +192,7 @@ public class ProjectFile {
 	 * Convert file names to file paths relative to the project file:
 	 */
 	private List< Path > convertFileNames( List< String > fileNames ) throws Exception {
-		List< Path > filePaths = Paths.get( fileNames );
+		List< Path > filePaths = com.pera_software.aidkit.nio.file.Paths.get( fileNames );
 		filePaths = resolveProjectSiblings( filePaths );
 
 		return filePaths;

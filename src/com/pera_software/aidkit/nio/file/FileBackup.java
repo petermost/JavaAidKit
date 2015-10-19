@@ -19,6 +19,7 @@ package com.pera_software.aidkit.nio.file;
 
 import java.io.*;
 import java.nio.file.*;
+import java.nio.file.Paths;
 import java.nio.file.attribute.*;
 import java.util.zip.*;
 import com.pera_software.aidkit.io.*;
@@ -26,10 +27,10 @@ import com.pera_software.aidkit.signal.*;
 
 //##################################################################################################
 
-public class FileBackup extends SimpleFileVisitor< Path > implements Closeable
-{
-	public final Signal1< String > storingFileSignal = new Signal1<>();
-	public final Signal2< String, Exception > storingFileFailedSignal = new Signal2<>();
+public class FileBackup extends SimpleFileVisitor< Path > implements Closeable {
+	
+	public final Signal1< String > storingFileSignal = new Signal1< >();
+	public final Signal2< String, Exception > storingFileFailedSignal = new Signal2< >();
 
 	private ZipOutputStream _zipStream;
 	private PathMatcher _pathMatcher;
@@ -37,20 +38,17 @@ public class FileBackup extends SimpleFileVisitor< Path > implements Closeable
 
 	//==============================================================================================
 
-	public FileBackup( String backupFileName )
-		throws FileNotFoundException
-	{
+	public FileBackup( String backupFileName ) throws FileNotFoundException {
 		_fileName = backupFileName;
-		_zipStream = new ZipOutputStream( new FileOutputStream( _fileName ));
+		_zipStream = new ZipOutputStream( new FileOutputStream( _fileName ) );
+		_pathMatcher = createPathMatcher( "*" );
 	}
 
 	//==============================================================================================
 
-	public void backup( String wildCardPath )
-		throws Exception
-	{
+	public void backup( String wildCardPath ) throws Exception {
 		try {
-			if ( wildCardPath.contains( "*" ) || wildCardPath.contains( "?" )) {
+			if ( wildCardPath.contains( "*" ) || wildCardPath.contains( "?" ) ) {
 
 				// Extract the path so we know where to start and get the name which contains the
 				// wildcard so we know what to store:
@@ -58,31 +56,31 @@ public class FileBackup extends SimpleFileVisitor< Path > implements Closeable
 				File wildCardFile = new File( wildCardPath );
 				String parentDirectory = wildCardFile.getParent();
 				String wildCardPattern = wildCardFile.getName();
-				_pathMatcher = FileSystems.getDefault().getPathMatcher( "glob:" + wildCardPattern );
+				_pathMatcher = createPathMatcher( wildCardPattern );
 				Files.walkFileTree( Paths.get( parentDirectory ), this );
 			} else
-				storeFile( new File( wildCardPath ));
+				storeFile( new File( wildCardPath ) );
 		} catch ( Exception exception ) {
 			storingFileFailedSignal.emit( wildCardPath, exception );
 		}
 	}
 
+	private static PathMatcher createPathMatcher( String wildCardPattern ) {
+		return FileSystems.getDefault().getPathMatcher( "glob:" + wildCardPattern );
+	}
+
 	//==============================================================================================
 
 	@Override
-	public void close()
-		throws IOException
-	{
+	public void close() throws IOException {
 		_zipStream.close();
 	}
 
 	//==============================================================================================
 
 	@Override
-	public FileVisitResult visitFile( Path file, BasicFileAttributes attrs)
-		throws IOException
-	{
-		if ( _pathMatcher.matches( file.getFileName() ))
+	public FileVisitResult visitFile( Path file, BasicFileAttributes attrs ) throws IOException {
+		if ( _pathMatcher.matches( file.getFileName() ) )
 			storeFile( file.toFile() );
 
 		return super.visitFile( file, attrs );
@@ -90,14 +88,12 @@ public class FileBackup extends SimpleFileVisitor< Path > implements Closeable
 
 	//==============================================================================================
 
-	private void storeFile( File file )
-		throws IOException
-	{
+	private void storeFile( File file ) throws IOException {
 		try {
 			String fileName = file.getCanonicalPath();
 			storingFileSignal.emit( fileName );
-			try ( FileInputStream inputStream = new FileInputStream( file )) {
-				_zipStream.putNextEntry( new ZipEntry( fileName ));
+			try ( FileInputStream inputStream = new FileInputStream( file ) ) {
+				_zipStream.putNextEntry( new ZipEntry( fileName ) );
 				Streams.copy( inputStream, _zipStream );
 				_zipStream.closeEntry();
 			}

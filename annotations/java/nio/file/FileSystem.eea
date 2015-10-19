@@ -1,0 +1,4 @@
+class java/nio/file/FileSystem
+getPathMatcher
+ (Ljava/lang/String;)Ljava/nio/file/PathMatcher;
+ (Ljava/lang/String;)L1java/nio/file/PathMatcher;

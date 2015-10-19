@@ -1,0 +1,10 @@
+class java/io/File
+getCanonicalPath
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
+getName
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
+getParent
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
