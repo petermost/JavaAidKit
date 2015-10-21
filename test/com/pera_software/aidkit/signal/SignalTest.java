@@ -22,51 +22,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import org.junit.*;
 
-class MethodArgumentsAsserter implements InvocationHandler
-{
-	private Method _expectedMethod;
-	private int _callCounter = 0;
-	private Object _expectedArguments[];
-
-	public MethodArgumentsAsserter( Method expectedMethod, Object ... expectedArguments )
-	{
-		_expectedMethod = expectedMethod;
-		_expectedArguments = expectedArguments;
-	}
-
-	private void assertArguments( Object ... arguments )
-	{
-		for ( int i = 0; arguments != null && i < arguments.length; ++i ) {
-			Object argument = arguments[ i ];
-			Object expectedArgument = _expectedArguments[ i ];
-
-			assertEquals( expectedArgument, argument );
-			assertEquals( expectedArgument.getClass(), argument.getClass() );
-		}
-	}
-
-	@Override
-	public Object invoke( Object proxy, Method method, Object arguments[] )
-		throws Throwable
-	{
-		if ( method.getName().equals( "equals" )) {
-			return proxy == arguments[ 0 ];
-		} else if ( method.equals( _expectedMethod )) {
-			assertArguments( arguments );
-			++_callCounter;
-		}
-		return null;
-	}
-
-	public int callCounter()
-	{
-		return _callCounter;
-	}
-}
-//##################################################################################################
-
-public abstract class SignalTest
-{
+public abstract class SignalTest {
 	private Class< ? extends Signal > _signalClass;
 	private Class< ? > _slotClass;
 	private Class< ? > _argumentTypes[];
@@ -91,21 +47,20 @@ public abstract class SignalTest
 	//==============================================================================================
 
 	protected static final Object EXPECTED_ARGUMENTS[] = {
-		new Byte(( byte )1 ),
-		new Long( 2 ),
-		new Short(( short )3 ),
-		new Float( 4 ),
-		new Double( 5 ),
-		new String( "6" ),
-		new Integer( 7 ),
-		new Boolean( true ),
+		new Byte( ( byte )1 ), 
+		new Long( 2 ), 
+		new Short( ( short )3 ),
+		new Float( 4 ), 
+		new Double( 5 ), 
+		new String( "6" ), 
+		new Integer( 7 ), 
+		new Boolean( true ), 
 		new Character( '9' )
 	};
 
 	//==============================================================================================
 
-	protected static void assertArguments( Object ... arguments )
-	{
+	protected static void assertArguments( Object ... arguments ) {
 		for ( int i = 0; arguments != null && i < arguments.length; ++i ) {
 			Object argument = arguments[ i ];
 			Object expectedArgument = EXPECTED_ARGUMENTS[ i ];
@@ -115,46 +70,40 @@ public abstract class SignalTest
 		}
 	}
 
-	private Object[] expectedArguments()
-	{
+	private Object[] expectedArguments() {
 		return Arrays.copyOf( EXPECTED_ARGUMENTS, _argumentTypes.length );
 	}
 
 	//==============================================================================================
 
-	private Signal createSignal()
-		throws Exception
-	{
+	private Signal createSignal() throws Exception {
 		return _signalClass.newInstance();
 	}
 
-	private Slot createSlotMock()
-	{
+	private Slot createSlotMock() {
 		MethodArgumentsAsserter argumentsAsserter = new MethodArgumentsAsserter( _handleMethod, expectedArguments() );
 
-		Class< ? >[] interfaces = new Class< ? >[] { _slotClass };
+		Class< ? >[] interfaces = new Class< ? >[] {
+			_slotClass
+		};
 		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces, argumentsAsserter );
 
 		return slot;
 	}
 
-//	private Slot createSlotMock( Callable0 callable )
-//	{
-//		return null;
-//	}
+	//	private Slot createSlotMock( Callable0 callable )
+	//	{
+	//		return null;
+	//	}
 
-	private static void assertSlotCallCounter( int expectedCallCounter, Slot slot )
-	{
+	private static void assertSlotCallCounter( int expectedCallCounter, Slot slot ) {
 		MethodArgumentsAsserter argumentsAsserter = ( MethodArgumentsAsserter )Proxy.getInvocationHandler( slot );
 		assertEquals( expectedCallCounter, argumentsAsserter.callCounter() );
 	}
 
 	//==============================================================================================
 
-	public SignalTest( Class< ? extends Signal > signalClass, Class< ? extends Slot > slotClass,
-			int parameterCount )
-		throws Exception
-	{
+	public SignalTest( Class< ? extends Signal > signalClass, Class< ? extends Slot > slotClass, int parameterCount ) throws Exception {
 		_signalClass = signalClass;
 		_slotClass = slotClass;
 
@@ -195,12 +144,11 @@ public abstract class SignalTest
 	//==============================================================================================
 
 	@Test
-	public void testEmitToMultipleSlots() throws Exception
-	{
+	public void testEmitToMultipleSlots() throws Exception {
 		// A Signal must be able to emit to multiple slots:
 
-		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _connectedSlot1 ));
-		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _connectedSlot2 ));
+		assertTrue( ( Boolean )_connectMethod.invoke( _signal1, _connectedSlot1 ) );
+		assertTrue( ( Boolean )_connectMethod.invoke( _signal1, _connectedSlot2 ) );
 
 		_emitMethod.invoke( _signal1, expectedArguments() );
 		assertSlotCallCounter( 1, _connectedSlot1 );
@@ -210,14 +158,13 @@ public abstract class SignalTest
 	//==============================================================================================
 
 	@Test
-	public void testDontEmitToDisconnectedSlot() throws Exception
-	{
+	public void testDontEmitToDisconnectedSlot() throws Exception {
 		// A Signal must not emit to a disconnected slot:
 
-		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _connectedSlot1 ));
+		assertTrue( ( Boolean )_connectMethod.invoke( _signal1, _connectedSlot1 ) );
 
-		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _disconnectedSlot ));
-		assertTrue(( Boolean )_disconnectMethod.invoke( _signal1, _disconnectedSlot ));
+		assertTrue( ( Boolean )_connectMethod.invoke( _signal1, _disconnectedSlot ) );
+		assertTrue( ( Boolean )_disconnectMethod.invoke( _signal1, _disconnectedSlot ) );
 
 		_emitMethod.invoke( _signal1, expectedArguments() );
 		assertSlotCallCounter( 0, _disconnectedSlot );
@@ -226,15 +173,13 @@ public abstract class SignalTest
 	//==============================================================================================
 
 	@Test
-	public void testEmitToSignal()
-		throws Exception
-	{
+	public void testEmitToSignal() throws Exception {
 		// A Signal can be used as a Slot:
 
-		assertTrue(( Boolean )_connectMethod.invoke( _signal2, _connectedSlot1 ));
-		assertTrue(( Boolean )_connectMethod.invoke( _signal1, _signal2 ));
+		assertTrue( ( Boolean )_connectMethod.invoke( _signal2, _connectedSlot1 ) );
+		assertTrue( ( Boolean )_connectMethod.invoke( _signal1, _signal2 ) );
 
-		_emitMethod.invoke( _signal1,  expectedArguments() );
+		_emitMethod.invoke( _signal1, expectedArguments() );
 		assertSlotCallCounter( 1, _connectedSlot1 );
 	}
 
@@ -266,30 +211,30 @@ public abstract class SignalTest
 	//		_emitMethod.invoke( signal,  expectedArguments() );
 	//	}
 
-//	@Test
-//	@SuppressWarnings("static-method")
-//	public void testHandleDisconnectingSlot()
-//		throws Exception
-//	{
-//		// A Signal must be able to handle a Slot which disconnects while being called:
-//
-//		Signal2< Byte, Long > signal = new Signal2<>();
-//
-//		Slot2< Byte, Long > disconnectingSlot = new Slot2< Byte, Long >() {
-//			@Override
-//			@SuppressWarnings( "unused" )
-//			public void handle( Byte parameter1, Long parameter2 ) throws Exception {
-//				signal.disconnect( this );
-//			}
-//		};
-//		Slot2< Byte, Long > unimportantSlot1 = ( parameter1, parameter2 ) -> {};
-//		Slot2< Byte, Long > unimportantSlot2 = ( parameter1, parameter2 ) -> {};
-//
-//		signal.connect( disconnectingSlot );
-//		signal.connect( unimportantSlot2 );
-//		signal.connect( unimportantSlot1 );
-//
-//		signal.emit( EXPECTED_PARAMETER_1, EXPECTED_ARGUMENT_2 );
-//	}
+	//	@Test
+	//	@SuppressWarnings("static-method")
+	//	public void testHandleDisconnectingSlot()
+	//		throws Exception
+	//	{
+	//		// A Signal must be able to handle a Slot which disconnects while being called:
+	//
+	//		Signal2< Byte, Long > signal = new Signal2<>();
+	//
+	//		Slot2< Byte, Long > disconnectingSlot = new Slot2< Byte, Long >() {
+	//			@Override
+	//			@SuppressWarnings( "unused" )
+	//			public void handle( Byte parameter1, Long parameter2 ) throws Exception {
+	//				signal.disconnect( this );
+	//			}
+	//		};
+	//		Slot2< Byte, Long > unimportantSlot1 = ( parameter1, parameter2 ) -> {};
+	//		Slot2< Byte, Long > unimportantSlot2 = ( parameter1, parameter2 ) -> {};
+	//
+	//		signal.connect( disconnectingSlot );
+	//		signal.connect( unimportantSlot2 );
+	//		signal.connect( unimportantSlot1 );
+	//
+	//		signal.emit( EXPECTED_PARAMETER_1, EXPECTED_ARGUMENT_2 );
+	//	}
 
 }
