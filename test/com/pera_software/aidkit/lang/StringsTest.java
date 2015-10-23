@@ -17,19 +17,24 @@
 
 package com.pera_software.aidkit.lang;
 
-import java.util.*;
+import org.junit.*;
+import static org.junit.Assert.*;
 
 /**
  * @author P. Most
  *
  */
-public final class Strings {
-	public static final String EMPTY = "";
+public class StringsTest {
+
+	@Test
+	public void testEmpty() {
+		assertNotNull( Strings.EMPTY );
+		assertTrue( Strings.EMPTY.isEmpty() );
+	}
 	
-	public static final String EMPTY_ARRAY[] = new String[ 0 ];
-	
-	public static final List< String > EMPTY_LIST = new ArrayList<>();
-	
-	private Strings() {
+	@Test
+	public void testEmptyArray() {
+		assertNotNull( Strings.EMPTY_ARRAY );
+		assertEquals( 0, Strings.EMPTY_ARRAY.length );
 	}
 }

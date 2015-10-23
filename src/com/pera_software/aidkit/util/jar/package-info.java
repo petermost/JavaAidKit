@@ -15,21 +15,9 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.lang;
-
-import java.util.*;
-
 /**
  * @author P. Most
  *
  */
-public final class Strings {
-	public static final String EMPTY = "";
-	
-	public static final String EMPTY_ARRAY[] = new String[ 0 ];
-	
-	public static final List< String > EMPTY_LIST = new ArrayList<>();
-	
-	private Strings() {
-	}
-}
+@org.eclipse.jdt.annotation.NonNullByDefault
+package com.pera_software.aidkit.util.jar;

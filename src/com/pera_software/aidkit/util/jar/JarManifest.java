@@ -20,20 +20,19 @@ package com.pera_software.aidkit.util.jar;
 import java.io.*;
 import java.net.*;
 import java.util.jar.*;
+import org.eclipse.jdt.annotation.*;
 import com.pera_software.aidkit.lang.*;
 
 //##############################################################################
 
-public class JarManifest extends Manifest
-{
+public class JarManifest extends Manifest {
 	private static final String MANIFEST_CLASS_PATH_SEPERATOR = " ";
 
 	private String _path = "";
 
 	//============================================================================
 
-	public static JarManifest getCurrentManifest( Class< ? > mainClass )
-	{
+	public static @Nullable JarManifest getCurrentManifest( Class< ? > mainClass ) {
 		JarManifest manifest = getJarManifest( mainClass );
 		if ( manifest == null )
 			manifest = getClassManifest( mainClass );
@@ -43,8 +42,7 @@ public class JarManifest extends Manifest
 
 	//============================================================================
 
-	public static JarManifest getJarManifest( Class< ? > mainClass )
-	{
+	public static @Nullable JarManifest getJarManifest( Class< ? > mainClass ) {
 		// The 'recommended' way of retrieving the manifest with:
 		// InputStream inputStream = rootClass.getResourceAsStream( "/META-INF/MANIFEST.MF" );
 		// Manifest manifest = new Manifest( inputStream );
@@ -70,16 +68,15 @@ public class JarManifest extends Manifest
 					manifest = new JarManifest( jarPathName, manifestURL.openStream() );
 				}
 			}
-			return ( manifest );
+			return manifest;
 		} catch ( IOException cause ) {
-			return ( null );
+			return null;
 		}
 	}
 
 	//============================================================================
 
-	public static JarManifest getClassManifest( Class< ? > mainClass )
-	{
+	public static JarManifest getClassManifest( Class< ? > mainClass ) {
 		// There is no manifest for classes, so we 'fake' a manifest:
 
 		// Make the class path look like in the manifest:
@@ -97,88 +94,76 @@ public class JarManifest extends Manifest
 		// Initialize the 'faked' manifest with the class path:
 
 		URL mainClassLocation = mainClass.getProtectionDomain().getCodeSource().getLocation();
-		String mainClassPath = mainClassLocation != null ? mainClassLocation.getPath() : ""
-			+ mainClassName;
+		String mainClassPath = mainClassLocation != null ? mainClassLocation.getPath() : "" + mainClassName;
 
-		return ( new JarManifest( mainClassPath, classPath ) );
+		return new JarManifest( mainClassPath, classPath );
 	}
 
 	//============================================================================
 
-	public JarManifest( String path )
-	{
+	public JarManifest( String path ) {
 		_path = path;
 	}
 
 	//============================================================================
 
-	public JarManifest( String path, InputStream inputStream ) throws IOException
-	{
+	public JarManifest( String path, InputStream inputStream ) throws IOException {
 		super( inputStream );
 		_path = path;
 	}
 
 	//============================================================================
 
-	public JarManifest( String path, Manifest manifest )
-	{
+	public JarManifest( String path, Manifest manifest ) {
 		super( manifest );
 		_path = path;
 	}
 
 	//============================================================================
 
-	public JarManifest( String path, String classPath )
-	{
+	public JarManifest( String path, String classPath ) {
 		_path = path;
 		getMainAttributes().putValue( Attributes.Name.CLASS_PATH.toString(), classPath );
 	}
 
 	//============================================================================
 
-	public String getPath()
-	{
-		return ( _path );
+	public String getPath() {
+		return _path;
 	}
 
 	//============================================================================
 
-	public String[] getClassPath()
-	{
+	public String[] getClassPath() {
 		String classPath = getMainAttributes().getValue( Attributes.Name.CLASS_PATH );
 
 		// Split the path when separated with one or more blanks:
 
-		return ( classPath != null ? classPath.split( MANIFEST_CLASS_PATH_SEPERATOR + "+" )
-			: new String[ 0 ] );
+		return ( classPath != null ? classPath.split( MANIFEST_CLASS_PATH_SEPERATOR + "+" ) : new String[ 0 ] );
 	}
 
 	//============================================================================
 
-	private String getAttribute( Attributes.Name name )
-	{
+	private String getAttribute( Attributes.Name name ) {
 		String value = getMainAttributes().getValue( name );
 		return ( value != null ? value : "" );
 	}
 
 	//============================================================================
 
-	public String getImplementationTitle()
-	{
+	public String getImplementationTitle() {
 		return ( getAttribute( Attributes.Name.IMPLEMENTATION_TITLE ) );
 	}
 
 	//============================================================================
 
-	public String getImplementationVendor()
-	{
+	public String getImplementationVendor() {
 		return ( getAttribute( Attributes.Name.IMPLEMENTATION_VENDOR ) );
 	}
 
 	//============================================================================
 
-	public String getImplementationVersion()
-	{
+	public String getImplementationVersion() {
 		return ( getAttribute( Attributes.Name.IMPLEMENTATION_VERSION ) );
 	}
 

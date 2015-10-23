@@ -20,56 +20,49 @@ package com.pera_software.aidkit.util.jar;
 import java.io.*;
 import java.util.*;
 import java.util.jar.*;
+import org.eclipse.jdt.annotation.*;
 
 //##############################################################################
 
-public class ApplicationJarManifests implements Iterable< ApplicationJarManifests.Entry >
-{
-	//############################################################################
+public class ApplicationJarManifests implements Iterable< ApplicationJarManifests.Entry > {
 
-	static public class Entry
-	{
+	static public class Entry {
 		private JarManifest _manifest;
-		private Exception _exception;
+		private @Nullable Exception _exception;
 
 		//==========================================================================
 
-		public Entry( JarManifest manifest, Exception exception )
-		{
+		public Entry( JarManifest manifest, @Nullable Exception exception ) {
 			_manifest = manifest;
 			_exception = exception;
 		}
 
 		//==========================================================================
 
-		public JarManifest manifest()
-		{
+		public JarManifest manifest() {
 			return ( _manifest );
 		}
 
 		//==========================================================================
 
-		public Exception exception()
-		{
-			return ( _exception );
+		public @Nullable Exception exception() {
+			return _exception;
 		}
 
 		//==========================================================================
 
-		public boolean isErroneous()
-		{
-			return ( _exception != null );
+		public boolean isErroneous() {
+			return _exception != null;
 		}
 	}
 
 	private String _requiredVersion = "";
 	private String _requiredVendor = "";
-	private List< Entry > _loadedManifests = new Vector<>();
+	private List< Entry > _loadedManifests = new Vector< >();
 
 	//============================================================================
 
-	public ApplicationJarManifests( JarManifest mainManifest )
-	{
+	public ApplicationJarManifests( JarManifest mainManifest ) {
 		// The main manifest specifies which vendor and version is required:
 
 		_requiredVersion = mainManifest.getImplementationVersion();
@@ -79,14 +72,13 @@ public class ApplicationJarManifests implements Iterable< ApplicationJarManifest
 
 		_loadedManifests.add( new Entry( mainManifest, null ) );
 
-		Set< String > loadedJars = new TreeSet<>();
+		Set< String > loadedJars = new TreeSet< >();
 		loadManifests( mainManifest, loadedJars );
 	}
 
 	//============================================================================
 
-	private void loadManifests( JarManifest manifest, Set< String > loadedJars )
-	{
+	private void loadManifests( JarManifest manifest, Set< String > loadedJars ) {
 		String classPaths[] = manifest.getClassPath();
 		for ( String classPath : classPaths ) {
 			// Avoid endless recursion if we have already seen it:
@@ -107,8 +99,7 @@ public class ApplicationJarManifests implements Iterable< ApplicationJarManifest
 
 									// Check the version but only if it is from the same vendor:
 
-									if ( _requiredVendor.length() > 0 && _requiredVendor.equals( jarManifest.getImplementationVendor() )
-										&& !_requiredVersion.equals( jarManifest.getImplementationVersion() ) ) {
+									if ( _requiredVendor.length() > 0 && _requiredVendor.equals( jarManifest.getImplementationVendor() ) && !_requiredVersion.equals( jarManifest.getImplementationVersion() ) ) {
 										exception = new JarException( "Wrong version!" );
 									}
 									_loadedManifests.add( new Entry( jarManifest, exception ) );
@@ -117,8 +108,7 @@ public class ApplicationJarManifests implements Iterable< ApplicationJarManifest
 									throw ( new JarException( "Manifest not found!" ) );
 							}
 						} else
-							_loadedManifests.add( new Entry(
-								new JarManifest( classPath, classPath ), null ) );
+							_loadedManifests.add( new Entry( new JarManifest( classPath, classPath ), null ) );
 					} else
 						throw ( new FileNotFoundException( "JAR not found!" ) );
 				} catch ( Exception cause ) {
@@ -131,15 +121,13 @@ public class ApplicationJarManifests implements Iterable< ApplicationJarManifest
 	//============================================================================
 
 	@Override
-	public Iterator< Entry > iterator()
-	{
+	public Iterator< Entry > iterator() {
 		return ( _loadedManifests.iterator() );
 	}
 
 	//============================================================================
 
-	public boolean isErroneous()
-	{
+	public boolean isErroneous() {
 		for ( Entry entry : this ) {
 			if ( entry.isErroneous() )
 				return ( true );
