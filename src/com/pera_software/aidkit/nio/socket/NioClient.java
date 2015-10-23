@@ -24,15 +24,15 @@ import java.nio.channels.*;
 /**
  * This class is used to establish a 'client' connection.
  */
-public class NioClient
-{
+public class NioClient {
+	
 	private NioDispatcher _dispatcher;
 	private SocketChannel _clientChannel;
 
 	//=============================================================================
 
-	public NioClient( NioDispatcher dispatcher )
-	{
+	@SuppressWarnings( "null" )
+	public NioClient( NioDispatcher dispatcher ) {
 		_dispatcher = dispatcher;
 	}
 
@@ -47,9 +47,7 @@ public class NioClient
 	 *
 	 * @see NioHandler#onConnect
 	 */
-	public void connect( InetAddress address, int port, NioHandler handler )
-		throws Exception
-	{
+	public void connect( InetAddress address, int port, NioHandler handler ) throws Exception {
 		// Create the non-blocking client channel:
 
 		_clientChannel = SocketChannel.open();
@@ -67,8 +65,7 @@ public class NioClient
 	/**
 	 * Closes the connection and <code>NioHandler.onClose</code>is called.
 	 */
-	public void close() throws Exception
-	{
+	public void close() throws Exception {
 		_dispatcher.closeChannel( _clientChannel );
 	}
 }

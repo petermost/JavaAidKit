@@ -25,15 +25,14 @@ import java.nio.channels.*;
  * The <code>NioDispatcher</code> uses this class to notify the user code
  * about events for a channel.
  */
-public class NioHandler
-{
-	private ByteBuffer _readBuffer = null;
-	private ByteBuffer _writeBuffer = null;
+public class NioHandler {
+	
+	private ByteBuffer _readBuffer;
+	private ByteBuffer _writeBuffer;
 
 	//=============================================================================
 
-	public NioHandler( int readBufferSize, int writeBufferSize )
-	{
+	public NioHandler( int readBufferSize, int writeBufferSize ) {
 		_readBuffer = ByteBuffer.allocateDirect( readBufferSize );
 		_writeBuffer = ByteBuffer.allocateDirect( writeBufferSize );
 	}
@@ -46,9 +45,7 @@ public class NioHandler
 	 * @throws Exception
 	 * @see NioClient#connect(InetAddress, int, NioHandler)
 	 */
-	public void onConnect( NioDispatcher dispatcher, SocketChannel channel )
-		throws Exception
-	{
+	public void onConnect( NioDispatcher dispatcher, SocketChannel channel ) throws Exception {
 	}
 
 	//=============================================================================
@@ -59,9 +56,7 @@ public class NioHandler
 	 * @throws Exception
 	 * @see NioServer#listen(int, NioHandler)
 	 */
-	public void onAccept( NioDispatcher dispatcher, SocketChannel clientChannel )
-		throws Exception
-	{
+	public void onAccept( NioDispatcher dispatcher, SocketChannel clientChannel ) throws Exception {
 	}
 
 	//=============================================================================
@@ -70,9 +65,7 @@ public class NioHandler
 	 * @param channel The channel which is readable.
 	 * @throws Exception
 	 */
-	public int onRead( SocketChannel channel )
-		throws Exception
-	{
+	public int onRead( SocketChannel channel ) throws Exception {
 		int bufferCount = -1;
 		int channelCount = -1;
 
@@ -118,9 +111,7 @@ public class NioHandler
 	 *
 	 * @see #onRead
 	 */
-	public int doRead( SocketChannel channel, ByteBuffer buffer )
-		throws Exception, BufferUnderflowException
-	{
+	public int doRead( SocketChannel channel, ByteBuffer buffer ) throws Exception, BufferUnderflowException {
 		// Fallback implementation in case it isn't overwritten to ensure the buffer
 		// is drained:
 
@@ -136,9 +127,7 @@ public class NioHandler
 	 * Will be called when a channel has become ready to write to.
 	 * @param channel The channel which is writable.
 	 */
-	public int onWrite( SocketChannel channel )
-		throws Exception
-	{
+	public int onWrite( SocketChannel channel ) throws Exception {
 		int bufferCount = -1;
 		int channelCount = -1;
 
@@ -182,9 +171,7 @@ public class NioHandler
 	 *          from the handler.
 	 * @see #onWrite
 	 */
-	public int doWrite( SocketChannel channel, ByteBuffer buffer )
-		throws Exception, BufferOverflowException
-	{
+	public int doWrite( SocketChannel channel, ByteBuffer buffer ) throws Exception, BufferOverflowException {
 		// Fallback implementation in case it isn't overwritten to ensure the buffer
 		// is drained:
 
@@ -201,9 +188,7 @@ public class NioHandler
 	 * @param channel The channel which is unregistered.
 	 * @throws Exception
 	 */
-	public void onClose( SelectableChannel channel )
-		throws Exception
-	{
+	public void onClose( SelectableChannel channel ) throws Exception {
 	}
 
 	//=============================================================================
@@ -217,9 +202,7 @@ public class NioHandler
 	 *  return <code>true</code> otherwise return <code>false</code> which will
 	 *  result in the exception being thrown from <code>dispatch</code>.
 	 */
-	public boolean onError( NioDispatcher dispatcher, SelectableChannel channel, Exception exception )
-		throws Exception
-	{
+	public boolean onError( NioDispatcher dispatcher, SelectableChannel channel, Exception exception ) throws Exception {
 		// In case of an error, close the channel:
 
 		dispatcher.closeChannel( channel );

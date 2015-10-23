@@ -20,27 +20,24 @@ package com.pera_software.aidkit.nio.socket;
 import java.net.*;
 import java.nio.channels.*;
 
-
 //#############################################################################
 
-public class NioServer
-{
+public class NioServer {
+	
 	private NioDispatcher _dispatcher;
 	private ServerSocketChannel _serverChannel;
 
 	//=============================================================================
 
-	public NioServer( NioDispatcher dispatcher )
-	{
+	@SuppressWarnings( "null" )
+	public NioServer( NioDispatcher dispatcher ) {
 		_dispatcher = dispatcher;
 	}
 
 	//=============================================================================
 
 	@SuppressWarnings( "resource" )
-	public void listen( int port, NioHandler handler )
-		throws Exception
-	{
+	public void listen( int port, NioHandler handler ) throws Exception {
 		// Create the non-blocking server channel:
 
 		_serverChannel = ServerSocketChannel.open();
@@ -60,8 +57,7 @@ public class NioServer
 
 	//=============================================================================
 
-	public void close() throws Exception
-	{
+	public void close() throws Exception {
 		_dispatcher.closeChannel( _serverChannel );
 	}
 }

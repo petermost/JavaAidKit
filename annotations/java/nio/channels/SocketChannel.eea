@@ -1,0 +1,4 @@
+class java/nio/channels/SocketChannel
+open
+ ()Ljava/nio/channels/SocketChannel;
+ ()L1java/nio/channels/SocketChannel;
