@@ -1,0 +1,7 @@
+class java/net/URL
+getPath
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
+openStream
+ ()Ljava/io/InputStream;
+ ()L1java/io/InputStream;
