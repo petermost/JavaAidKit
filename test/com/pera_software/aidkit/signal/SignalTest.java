@@ -23,6 +23,19 @@ import java.util.*;
 import org.junit.*;
 
 public abstract class SignalTest {
+	
+	private static final Object EXPECTED_ARGUMENTS[] = {
+		new Byte( ( byte )1 ), 
+		new Long( 2 ), 
+		new Short( ( short )3 ),
+		new Float( 4 ), 
+		new Double( 5 ), 
+		new String( "6" ), 
+		new Integer( 7 ), 
+		new Boolean( true ), 
+		new Character( '9' )
+	};
+	
 	private Class< ? extends Signal > _signalClass;
 	private Class< ? > _slotClass;
 	private Class< ? > _argumentTypes[];
@@ -44,62 +57,6 @@ public abstract class SignalTest {
 
 	private Method _handleMethod;
 
-	//==============================================================================================
-
-	protected static final Object EXPECTED_ARGUMENTS[] = {
-		new Byte( ( byte )1 ), 
-		new Long( 2 ), 
-		new Short( ( short )3 ),
-		new Float( 4 ), 
-		new Double( 5 ), 
-		new String( "6" ), 
-		new Integer( 7 ), 
-		new Boolean( true ), 
-		new Character( '9' )
-	};
-
-	//==============================================================================================
-
-	protected static void assertArguments( Object ... arguments ) {
-		for ( int i = 0; arguments != null && i < arguments.length; ++i ) {
-			Object argument = arguments[ i ];
-			Object expectedArgument = EXPECTED_ARGUMENTS[ i ];
-
-			assertEquals( expectedArgument, argument );
-			assertEquals( expectedArgument.getClass(), argument.getClass() );
-		}
-	}
-
-	private Object[] expectedArguments() {
-		return Arrays.copyOf( EXPECTED_ARGUMENTS, _argumentTypes.length );
-	}
-
-	//==============================================================================================
-
-	private Signal createSignal() throws Exception {
-		return _signalClass.newInstance();
-	}
-
-	private Slot createSlotMock() {
-		MethodArgumentsAsserter argumentsAsserter = new MethodArgumentsAsserter( _handleMethod, expectedArguments() );
-
-		Class< ? >[] interfaces = new Class< ? >[] {
-			_slotClass
-		};
-		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces, argumentsAsserter );
-
-		return slot;
-	}
-
-	//	private Slot createSlotMock( Callable0 callable )
-	//	{
-	//		return null;
-	//	}
-
-	private static void assertSlotCallCounter( int expectedCallCounter, Slot slot ) {
-		MethodArgumentsAsserter argumentsAsserter = ( MethodArgumentsAsserter )Proxy.getInvocationHandler( slot );
-		assertEquals( expectedCallCounter, argumentsAsserter.callCounter() );
-	}
 
 	//==============================================================================================
 
@@ -107,6 +64,11 @@ public abstract class SignalTest {
 		_signalClass = signalClass;
 		_slotClass = slotClass;
 
+		// Create the signal:
+		
+		_signal1 = _signalClass.newInstance();
+		_signal2 = _signalClass.newInstance();
+		
 		// Because of type erasure we have to use an array of Object classes:
 
 		_argumentTypes = new Class< ? >[ parameterCount ];
@@ -128,17 +90,51 @@ public abstract class SignalTest {
 		_handleMethod = _slotClass.getMethod( "handle", _argumentTypes );
 		assertEquals( "handle() has wrong parameter count!", parameterCount, _handleMethod.getParameterCount() );
 
-		// Create the signal:
-
-		_signal1 = createSignal();
-		_signal2 = createSignal();
-
 		// Create the slot mocks:
 
 		_connectedSlot1 = createSlotMock();
 		_connectedSlot2 = createSlotMock();
 
 		_disconnectedSlot = createSlotMock();
+	}
+
+	//==============================================================================================
+
+	private static void assertArguments( Object ... arguments ) {
+		for ( int i = 0; arguments != null && i < arguments.length; ++i ) {
+			Object argument = arguments[ i ];
+			Object expectedArgument = EXPECTED_ARGUMENTS[ i ];
+
+			assertEquals( expectedArgument, argument );
+			assertEquals( expectedArgument.getClass(), argument.getClass() );
+		}
+	}
+
+	private Object[] expectedArguments() {
+		return Arrays.copyOf( EXPECTED_ARGUMENTS, _argumentTypes.length );
+	}
+
+	//==============================================================================================
+
+	private Slot createSlotMock() {
+		MethodArgumentsAsserter argumentsAsserter = new MethodArgumentsAsserter( _handleMethod, expectedArguments() );
+
+		Class< ? >[] interfaces = new Class< ? >[] {
+			_slotClass
+		};
+		Slot slot = ( Slot )Proxy.newProxyInstance( _slotClass.getClassLoader(), interfaces, argumentsAsserter );
+
+		return slot;
+	}
+
+	//	private Slot createSlotMock( Callable0 callable )
+	//	{
+	//		return null;
+	//	}
+
+	private static void assertSlotCallCounter( int expectedCallCounter, Slot slot ) {
+		MethodArgumentsAsserter argumentsAsserter = ( MethodArgumentsAsserter )Proxy.getInvocationHandler( slot );
+		assertEquals( expectedCallCounter, argumentsAsserter.callCounter() );
 	}
 
 	//==============================================================================================
