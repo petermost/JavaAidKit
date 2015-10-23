@@ -18,15 +18,37 @@
 package com.pera_software.aidkit.lang;
 
 import java.lang.reflect.*;
+import java.net.*;
+import com.pera_software.aidkit.io.*;
 
 /**
  * Query properties of classes.
  */
 public final class Classes {
 
+	//==============================================================================================
+	
 	private Classes() {
 	}
 
+	//==============================================================================================
+	
+	/**
+	 * Try to get the resource as an URL but throws an exception if the given resource name wasn't 
+	 * found.
+	 * 
+	 * @see Class#getResource(String)
+	 */
+	public static URL getResource( Class< ? > clazz, String resourceName ) throws ResourceNotFoundException {
+		URL url = clazz.getResource( resourceName );
+		if ( url != null )
+			return url;
+		else
+			throw new ResourceNotFoundException( resourceName );
+	}
+	
+	//==============================================================================================
+	
 	/**
 	 * Is the class abstract
 	 */
