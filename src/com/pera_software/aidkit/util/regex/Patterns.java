@@ -18,21 +18,21 @@
 package com.pera_software.aidkit.util.regex;
 
 import java.util.regex.*;
+import org.eclipse.jdt.annotation.*;
 
 //##################################################################################################
 
-public final class Patterns
-{
+public final class Patterns {
+	
 	//==============================================================================================
 
-	private Patterns()
-	{
+	private Patterns() {
 	}
 
 	//==============================================================================================
 
-	public static String convertWildcardPatternToRegularExpression( String wildcardPattern )
-	{
+	public static String convertWildcardPatternToRegularExpression( String wildcardPattern ) {
+		
 		StringBuilder regularExpression = new StringBuilder( wildcardPattern.length() );
 		for ( int i = 0; i < wildcardPattern.length(); ++i ) {
 			char c = wildcardPattern.charAt( i );
@@ -70,11 +70,14 @@ public final class Patterns
 
 	//==============================================================================================
 
-	public static Pattern[] convertWildcardPatternsToRegularExpressions( String ... wildcardPatterns )
-	{
+	// TODO I don't know why we have to annotate it explicitly with @NonNull since the package-info
+	// says non-null by default!
+	
+	public static Pattern[] convertWildcardPatternsToRegularExpressions( @NonNull String ... wildcardPatterns ) {
+		
 		Pattern regularExpressions[] = new Pattern[ wildcardPatterns.length ];
 		for ( int i = 0; i < wildcardPatterns.length; ++i ) {
-			String regularExpression = convertWildcardPatternToRegularExpression(wildcardPatterns[ i ]);
+			String regularExpression = convertWildcardPatternToRegularExpression( wildcardPatterns[ i ] );
 			regularExpressions[ i ] = Pattern.compile( regularExpression );
 		}
 		return regularExpressions;
