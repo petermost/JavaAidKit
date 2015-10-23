@@ -32,9 +32,12 @@ public final class Paths {
 
 	//==============================================================================================
 
-//	public static Path get( String first, String ... more ) {
-//		return java.nio.file.Paths.get( first, more );
-//	}
+	/**
+	 * Simply forward this call so if this class was imported there is no conflict with java.nio.file.Paths
+	 */
+	public static Path get( String first, String ... more ) {
+		return java.nio.file.Paths.get( first, more );
+	}
 
 	//==============================================================================================
 

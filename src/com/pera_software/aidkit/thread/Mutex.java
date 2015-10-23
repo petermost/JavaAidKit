@@ -19,13 +19,14 @@ package com.pera_software.aidkit.thread;
 
 import java.util.*;
 import java.util.concurrent.locks.*;
+import org.eclipse.jdt.annotation.*;
 
 //##################################################################################################
 
 /**
  * @author P. Most
  */
-public final class Mutex< T > {
+public final class Mutex< @NonNull T > {
 
 	private ReentrantLock _lock;
 	private T _resource;

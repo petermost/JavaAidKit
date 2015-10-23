@@ -17,12 +17,14 @@
 
 package com.pera_software.aidkit.thread;
 
+import org.eclipse.jdt.annotation.*;
+
 //##################################################################################################
 
 /**
  * @author P. Most
  */
-public final class MutexLocker< T > implements AutoCloseable {
+public final class MutexLocker< @NonNull T > implements AutoCloseable {
 
 	private Mutex< T > _mutex;
 	private T _resource;

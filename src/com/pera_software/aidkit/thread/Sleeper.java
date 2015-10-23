@@ -17,20 +17,16 @@
 
 package com.pera_software.aidkit.thread;
 
-//#############################################################################
-public class Sleeper
-//#############################################################################
-{
+public class Sleeper {
+	
+	//=============================================================================
 	/**
 	 * Simple wrapper around Thread.sleep() to avoid writing repeatedly the exception
 	 * handling code.
 	 * @param timeSpan The time to sleep in milliseconds
 	 * @return Whether the sleep has succeeded without being interrupted.
 	 */
-	//=============================================================================
-	public static boolean sleep( long timeSpan )
-	//=============================================================================
-	{
+	public static boolean sleep( long timeSpan ) {
 		try {
 			Thread.sleep( timeSpan );
 			return ( true );
