@@ -18,6 +18,7 @@
 package com.pera_software.aidkit.io;
 
 import java.io.*;
+import java.net.*;
 import java.nio.file.*;
 
 /**
@@ -31,21 +32,26 @@ public final class Resources {
 
 	//==============================================================================================
 	
-	public static Path asPath( Class< ? > parentClass, String resourceName ) {
+	public static Path asPath( Class< ? > clazz, String name ) throws ResourceNotFoundException {
 		try {
-			return new Resource( parentClass, resourceName ).asPath();
-		} catch ( Exception exception ) {
-			throw new ExceptionInInitializerError( exception );
+			URL resourceUrl = clazz.getResource( name );
+			if ( resourceUrl != null ) {
+				URI resourceUri = resourceUrl.toURI();
+				return Paths.get( resourceUri );
+			} else
+				throw new ResourceNotFoundException( name );
+		} catch ( URISyntaxException syntaxException ) {
+			throw new ResourceNotFoundException( name, syntaxException );
 		}
 	}
-
+	
 	//==============================================================================================
 	
-	public static InputStream asStream( Class< ? > resourceClass, String resourceName ) {
-		try {
-			return new Resource( resourceClass, resourceName ).asStream();
-		} catch ( Exception exception ) {
-			throw new ExceptionInInitializerError( exception );
-		}
+	public static InputStream asStream( Class< ? > clazz, String name ) throws ResourceNotFoundException {
+		InputStream inputStream = clazz.getResourceAsStream( name );
+		if ( inputStream != null )
+			return inputStream;
+		else
+			throw new ResourceNotFoundException( name );
 	}
 }

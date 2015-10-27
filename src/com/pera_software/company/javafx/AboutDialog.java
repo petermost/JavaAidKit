@@ -25,7 +25,7 @@ import javafx.scene.layout.*;
 
 public class AboutDialog extends Dialog< ButtonType > {
 
-	public AboutDialog( HostServices hostServices ) {
+	public AboutDialog( HostServices hostServices ) throws Exception {
 
 		Hyperlink hyperlink = new Hyperlink( PERA.FULL_DOMAIN_NAME );
 		hyperlink.setOnAction( event -> hostServices.showDocument( hyperlink.getText() ));

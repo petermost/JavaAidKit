@@ -29,6 +29,15 @@ public class ResourceNotFoundException extends Exception {
 		_resourceName = resourceName;
 	}
 
+	/**
+	 * @param exception
+	 */
+	public ResourceNotFoundException( String resourceName, Exception exception ) {
+		super( exception );
+		
+		_resourceName = resourceName;
+	}
+
 	public String resourceName() {
 		return _resourceName;
 	}

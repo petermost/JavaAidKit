@@ -18,6 +18,7 @@
 package com.pera_software.company;
 
 import java.io.*;
+import com.pera_software.aidkit.io.*;
 
 /**
  * @author P. Most
@@ -46,7 +47,7 @@ public final class PERA {
 	private PERA() {
 	}
 	
-	public static InputStream getResourceAsStream( String resourceName ) {
-		return PERA.class.getResourceAsStream( resourceName );	
+	public static InputStream getResourceAsStream( String resourceName ) throws ResourceNotFoundException {
+		return Resources.asStream( PERA.class, resourceName );	
 	}
 }

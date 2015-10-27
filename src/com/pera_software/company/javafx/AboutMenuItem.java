@@ -27,7 +27,7 @@ import javafx.scene.image.*;
  */
 public class AboutMenuItem extends MenuItem {
 
-	public AboutMenuItem() {
+	public AboutMenuItem() throws Exception {
 		super( "About _" + PERA.SHORT_NAME + "..." );
 		setGraphic( new ImageView( new Image( PERA.getResourceAsStream( PERA.ICON_NAME )))); 
 	}

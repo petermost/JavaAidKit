@@ -37,10 +37,6 @@ public final class AidKit {
 	
 	
 	public static InputStream getResourceAsStream( String resourceName ) throws ResourceNotFoundException {
-		InputStream stream = AidKit.class.getResourceAsStream( resourceName );
-		if ( stream != null )
-			return stream;
-		else
-			throw new ResourceNotFoundException( resourceName );
+		return Resources.asStream( AidKit.class, resourceName );
 	}
 }
