@@ -27,11 +27,13 @@
 	<classpathentry kind="lib" path="lib/jna-4.2.1.jar" sourcepath="lib/jna-4.2.1-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/JavaAidKit/lib/jna-4.2.1-javadoc.jar!/"/>
+			<attribute name="annotationpath" value="/JavaAidKit/annotations/jna"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jna-platform-4.2.1.jar" sourcepath="lib/jna-platform-4.2.1-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/JavaAidKit/lib/jna-4.2.1-javadoc.jar!/"/>
+			<attribute name="annotationpath" value="/JavaAidKit/annotations/jna"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
