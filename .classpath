@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
-			<attribute name="annotationpath" value="/JavaAidKit/annotations"/>
+			<attribute name="annotationpath" value="/JavaAidKit/annotations/jre"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/junit-4.12.jar" sourcepath="lib/junit-4.12-sources.jar">
