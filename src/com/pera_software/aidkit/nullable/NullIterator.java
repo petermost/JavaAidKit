@@ -24,8 +24,16 @@ import java.util.*;
  * @author P. Most
  *
  */
-public class NullIterator< E > implements Iterator< E > {
+public class NullIterator< T > implements Iterable< T >, Iterator< T > {
 
+	/* (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
+	@Override
+	public Iterator< T > iterator() {
+		return this;
+	}
+	
 	/**
 	 * @return false Always since there are no elements.
 	 * @see java.util.Iterator#hasNext()
@@ -42,8 +50,15 @@ public class NullIterator< E > implements Iterator< E > {
 	 * @throws NoSuchElementException Always!
 	 */
 	@Override
-	public E next() {
+	public T next() {
 		throw new NoSuchElementException();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#remove()
+	 */
+	@Override
+	public void remove() {
+		throw new NoSuchElementException();
+	}
 }
