@@ -8,3 +8,6 @@ split
 substring
  (II)Ljava/lang/String;
  (II)L1java/lang/String;
+toLowerCase
+ ()Ljava/lang/String;
+ ()L1java/lang/String;
