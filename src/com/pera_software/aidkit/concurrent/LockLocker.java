@@ -15,23 +15,31 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.thread;
+package com.pera_software.aidkit.concurrent;
 
-public class Sleeper {
-	
-	//=============================================================================
-	/**
-	 * Simple wrapper around Thread.sleep() to avoid writing repeatedly the exception
-	 * handling code.
-	 * @param timeSpan The time to sleep in milliseconds
-	 * @return Whether the sleep has succeeded without being interrupted.
-	 */
-	public static boolean sleep( long timeSpan ) {
-		try {
-			Thread.sleep( timeSpan );
-			return ( true );
-		} catch ( InterruptedException cause ) {
-			return ( false );
-		}
+import java.util.concurrent.locks.Lock;
+
+//##################################################################################################
+
+/**
+ * @author P. Most
+ *
+ */
+public class LockLocker implements AutoCloseable {
+
+	private Lock _lock;
+
+	//==============================================================================================
+
+	public LockLocker( Lock lock ) {
+		_lock = lock;
+		_lock.lock();
+	}
+
+	//==============================================================================================
+
+	@Override
+	public void close() throws Exception {
+		_lock.unlock();
 	}
 }

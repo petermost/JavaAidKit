@@ -15,47 +15,53 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with JavaAidKit. If not, see <http://www.gnu.org/licenses/>.
 
-package com.pera_software.aidkit.thread;
+package com.pera_software.aidkit.concurrent;
 
+import static org.junit.Assert.*;
 import java.util.*;
 import java.util.concurrent.locks.*;
-import org.eclipse.jdt.annotation.*;
+import org.junit.*;
 
 //##################################################################################################
 
 /**
  * @author P. Most
  */
-public final class Mutex< @NonNull T > {
-
-	private ReentrantLock _lock;
-	private T _resource;
+public class DataMutexTest {
 
 	//==============================================================================================
 
-	public Mutex( T resource ) {
-		_lock = new ReentrantLock();
-		_resource = resource;
+	@Test
+	public void testLock() throws Exception {
+
+		// Must not be locked yet:
+
+		DataMutex< List< String >> stringList = new DataMutex<>( new ArrayList< String >() );
+		assertFalse( stringList.isLocked() );
+
+		// Lock the resource:
+
+		try ( DataMutex< List< String >>.Pointer stringListPtr = stringList.lock() ) {
+			assertTrue( stringList.isLocked() );
+			stringListPtr.get().add( "first string" );
+			stringListPtr.get().add( "second string" );
+		}
+		// Must be unlocked again:
+
+		assertFalse( stringList.isLocked() );
 	}
 
 	//==============================================================================================
 
-	public T lock() {
-		_lock.lock();
+	@Test
+	public void testAutoLock() throws Exception {
 
-		return _resource;
-	}
+		ReentrantLock lock = new ReentrantLock();
+		assertFalse( lock.isLocked() );
 
-	//==============================================================================================
-
-	public void unlock( T resource ) {
-		assert Objects.equals( _resource, resource );
-		_lock.unlock();
-	}
-
-	//==============================================================================================
-
-	boolean isLocked() {
-		return _lock.isLocked();
+		try ( LockLocker locker = new LockLocker( lock )) {
+			assertTrue( lock.isLocked() );
+		}
+		assertFalse( lock.isLocked() );
 	}
 }
