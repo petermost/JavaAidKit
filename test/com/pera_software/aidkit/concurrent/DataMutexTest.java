@@ -34,12 +34,12 @@ public class DataMutexTest {
 	@Test
 	public void testLock() throws Exception {
 
-		// Must not be locked yet:
+		// Must initially not be locked yet:
 
 		DataMutex< List< String >> stringList = new DataMutex<>( new ArrayList< String >() );
 		assertFalse( stringList.isLocked() );
 
-		// Lock the resource:
+		// Lock the data:
 
 		try ( DataMutex< List< String >>.Pointer stringListPtr = stringList.lock() ) {
 			assertTrue( stringList.isLocked() );

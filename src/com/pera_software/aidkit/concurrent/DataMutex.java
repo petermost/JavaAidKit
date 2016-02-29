@@ -41,7 +41,7 @@ public final class DataMutex< @NonNull T > {
 	
 	private T _data;
 	private Lock _lock;
-	private boolean _isLocked; 
+	private int _lockCount; 
 
 	//==============================================================================================
 
@@ -54,14 +54,14 @@ public final class DataMutex< @NonNull T > {
 	public DataMutex( T data, Lock lock ) {
 		_data = data;
 		_lock = lock;
-		_isLocked = false;
+		_lockCount = 0;
 	}
 	
 	//==============================================================================================
 
 	public Pointer lock() {
 		_lock.lock();
-		_isLocked = true;
+		++_lockCount;
 		
 		return new Pointer();
 	}
@@ -69,8 +69,10 @@ public final class DataMutex< @NonNull T > {
 	//==============================================================================================
 	
 	public @Nullable Pointer tryLock() {
-		if ( _lock.tryLock() )
+		if ( _lock.tryLock() ) {
+			++_lockCount;			
 			return new Pointer();
+		}
 		else
 			return null;
 	}
@@ -78,13 +80,19 @@ public final class DataMutex< @NonNull T > {
 	//==============================================================================================
 
 	private void unlock() {
-		_isLocked = false;
+		--_lockCount;
 		_lock.unlock();
 	}
 
 	//==============================================================================================
 
 	boolean isLocked() {
-		return _isLocked;
+		return lockCount() > 0;
+	}
+	
+	//==============================================================================================
+	
+	int lockCount() {
+		return _lockCount;
 	}
 }
