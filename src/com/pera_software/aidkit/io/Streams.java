@@ -18,6 +18,7 @@
 package com.pera_software.aidkit.io;
 
 import java.io.*;
+import java.util.*;
 import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 //##################################################################################################
@@ -69,5 +70,19 @@ public final class Streams {
 		OutputStreamWriter streamWriter = new OutputStreamWriter( outputStream );
 		streamWriter.write( content );
 		streamWriter.flush();
+	}
+	
+	//==============================================================================================
+	
+	public static List< String > readAllLines( InputStream inputStream ) throws IOException {
+		String line;
+		List< String > lines = new ArrayList<>();
+		
+		try ( BufferedReader reader = new BufferedReader( new InputStreamReader( inputStream ))) {
+			while (( line = reader.readLine()) != null ) {
+				lines.add( line );
+			}
+		}
+		return lines;
 	}
 }
