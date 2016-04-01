@@ -21,33 +21,24 @@ import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 //##################################################################################################
 /**
- * Central class to query platform specific settings.
+ * Wrap the call to System.getenv to avoid failing calls because of mistyped variable names.
+ * 
+ * Note: I've decided to remove platform specific (Windows) environment variable names.
  */
 public final class SystemEnvironment {
+	
 	private SystemEnvironment() {
 	}
 
 	//==============================================================================================
-
-	public static String systemDrive() {
-		return makeNonNull( System.getenv( "SystemDrive" ));
+	
+	private static String getenv( String name ) {
+		return makeNonNull( System.getenv( name ));
 	}
-
+	
 	//==============================================================================================
-
-	public static String programsDirectory() {
-		return makeNonNull( System.getenv( "ProgramFiles(x86)" ));
-	}
-
-	//==============================================================================================
-
-	public static String settingsDirectory() {
-		return makeNonNull( System.getenv( "AppData" ));
-	}
-
-	//==============================================================================================
-
-	public static String windowsDirectory() {
-		return makeNonNull( System.getenv( "windir" ));
+	
+	public static String getPath() {
+		return getenv( "PATH" );
 	}
 }
