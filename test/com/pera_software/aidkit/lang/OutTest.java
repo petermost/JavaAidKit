@@ -19,7 +19,6 @@ package com.pera_software.aidkit.lang;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 /**
  * @author P. Most
@@ -28,22 +27,22 @@ import static com.pera_software.aidkit.nullable.NullStrings.*;
 public class OutTest {
 
 	@Test
-	public void test() {
-		String email = "pmost@pera-software.com";
-		Out< String > name = new Out<>();
-		Out< String > domain = new Out<>();
+	public void testOut() {
+		String number = "123";
+		Out< Integer > integer = new Out<>();
 		
-		assertTrue( splitString( email, '@', name, domain ));
-		assertEquals( "pmost", name.get() );
-		assertEquals( "pera-software.com", domain.get() );
+		boolean success = tryParse( number, integer );
+		
+		assertTrue( success );
+		assertEquals( 123, integer.get().intValue() );
 	}
 
-	private static boolean splitString( String s, char separator, Out< String > before, Out< String > after ) {
-		int index = s.indexOf( separator );
-		if ( index >= 0 ) {
-			before.set( makeNonNull( s.substring( 0, index )));
-			after.set( makeNonNull( s.substring( index + 1 )));
+	private static boolean tryParse( String number, Out< Integer > integer ) {
+		try {
+			integer.set( Integer.parseInt( number ) );
+			return true;
+		} catch ( NumberFormatException exception ) {
+			return false;
 		}
-		return index >= 0;
 	}
 }

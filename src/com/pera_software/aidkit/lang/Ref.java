@@ -18,7 +18,6 @@
 package com.pera_software.aidkit.lang;
 
 import java.util.*;
-import org.eclipse.jdt.annotation.*;
 
 /**
  * A class which can be used to return an value from a method via a parameter. The difference to
@@ -39,7 +38,7 @@ import org.eclipse.jdt.annotation.*;
  * @author P. Most
  */
 public class Ref< T > {
-	private @Nullable T _value = null;
+	private T _value;
 
 	public Ref( T value ) {
 		set( value );

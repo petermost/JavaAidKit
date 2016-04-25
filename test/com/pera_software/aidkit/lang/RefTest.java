@@ -19,7 +19,6 @@ package com.pera_software.aidkit.lang;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 /**
  * @author P. Most
@@ -28,23 +27,19 @@ import static com.pera_software.aidkit.nullable.NullStrings.*;
 public class RefTest {
 
 	@Test
-	public void test() {
-		String email = "pmost@pera-software.com";
-		Ref< String > name = new Ref<>( "" );
-		Ref< String > domain = new Ref<>( "" );
+	public void testRef() {
+		Ref< String > firstName = new Ref<>( "peter" );
+		Ref< String > lastName = new Ref<>( "most" );
+
+		swapString( firstName, lastName );
 		
-		assertTrue( splitString( email, '@', name, domain ));
-		assertEquals( "pmost", name.get() );
-		assertEquals( "pera-software.com", domain.get() );
-		
+		assertEquals( "most", firstName.get() );
+		assertEquals( "peter", lastName.get() );
 	}
 
-	private static boolean splitString( String s, char separator, Ref< String > before, Ref< String > after ) {
-		int index = s.indexOf( separator );
-		if ( index >= 0 ) {
-			before.set( makeNonNull( s.substring( 0, index )));
-			after.set( makeNonNull( s.substring( index + 1 )));
-		}
-		return index >= 0;
+	private static void swapString( Ref< String > s1, Ref< String > s2 ) {
+		String temp = s1.get();
+		s1.set( s2.get() );
+		s2.set( temp );
 	}
 }
