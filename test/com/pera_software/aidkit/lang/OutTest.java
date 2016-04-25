@@ -25,21 +25,20 @@ import static com.pera_software.aidkit.nullable.NullStrings.*;
  * @author P. Most
  *
  */
-public class RefTest {
+public class OutTest {
 
 	@Test
 	public void test() {
 		String email = "pmost@pera-software.com";
-		Ref< String > name = new Ref<>( "" );
-		Ref< String > domain = new Ref<>( "" );
+		Out< String > name = new Out<>();
+		Out< String > domain = new Out<>();
 		
 		assertTrue( splitString( email, '@', name, domain ));
 		assertEquals( "pmost", name.get() );
 		assertEquals( "pera-software.com", domain.get() );
-		
 	}
 
-	private static boolean splitString( String s, char separator, Ref< String > before, Ref< String > after ) {
+	private static boolean splitString( String s, char separator, Out< String > before, Out< String > after ) {
 		int index = s.indexOf( separator );
 		if ( index >= 0 ) {
 			before.set( makeNonNull( s.substring( 0, index )));

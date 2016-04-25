@@ -1,4 +1,4 @@
-// Copyright 2014 Peter Most, PERA Software Solutions GmbH
+// Copyright 2016 Peter Most, PERA Software Solutions GmbH
 //
 // This file is part of the JavaAidKit library.
 //
@@ -22,11 +22,11 @@ import org.eclipse.jdt.annotation.*;
 
 /**
  * A class which can be used to return an value from a method via a parameter. The difference to
- * {@link com.pera_software.aidkit.lang.Out} is that it needs to be initialized with a value.
+ * {@link com.pera_software.aidkit.lang.Ref} is that it doesn't need to be initialized with a value.
  * 
  * {@code}
  * <blockquote><pre>
- * public static boolean splitString( String s, char separator, Ref< String > before, Ref< String > after ) {
+ * public static boolean splitString( String s, char separator, Out< String > before, Out< String > after ) {
  *     int index = s.indexOf( separator );
  *     if ( index >= 0 ) {
  *         before.set( s.substring( 0, index ));
@@ -38,11 +38,10 @@ import org.eclipse.jdt.annotation.*;
  * 
  * @author P. Most
  */
-public class Ref< T > {
+public class Out< T > {
 	private @Nullable T _value = null;
 
-	public Ref( T value ) {
-		set( value );
+	public Out() {
 	}
 
 	public void set( T value ) {
