@@ -89,7 +89,7 @@ public class CyclicList< T > implements Iterable< T > {
 		try {
 			return requireNonNull( _list.iterator() );
 		} catch ( NullObjectException cause ) {
-			return new NullIterator< >();
+			return Collections.emptyIterator();
 		}
 	}
 }

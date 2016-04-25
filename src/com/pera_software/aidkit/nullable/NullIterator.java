@@ -19,6 +19,8 @@ package com.pera_software.aidkit.nullable;
 
 import java.util.*;
 
+// TODO: Replace with Collections.emptyIterator()?
+
 /**
  * A null Iterator<> implementation of the Iterator interface. 
  * @author P. Most

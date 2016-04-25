@@ -1,0 +1,4 @@
+class java/util/Collections
+emptyIterator
+ <T:Ljava/lang/Object;>()Ljava/util/Iterator<TT;>;
+ <T:Ljava/lang/Object;>()L1java/util/Iterator<TT;>;
