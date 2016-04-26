@@ -100,15 +100,15 @@ public abstract class SignalTest {
 
 	//==============================================================================================
 
-	private static void assertArguments( Object ... arguments ) {
-		for ( int i = 0; arguments != null && i < arguments.length; ++i ) {
-			Object argument = arguments[ i ];
-			Object expectedArgument = EXPECTED_ARGUMENTS[ i ];
-
-			assertEquals( expectedArgument, argument );
-			assertEquals( expectedArgument.getClass(), argument.getClass() );
-		}
-	}
+//	private static void assertArguments( Object ... arguments ) {
+//		for ( int i = 0; arguments != null && i < arguments.length; ++i ) {
+//			Object argument = arguments[ i ];
+//			Object expectedArgument = EXPECTED_ARGUMENTS[ i ];
+//
+//			assertEquals( expectedArgument, argument );
+//			assertEquals( expectedArgument.getClass(), argument.getClass() );
+//		}
+//	}
 
 	private Object[] expectedArguments() {
 		return Arrays.copyOf( EXPECTED_ARGUMENTS, _argumentTypes.length );
