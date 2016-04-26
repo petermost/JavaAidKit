@@ -20,7 +20,6 @@ package com.pera_software.aidkit.nio.file;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.*;
-import org.eclipse.jdt.annotation.*;
 import com.pera_software.aidkit.signal.*;
 
 //##################################################################################################
@@ -88,7 +87,7 @@ public class DirectoryTreeDeleter extends SimpleFileVisitor< Path >
 
 	@Override
 	@SuppressWarnings("unused")
-	public FileVisitResult postVisitDirectory( Path directory, @Nullable IOException exception )
+	public FileVisitResult postVisitDirectory( Path directory, IOException exception )
 		throws IOException
 	{
 		try {

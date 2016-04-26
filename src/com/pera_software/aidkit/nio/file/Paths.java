@@ -19,7 +19,6 @@ package com.pera_software.aidkit.nio.file;
 
 import java.nio.file.*;
 import java.util.*;
-import org.eclipse.jdt.annotation.*;
 
 //##################################################################################################
 
@@ -70,7 +69,7 @@ public final class Paths {
 	public static List< Path > removeOverlaps( List< Path > paths ) {
 		// Walk through all paths and nullify those which have a parent path:
 
-		List< @Nullable Path > pathsCopy = new ArrayList< >( paths );
+		List< Path > pathsCopy = new ArrayList< >( paths );
 		for ( int path1Idx = 0; path1Idx < pathsCopy.size(); ++path1Idx ) {
 			Path path1 = pathsCopy.get( path1Idx );
 			for ( int path2Idx = path1Idx + 1; path2Idx < pathsCopy.size(); ++path2Idx ) {

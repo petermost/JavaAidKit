@@ -27,7 +27,6 @@ import javafx.scene.paint.*;
  * @author P. Most
  *
  */
-@SuppressWarnings( "null" )
 public class MainScene extends Scene {
 
 	private MenuBar _menuBar;

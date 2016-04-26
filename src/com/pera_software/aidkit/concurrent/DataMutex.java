@@ -18,14 +18,13 @@
 package com.pera_software.aidkit.concurrent;
 
 import java.util.concurrent.locks.*;
-import org.eclipse.jdt.annotation.*;
 
 //##################################################################################################
 
 /**
  * @author P. Most
  */
-public final class DataMutex< @NonNull T > {
+public final class DataMutex< T > {
 
 	public final class Pointer implements AutoCloseable {
 		
@@ -68,7 +67,7 @@ public final class DataMutex< @NonNull T > {
 
 	//==============================================================================================
 	
-	public @Nullable Pointer tryLock() {
+	public Pointer tryLock() {
 		if ( _lock.tryLock() ) {
 			++_lockCount;			
 			return new Pointer();

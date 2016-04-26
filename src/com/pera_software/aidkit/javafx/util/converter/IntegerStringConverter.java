@@ -17,7 +17,6 @@
 
 package com.pera_software.aidkit.javafx.util.converter;
 
-import org.eclipse.jdt.annotation.*;
 import static com.pera_software.aidkit.nullable.NullStrings.*;
 import javafx.util.*;
 
@@ -28,7 +27,7 @@ public class IntegerStringConverter extends StringConverter< Number > {
 	}
 
 	@Override
-	public Number fromString( @Nullable String string ) {
+	public Number fromString( String string ) {
 		return Integer.parseInt( string );
 	}
 }

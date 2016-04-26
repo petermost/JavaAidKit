@@ -18,7 +18,6 @@
 package com.pera_software.aidkit.util.regex;
 
 import java.util.regex.*;
-import org.eclipse.jdt.annotation.*;
 
 //##################################################################################################
 
@@ -70,10 +69,7 @@ public final class Patterns {
 
 	//==============================================================================================
 
-	// TODO I don't know why we have to annotate it explicitly with @NonNull since the package-info
-	// says non-null by default!
-	
-	public static Pattern[] convertWildcardPatternsToRegularExpressions( @NonNull String ... wildcardPatterns ) {
+	public static Pattern[] convertWildcardPatternsToRegularExpressions( String ... wildcardPatterns ) {
 		
 		Pattern regularExpressions[] = new Pattern[ wildcardPatterns.length ];
 		for ( int i = 0; i < wildcardPatterns.length; ++i ) {

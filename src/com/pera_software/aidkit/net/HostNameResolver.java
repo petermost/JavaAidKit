@@ -20,7 +20,6 @@ package com.pera_software.aidkit.net;
 import java.lang.reflect.*;
 import java.net.*;
 import java.util.*;
-import org.eclipse.jdt.annotation.*;
 import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 /*
@@ -45,7 +44,7 @@ import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 public class HostNameResolver
 {
-	private static HashMap< @Nullable InetAddress, @Nullable String > s_hostNameCache = new HashMap<>();
+	private static HashMap< InetAddress, String > s_hostNameCache = new HashMap<>();
 
 	//==============================================================================================
 

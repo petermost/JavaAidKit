@@ -29,14 +29,13 @@ public class NioServer {
 
 	//=============================================================================
 
-	@SuppressWarnings( "null" )
 	public NioServer( NioDispatcher dispatcher ) {
 		_dispatcher = dispatcher;
 	}
 
 	//=============================================================================
 
-	@SuppressWarnings( "resource" )
+//	@SuppressWarnings( "resource" )
 	public void listen( int port, NioHandler handler ) throws Exception {
 		// Create the non-blocking server channel:
 

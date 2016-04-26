@@ -18,7 +18,6 @@
 package com.pera_software.aidkit.nullable;
 
 import java.util.function.*;
-import org.eclipse.jdt.annotation.*;
 
 //##################################################################################################
 
@@ -38,7 +37,7 @@ public final class NullObjects {
 	
 	//==============================================================================================
 	
-	public static< T > T requireNonNull( @Nullable T obj ) throws NullObjectException {
+	public static< T > T requireNonNull( T obj ) throws NullObjectException {
 		if ( obj != null )
 			return obj;
 		else
@@ -47,7 +46,7 @@ public final class NullObjects {
 	
 	//==============================================================================================
 	
-	public static < T > T requireNonNull( @Nullable T obj, String message ) throws NullObjectException {
+	public static < T > T requireNonNull( T obj, String message ) throws NullObjectException {
 		if ( obj != null )
 			return obj;
 		else
@@ -56,7 +55,7 @@ public final class NullObjects {
 
 	//==============================================================================================
 	
-	public static < T > T requireNonNull( @Nullable T obj, Supplier< String > messageSupplier ) throws NullObjectException {
+	public static < T > T requireNonNull( T obj, Supplier< String > messageSupplier ) throws NullObjectException {
 		if ( obj != null )
 			return obj;
 		else

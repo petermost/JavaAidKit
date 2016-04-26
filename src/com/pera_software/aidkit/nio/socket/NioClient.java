@@ -31,7 +31,6 @@ public class NioClient {
 
 	//=============================================================================
 
-	@SuppressWarnings( "null" )
 	public NioClient( NioDispatcher dispatcher ) {
 		_dispatcher = dispatcher;
 	}

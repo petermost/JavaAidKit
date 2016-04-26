@@ -1,4 +1,0 @@
-class java/nio/channels/ServerSocketChannel
-open
- ()Ljava/nio/channels/ServerSocketChannel;
- ()L1java/nio/channels/ServerSocketChannel;

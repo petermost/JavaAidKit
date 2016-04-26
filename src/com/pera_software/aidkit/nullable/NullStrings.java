@@ -17,7 +17,6 @@
 
 package com.pera_software.aidkit.nullable;
 
-import org.eclipse.jdt.annotation.*;
 import com.pera_software.aidkit.lang.*;
 
 /**
@@ -33,11 +32,10 @@ public final class NullStrings {
 
 	//==============================================================================================
 	
-	public static String makeNonNull( @Nullable String str ) {
+	public static String makeNonNull( String str ) {
 		if ( str != null )
 			return str;
 		else
 			return Strings.EMPTY;
 	}
-	
 }

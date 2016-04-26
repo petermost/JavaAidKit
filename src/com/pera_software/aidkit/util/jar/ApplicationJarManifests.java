@@ -20,7 +20,6 @@ package com.pera_software.aidkit.util.jar;
 import java.io.*;
 import java.util.*;
 import java.util.jar.*;
-import org.eclipse.jdt.annotation.*;
 
 //##############################################################################
 
@@ -28,13 +27,13 @@ public class ApplicationJarManifests implements Iterable< ApplicationJarManifest
 
 	static public class Entry {
 		private JarManifest _manifest;
-		private @Nullable Exception _exception;
+		private Optional< Exception > _exception;
 
 		//==========================================================================
 
-		public Entry( JarManifest manifest, @Nullable Exception exception ) {
+		public Entry( JarManifest manifest, Exception exception ) {
 			_manifest = manifest;
-			_exception = exception;
+			_exception = Optional.ofNullable( exception );
 		}
 
 		//==========================================================================
@@ -45,7 +44,7 @@ public class ApplicationJarManifests implements Iterable< ApplicationJarManifest
 
 		//==========================================================================
 
-		public @Nullable Exception exception() {
+		public Optional< Exception > exception() {
 			return _exception;
 		}
 

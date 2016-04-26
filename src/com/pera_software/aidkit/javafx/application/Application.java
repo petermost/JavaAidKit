@@ -23,7 +23,6 @@ package com.pera_software.aidkit.javafx.application;
  */
 public abstract class Application extends javafx.application.Application {
 
-	@SuppressWarnings( "null" )
 	private static Application s_instance;
 	
 	protected Application() {

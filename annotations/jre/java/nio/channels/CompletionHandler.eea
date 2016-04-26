@@ -1,7 +1,0 @@
-class java/nio/channels/CompletionHandler
-completed
- (TV;TA;)V
- (T1V;T0A;)V
-failed
- (Ljava/lang/Throwable;TA;)V
- (L1java/lang/Throwable;T0A;)V

@@ -1,4 +1,0 @@
-class com/sun/jna/Library
-OPTION_FUNCTION_MAPPER
- Ljava/lang/String;
- L1java/lang/String;

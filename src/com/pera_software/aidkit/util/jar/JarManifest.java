@@ -19,9 +19,8 @@ package com.pera_software.aidkit.util.jar;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 import java.util.jar.*;
-import org.eclipse.jdt.annotation.*;
-import com.pera_software.aidkit.lang.*;
 import com.pera_software.aidkit.system.*;
 
 //##############################################################################
@@ -33,17 +32,17 @@ public class JarManifest extends Manifest {
 
 	//============================================================================
 
-	public static @Nullable JarManifest getCurrentManifest( Class< ? > mainClass ) {
-		JarManifest manifest = getJarManifest( mainClass );
+	public static Optional< JarManifest > getCurrentManifest( Class< ? > mainClass ) {
+		Optional< JarManifest > manifest = getJarManifest( mainClass );
 		if ( manifest == null )
-			manifest = getClassManifest( mainClass );
+			manifest = Optional.of( getClassManifest( mainClass ));
 
-		return ( manifest );
+		return manifest;
 	}
 
 	//============================================================================
 
-	public static @Nullable JarManifest getJarManifest( Class< ? > mainClass ) {
+	public static Optional< JarManifest > getJarManifest( Class< ? > mainClass ) {
 		// The 'recommended' way of retrieving the manifest with:
 		// InputStream inputStream = rootClass.getResourceAsStream( "/META-INF/MANIFEST.MF" );
 		// Manifest manifest = new Manifest( inputStream );
@@ -69,9 +68,9 @@ public class JarManifest extends Manifest {
 					manifest = new JarManifest( jarPathName, manifestURL.openStream() );
 				}
 			}
-			return manifest;
+			return Optional.of( manifest );
 		} catch ( IOException cause ) {
-			return null;
+			return Optional.empty();
 		}
 	}
 

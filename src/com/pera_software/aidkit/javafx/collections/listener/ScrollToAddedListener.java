@@ -31,7 +31,6 @@ public class ScrollToAddedListener< T > implements ListChangeListener< T > {
 		_tableView = tableView;
 	}
 
-	@SuppressWarnings( "null" )
 	@Override
 	public void onChanged( ListChangeListener.Change< ? extends T > change ) {
 		// Scroll to the item which was just added:
