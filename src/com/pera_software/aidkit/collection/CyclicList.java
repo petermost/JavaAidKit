@@ -18,8 +18,7 @@
 package com.pera_software.aidkit.collection;
 
 import java.util.*;
-import com.pera_software.aidkit.nullable.*;
-import static com.pera_software.aidkit.nullable.NullObjects.*;
+import static java.util.Objects.*;
 
 //##################################################################################################
 /**
@@ -50,30 +49,29 @@ public class CyclicList< T > implements Iterable< T > {
 	//==============================================================================================
 
 	public void append( T element ) {
+		requireNonNull( element );
 		_list.add( element );
 	}
 
 	//==============================================================================================
 
 	public void insert( int index, T element ) {
+		requireNonNull( element );
 		_list.add( wrapIndex( index ), element );
 	}
 
 	//==============================================================================================
 
 	public void replace( int index, T element ) {
+		requireNonNull( element );
 		_list.set( wrapIndex( index ), element );
 	}
 
 	//==============================================================================================
 
 	public T getAt( int index, T defaultValue ) {
-		try {
-			index = wrapIndex( index );
-			return ( index >= 0 && index < _list.size() ) ? requireNonNull( _list.get( index )) : defaultValue;
-		} catch ( NullObjectException ignoredException ) {
-			return defaultValue;
-		}
+		index = wrapIndex( index );
+		return ( index >= 0 && index < _list.size() ) ? _list.get( index ) : defaultValue;
 	}
 
 	//==============================================================================================
@@ -86,10 +84,6 @@ public class CyclicList< T > implements Iterable< T > {
 
 	@Override
 	public Iterator< T > iterator() {
-		try {
-			return requireNonNull( _list.iterator() );
-		} catch ( NullObjectException cause ) {
-			return Collections.emptyIterator();
-		}
+		return _list.iterator();
 	}
 }

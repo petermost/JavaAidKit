@@ -35,7 +35,7 @@ public class NioServer {
 
 	//=============================================================================
 
-//	@SuppressWarnings( "resource" )
+	@SuppressWarnings( "resource" )
 	public void listen( int port, NioHandler handler ) throws Exception {
 		// Create the non-blocking server channel:
 

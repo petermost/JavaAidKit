@@ -19,8 +19,6 @@ package com.pera_software.aidkit.collection;
 
 import java.lang.reflect.*;
 import java.util.*;
-import com.pera_software.aidkit.nullable.*;
-import static com.pera_software.aidkit.nullable.NullObjects.*;
 
 /**
  * Iterator for primitive arrays which uses the java.lang.reflect.Array class
@@ -48,10 +46,6 @@ public class PrimitiveArrayIterator implements Iterator< Object > {
 
 	@Override
 	public Object next() {
-		try {
-			return requireNonNull( Array.get( _array, _index++ ));
-		} catch ( NullObjectException cause ) {
-			throw new NoSuchElementException( cause.getMessage() );
-		}
+		return Array.get( _array, _index++ );
 	}
 }

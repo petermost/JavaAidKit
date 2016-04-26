@@ -20,8 +20,6 @@ package com.pera_software.aidkit.debug;
 import java.util.*;
 import java.lang.reflect.*;
 import com.pera_software.aidkit.collection.*;
-import com.pera_software.aidkit.nullable.*;
-import static com.pera_software.aidkit.nullable.NullObjects.*;
 
 //#############################################################################
 
@@ -79,19 +77,14 @@ public class ObjectDumper {
 	//===========================================================================
 
 	private void dumpCollection( String name, Iterator< ? > iterator, int length ) {
-		try {
-			addSeparator( _objectCounter++ );
-	
-			_output.beginCollection( name, length );
-			for ( int i = 0; iterator.hasNext(); ++i ) {
-				addSeparator( i );
-				dumpObject( requireNonNull( iterator.next() ));
-			}
-		} catch ( NullObjectException ignoredException ) {
-			// Simply stop the dump.
-		} finally {
-			_output.endCollection();
+		addSeparator( _objectCounter++ );
+
+		_output.beginCollection( name, length );
+		for ( int i = 0; iterator.hasNext(); ++i ) {
+			addSeparator( i );
+			dumpObject( iterator.next() );
 		}
+		_output.endCollection();
 	}
 
 	//===========================================================================
@@ -115,11 +108,7 @@ public class ObjectDumper {
 	//===========================================================================
 
 	public void dump( String name, List< ? > objects ) {
-		try {
-			dumpCollection( name, requireNonNull( objects.iterator() ), objects.size() );
-		} catch ( NullObjectException ignoredException ) {
-			// Simply don't dump.
-		}
+		dumpCollection( name, objects.iterator(), objects.size() );
 	}
 
 	//===========================================================================

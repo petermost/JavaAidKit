@@ -19,7 +19,6 @@ package com.pera_software.aidkit.net;
 
 import java.net.*;
 import org.junit.*;
-import static com.pera_software.aidkit.nullable.NullObjects.*;
 import static org.junit.Assert.*;
 
 /**
@@ -31,7 +30,7 @@ public class HostNameResolverTest {
 	@Test
 	public void testGetHostName() throws Exception {
 		InetAddress address = InetAddress.getByName( "192.0.0.48" );
-		String hostName = HostNameResolver.getHostName( requireNonNull( address ));
+		String hostName = HostNameResolver.getHostName( address );
 		assertNotNull( hostName );
 	}
 }
