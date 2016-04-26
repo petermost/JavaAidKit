@@ -17,13 +17,12 @@
 
 package com.pera_software.aidkit.javafx.util.converter;
 
-import static com.pera_software.aidkit.nullable.NullStrings.*;
 import javafx.util.*;
 
 public class IntegerStringConverter extends StringConverter< Number > {
 	@Override
 	public String toString( Number number ) {
-		return makeNonNull( number.toString() );
+		return number.toString();
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class SystemPropertiesTest {
 	
 	@Test
 	public void testGetOsArchitecture() {
-		String osArchitecture = SystemProperties.getOsArchitecture();
+		String osArchitecture = SystemProperties.getOsArchitecture().get();
 		assertThat( osArchitecture, Matchers.anyOf( is( SystemProperties.OS_ARCHITECTURE_32 ),
 			is( SystemProperties.OS_ARCHITECTURE_64 )));
 	}

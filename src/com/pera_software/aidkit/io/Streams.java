@@ -19,7 +19,6 @@ package com.pera_software.aidkit.io;
 
 import java.io.*;
 import java.util.*;
-import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 //##################################################################################################
 
@@ -58,7 +57,7 @@ public final class Streams {
 		while (( length = streamReader.read( buffer ) ) > 0 )
 			content.append( buffer, 0, length );
 
-		return makeNonNull( content.toString() );
+		return content.toString();
 	}
 
 	//==============================================================================================

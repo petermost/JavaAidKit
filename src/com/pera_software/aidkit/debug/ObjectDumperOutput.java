@@ -17,8 +17,6 @@
 
 package com.pera_software.aidkit.debug;
 
-import static com.pera_software.aidkit.nullable.NullStrings.*;
-
 //#############################################################################
 
 public class ObjectDumperOutput implements Cloneable {
@@ -95,13 +93,13 @@ public class ObjectDumperOutput implements Cloneable {
 
 	@Override
 	public String toString() {
-		return makeNonNull( _buffer.toString() );
+		return _buffer.toString();
 	}
 
 	//===========================================================================
 
 	@Override
 	public ObjectDumperOutput clone() {
-		return ( new ObjectDumperOutput() );
+		return new ObjectDumperOutput();
 	}
 }

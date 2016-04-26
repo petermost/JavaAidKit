@@ -81,13 +81,13 @@ public class JarManifest extends Manifest {
 
 		// Make the class path look like in the manifest:
 
-		String pathSeparator = SystemProperties.getPathSeparator();
-		String classPath = SystemProperties.getClassPath();
+		String pathSeparator = SystemProperties.getPathSeparator().get();
+		String classPath = SystemProperties.getClassPath().get();
 		classPath = classPath.replace( pathSeparator, MANIFEST_CLASS_PATH_SEPERATOR );
 
 		// Transform the full qualified name of the main class to a path:
 
-		String fileSeparator = SystemProperties.getFileSeparator();
+		String fileSeparator = SystemProperties.getFileSeparator().get();
 		String mainClassName = mainClass.getName().replace( ".", fileSeparator );
 		mainClassName += ".class";
 

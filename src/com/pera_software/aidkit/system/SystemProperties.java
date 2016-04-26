@@ -17,7 +17,7 @@
 
 package com.pera_software.aidkit.system;
 
-import static com.pera_software.aidkit.nullable.NullStrings.*;
+import java.util.*;
 
 //##################################################################################################
 /**
@@ -35,13 +35,13 @@ public final class SystemProperties {
 
 	//==============================================================================================
 	
-	private static String getProperty( String key ) {
-		return makeNonNull( System.getProperty( key ));
+	private static Optional< String > getProperty( String key ) {
+		return Optional.ofNullable( System.getProperty( key ));
 	}
 	
 	//==============================================================================================
 
-	public static String getClassPath() {
+	public static Optional< String > getClassPath() {
 		return getProperty( "java.class.path" );
 	}
 
@@ -49,7 +49,7 @@ public final class SystemProperties {
 	/**
 	 * @return ":" under UNIX and ";" under Windows
 	 */
-	public static String getPathSeparator() {
+	public static Optional< String > getPathSeparator() {
 		return getProperty( "path.separator" );
 	}
 
@@ -57,7 +57,7 @@ public final class SystemProperties {
 	/**
 	 * @return "/" under UNIX and "\" under Windows
 	 */
-	public static String getFileSeparator() {
+	public static Optional< String > getFileSeparator() {
 		return getProperty( "file.separator" );
 	}
 
@@ -65,13 +65,13 @@ public final class SystemProperties {
 	/**
 	 * @return "\n" under UNIX and "\r\n" under Windows
 	 */
-	public static String getLineSeparator() {
+	public static Optional< String > getLineSeparator() {
 		return getProperty( "line.separator" );
 	}
 
 	//==============================================================================================
 
-	public static String getTmpDir() {
+	public static Optional< String > getTmpDir() {
 		return getProperty( "java.io.tmpdir" );
 	}
 
@@ -79,7 +79,7 @@ public final class SystemProperties {
 	/**
 	 * @return The current working directory
 	 */
-	public static String getUserDirectory() {
+	public static Optional< String > getUserDirectory() {
 		return getProperty( "user.dir" );
 	}
 	
@@ -88,7 +88,7 @@ public final class SystemProperties {
 	/**
 	 * @return 'x86' for 32-bit JVM and 'amd64' for an 64-bit JVM:
 	 */
-	public static String getOsArchitecture() {
+	public static Optional< String > getOsArchitecture() {
 		return getProperty( "os.arch" );
 	}
 }

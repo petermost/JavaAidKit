@@ -20,7 +20,6 @@ package com.pera_software.aidkit.net;
 import java.lang.reflect.*;
 import java.net.*;
 import java.util.*;
-import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 /*
  * According to this article http://support.microsoft.com/kb/308512 the windows
@@ -76,6 +75,6 @@ public class HostNameResolver
 
 			hostName = address.getHostName();
 		}
-		return makeNonNull( hostName );
+		return hostName;
 	}
 }

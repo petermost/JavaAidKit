@@ -17,7 +17,7 @@
 
 package com.pera_software.aidkit.system;
 
-import static com.pera_software.aidkit.nullable.NullStrings.*;
+import java.util.*;
 
 //##################################################################################################
 /**
@@ -32,13 +32,13 @@ public final class SystemEnvironment {
 
 	//==============================================================================================
 	
-	private static String getenv( String name ) {
-		return makeNonNull( System.getenv( name ));
+	private static Optional< String > getenv( String name ) {
+		return Optional.ofNullable( System.getenv( name ));
 	}
 	
 	//==============================================================================================
 	
-	public static String getPath() {
+	public static Optional< String > getPath() {
 		return getenv( "PATH" );
 	}
 }

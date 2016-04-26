@@ -20,7 +20,6 @@ package com.pera_software.aidkit.io;
 import com.pera_software.aidkit.lang.*;
 import java.util.*;
 import com.pera_software.aidkit.collection.*;
-import static com.pera_software.aidkit.nullable.NullStrings.*;
 
 //##################################################################################################
 
@@ -62,10 +61,10 @@ public final class FilePath {
 
 		for ( end = 0; end < path.length(); ++end ) {
 			if (( c = path.charAt( end )) == DRIVE_SEPARATOR ) {
-				_drive = makeNonNull( path.substring( begin, end + 1 ));
+				_drive = path.substring( begin, end + 1 );
 				begin = end + 1;
 			} else if ( c == UNIX_DIRECTORY_SEPARATOR || c == WINDOWS_DIRECTORY_SEPARATOR ) {
-				_directories.append( makeNonNull( path.substring( begin, end + 1 )));
+				_directories.append( path.substring( begin, end + 1 ));
 				begin = end + 1;
 			}
 		}
@@ -75,11 +74,11 @@ public final class FilePath {
 		for ( end = begin; end < path.length(); ++end ) {
 			if (( isEnd = ( end == path.length() - 1 )) || ( c = path.charAt( end )) == EXTENSION_SEPARATOR ) {
 				if ( !hasName ) {
-					_name = makeNonNull( path.substring( begin, isEnd ? end + 1 : end ));
+					_name = path.substring( begin, isEnd ? end + 1 : end );
 					hasName = true;
 				}
 				else
-					_extensions.append( makeNonNull( path.substring( begin, isEnd ? end + 1 : end )));
+					_extensions.append( path.substring( begin, isEnd ? end + 1 : end ));
 
 				begin = end;
 			}
@@ -119,7 +118,7 @@ public final class FilePath {
 					break;
 			}
 		}
-		return makeNonNull( builder.toString() );
+		return builder.toString();
 	}
 	
 	@Override
