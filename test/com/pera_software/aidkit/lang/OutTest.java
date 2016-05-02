@@ -36,6 +36,16 @@ public class OutTest {
 		assertTrue( success );
 		assertEquals( 123, integer.get().intValue() );
 	}
+	
+	@Test
+	public void testOutWithRef() {
+		String number = "abc";
+		Ref< Integer > integer = new Ref<>( 455 );
+				
+		boolean success = tryParse( number, integer );
+		assertFalse( success );
+		assertEquals( 455, integer.get().intValue() );
+	}
 
 	private static boolean tryParse( String number, Out< Integer > integer ) {
 		try {

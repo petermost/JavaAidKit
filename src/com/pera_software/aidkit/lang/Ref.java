@@ -17,8 +17,6 @@
 
 package com.pera_software.aidkit.lang;
 
-import java.util.*;
-
 /**
  * A class which can be used to return an value from a method via a parameter. The difference to
  * {@link com.pera_software.aidkit.lang.Out} is that it needs to be initialized with a value.
@@ -37,20 +35,9 @@ import java.util.*;
  * 
  * @author P. Most
  */
-public class Ref< T > {
-	private T _value;
+public class Ref< T > extends Out< T > {
 
 	public Ref( T value ) {
 		set( value );
-	}
-
-	public void set( T value ) {
-		Objects.requireNonNull( value );
-		_value = value;
-	}
-
-	public T get() {
-		Objects.requireNonNull( _value );
-		return _value;
 	}
 }
