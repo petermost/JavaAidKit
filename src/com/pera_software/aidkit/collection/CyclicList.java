@@ -26,6 +26,8 @@ import static java.util.Objects.*;
  * in such a way that the elements are accessed from the end i.e. -1 accesses the
  * last element -2 the element before that etc.
  */
+// TODO: Let CyclicList<> implement List<>.
+
 public class CyclicList< T > implements Iterable< T > {
 	private List< T > _list = new ArrayList<>();
 
