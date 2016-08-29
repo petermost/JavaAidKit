@@ -26,9 +26,10 @@ import static java.util.Objects.*;
  * in such a way that the elements are accessed from the end i.e. -1 accesses the
  * last element -2 the element before that etc.
  */
-// TODO: Let CyclicList<> implement List<>.
 
-public class CyclicList< T > implements Iterable< T > {
+// TODO: Remove Non-List methods.
+
+public class CyclicList< T > implements List< T > {
 	private List< T > _list = new ArrayList<>();
 
 	//==============================================================================================
@@ -78,8 +79,9 @@ public class CyclicList< T > implements Iterable< T > {
 
 	//==============================================================================================
 
-	public void remove( int index ) {
-		_list.remove( wrapIndex( index ) );
+	@Override
+	public T remove( int index ) {
+		return _list.remove( wrapIndex( index ) );
 	}
 
 	//==============================================================================================
@@ -88,4 +90,152 @@ public class CyclicList< T > implements Iterable< T > {
 	public Iterator< T > iterator() {
 		return _list.iterator();
 	}
+
+	//==============================================================================================
+
+	@Override
+	public int size() {
+		return _list.size();
+	}
+
+	//==============================================================================================
+
+	@Override
+	public boolean isEmpty() {
+		return _list.isEmpty();
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public boolean contains( Object o ) {
+		return _list.contains( o );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public Object[] toArray() {
+		return _list.toArray();
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public < T > T[] toArray( T[] a ) {
+		return _list.toArray( a );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public boolean add( T e ) {
+		return _list.add( e );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public boolean remove( Object o ) {
+		return _list.remove( o );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public boolean containsAll( Collection< ? > c ) {
+		return _list.containsAll( c );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public boolean addAll( Collection< ? extends T > c ) {
+		return _list.addAll( c );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public boolean addAll( int index, Collection< ? extends T > c ) {
+		return _list.addAll( wrapIndex( index ), c );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public boolean removeAll( Collection< ? > c ) {
+		return _list.removeAll( c );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public boolean retainAll( Collection< ? > c ) {
+		return _list.retainAll( c );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public void clear() {
+		_list.clear();
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public T get( int index ) {
+		return _list.get( wrapIndex( index ));
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public T set( int index, T element ) {
+		return _list.set( wrapIndex( index ), element );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public void add( int index, T element ) {
+		_list.add( wrapIndex( index ), element );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public int indexOf( Object o ) {
+		return _list.indexOf( o );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public int lastIndexOf( Object o ) {
+		return _list.lastIndexOf( o );
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public ListIterator< T > listIterator() {
+		return _list.listIterator();
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public ListIterator< T > listIterator( int index ) {
+		return _list.listIterator( wrapIndex( index ));
+	}
+
+	//==============================================================================================
+	
+	@Override
+	public List< T > subList( int fromIndex, int toIndex ) {
+		return _list.subList( wrapIndex( fromIndex ), wrapIndex( toIndex ));
+	}
+	
 }
