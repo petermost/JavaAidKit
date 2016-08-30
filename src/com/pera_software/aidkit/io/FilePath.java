@@ -29,6 +29,9 @@ import com.pera_software.aidkit.collection.*;
  * 
  * @author P. Most
  */
+
+// TODO: Try to replace try/catch in *At() methods.
+
 public final class FilePath {
 	public enum ToStringOptions {
 		Drive, Directories, Name, Extensions
@@ -64,7 +67,7 @@ public final class FilePath {
 				_drive = path.substring( begin, end + 1 );
 				begin = end + 1;
 			} else if ( c == UNIX_DIRECTORY_SEPARATOR || c == WINDOWS_DIRECTORY_SEPARATOR ) {
-				_directories.append( path.substring( begin, end + 1 ));
+				_directories.add( path.substring( begin, end + 1 ));
 				begin = end + 1;
 			}
 		}
@@ -78,7 +81,7 @@ public final class FilePath {
 					hasName = true;
 				}
 				else
-					_extensions.append( path.substring( begin, isEnd ? end + 1 : end ));
+					_extensions.add( path.substring( begin, isEnd ? end + 1 : end ));
 
 				begin = end;
 			}
@@ -174,21 +177,21 @@ public final class FilePath {
 
 	public FilePath appendDirectory( String directory ) {
 		FilePath copy = new FilePath( this );
-		copy._directories.append( addDirectorySeparator( directory ));
+		copy._directories.add( addDirectorySeparator( directory ));
 		
 		return copy;
 	}
 
 	public FilePath insertDirectory( int index, String directory ) {
 		FilePath copy = new FilePath( this );
-		copy._directories.insert( index, addDirectorySeparator( directory ));
+		copy._directories.add( index, addDirectorySeparator( directory ));
 		
 		return copy;
 	}
 
 	public FilePath replaceDirectory( int index, String directory ) {
 		FilePath copy = new FilePath( this );
-		copy._directories.replace( index, addDirectorySeparator( directory ));
+		copy._directories.set( index, addDirectorySeparator( directory ));
 		
 		return copy;
 	}
@@ -201,7 +204,11 @@ public final class FilePath {
 	}
 
 	public String directoryAt( int index ) {
-		return _directories.getAt( index, Strings.EMPTY );
+		try {
+			return _directories.get( index );
+		} catch ( IndexOutOfBoundsException e ) {
+			return Strings.EMPTY;
+		}
 	}
 	
 	//==============================================================================================
@@ -232,21 +239,21 @@ public final class FilePath {
 
 	public FilePath appendExtension( String extension ) {
 		FilePath copy = new FilePath( this );
-		copy._extensions.append( addExtensionSeparator( extension ));
+		copy._extensions.add( addExtensionSeparator( extension ));
 		
 		return copy;
 	}
 
 	public FilePath insertExtension( int index, String extension ) {
 		FilePath copy = new FilePath( this );
-		copy._extensions.insert( index, addExtensionSeparator( extension ));
+		copy._extensions.add( index, addExtensionSeparator( extension ));
 		
 		return copy;
 	}
 
 	public FilePath replaceExtension( int index, String extension ) {
 		FilePath copy = new FilePath( this );
-		copy._extensions.replace( index, addExtensionSeparator( extension ));
+		copy._extensions.set( index, addExtensionSeparator( extension ));
 		
 		return copy;
 	}
@@ -259,7 +266,11 @@ public final class FilePath {
 	}
 
 	public String extensionAt( int index ) {
-		return _extensions.getAt( index, Strings.EMPTY );
+		try {
+			return _extensions.get( index );
+		} catch ( IndexOutOfBoundsException e ) {
+			return Strings.EMPTY;
+		}
 	}
 	
 	//==============================================================================================

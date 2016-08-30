@@ -18,7 +18,6 @@
 package com.pera_software.aidkit.collection;
 
 import java.util.*;
-import static java.util.Objects.*;
 
 //##################################################################################################
 /**
@@ -26,8 +25,6 @@ import static java.util.Objects.*;
  * in such a way that the elements are accessed from the end i.e. -1 accesses the
  * last element -2 the element before that etc.
  */
-
-// TODO: Remove Non-List methods.
 
 public class CyclicList< T > implements List< T > {
 	private List< T > _list = new ArrayList<>();
@@ -49,34 +46,6 @@ public class CyclicList< T > implements List< T > {
 		_list.addAll( other._list );
 	}
 	
-	//==============================================================================================
-
-	public void append( T element ) {
-		requireNonNull( element );
-		_list.add( element );
-	}
-
-	//==============================================================================================
-
-	public void insert( int index, T element ) {
-		requireNonNull( element );
-		_list.add( wrapIndex( index ), element );
-	}
-
-	//==============================================================================================
-
-	public void replace( int index, T element ) {
-		requireNonNull( element );
-		_list.set( wrapIndex( index ), element );
-	}
-
-	//==============================================================================================
-
-	public T getAt( int index, T defaultValue ) {
-		index = wrapIndex( index );
-		return ( index >= 0 && index < _list.size() ) ? _list.get( index ) : defaultValue;
-	}
-
 	//==============================================================================================
 
 	@Override
