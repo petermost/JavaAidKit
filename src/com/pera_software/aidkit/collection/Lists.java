@@ -60,4 +60,11 @@ public final class Lists {
 		
 		return list;
 	}
+
+	//==============================================================================================
+	
+	public static < T > T getOrDefault( List< T > list, int index, T defaultValue ) {
+		return ( index >= 0 && index < list.size() ) ? list.get( index ) : defaultValue;
+	}
+	
 }
