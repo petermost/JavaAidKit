@@ -31,10 +31,60 @@ public class StringsTest {
 		assertNotNull( Strings.EMPTY );
 		assertTrue( Strings.EMPTY.isEmpty() );
 	}
+
+	//==============================================================================================
 	
 	@Test
 	public void testEmptyArray() {
 		assertNotNull( Strings.EMPTY_ARRAY );
 		assertEquals( 0, Strings.EMPTY_ARRAY.length );
+	}
+	
+	//==============================================================================================
+
+	@Test
+	public void testTrimLeftIf() {
+		String s = "@#$text@#$";
+		String trimmed = Strings.trimLeftIf( s, character -> !Character.isLetter( character ));
+		
+		assertEquals( "text@#$", trimmed );
+	}
+	
+	//==============================================================================================
+
+	@Test
+	public void testTrimLeftIfWithEmptyString() {
+		String trimmed = Strings.trimLeftIf( Strings.EMPTY, character -> !Character.isLetter( character ));
+		
+		assertEquals( Strings.EMPTY, trimmed );
+	}
+	
+	//==============================================================================================
+
+	@Test
+	public void testTrimRightIf() {
+		String s = "@#$text@#$";
+		String trimmed = Strings.trimRightIf( s, character -> !Character.isLetter( character ));
+		
+		assertEquals( "@#$text", trimmed );
+	}
+	
+	//==============================================================================================
+
+	@Test
+	public void testTrimRightIfWithEmptyString() {
+		String trimmed = Strings.trimRightIf( Strings.EMPTY, character -> !Character.isLetter( character ));
+		
+		assertEquals( Strings.EMPTY, trimmed );
+	}
+
+	//==============================================================================================
+
+	@Test
+	public void testTrimIf() {
+		String s = "@#$text@#$";
+		String trimmed = Strings.trimIf( s, character -> !Character.isLetter( character ));
+		
+		assertEquals( "text", trimmed );
 	}
 }

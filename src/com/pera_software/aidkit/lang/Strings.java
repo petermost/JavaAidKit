@@ -18,12 +18,14 @@
 package com.pera_software.aidkit.lang;
 
 import java.util.*;
+import java.util.function.*;
 
 /**
  * @author P. Most
  *
  */
 public final class Strings {
+	
 	public static final String EMPTY = "";
 	
 	public static final String EMPTY_ARRAY[] = new String[ 0 ];
@@ -31,5 +33,31 @@ public final class Strings {
 	public static final List< String > EMPTY_LIST = new ArrayList<>();
 	
 	private Strings() {
+	}
+	
+	//==============================================================================================
+	
+	public static String trimLeftIf( String s, Predicate< Character > condition ) {
+		for ( int i = 0; i < s.length(); ++i ) {
+			if ( !condition.test( Character.valueOf( s.charAt( i ))))
+				return s.substring( i );
+		}
+		return s;
+	}
+	
+	//==============================================================================================
+	
+	public static String trimRightIf( String s, Predicate< Character > condition ) {
+		for ( int i = s.length() - 1; i >= 0; --i ) {
+			if ( !condition.test( Character.valueOf( s.charAt( i ))))
+				return s.substring( 0, i + 1 );
+		}
+		return s;
+	}
+
+	//==============================================================================================
+	
+	public static String trimIf( String s, Predicate< Character > condition ) {
+		return trimRightIf( trimLeftIf( s, condition ), condition );
 	}
 }
