@@ -23,7 +23,6 @@ import java.util.*;
 //##################################################################################################
 
 public class CPlusPlusProjectFileParser extends ProjectFileParser {
-	public static final String EXTENSION = ".vcxproj";
 
 	//==============================================================================================
 
@@ -46,7 +45,7 @@ public class CPlusPlusProjectFileParser extends ProjectFileParser {
 			return projectNames.get( 0 );
 		else {
 			String projectFileName = path().getFileName().toString();
-			int extensionIndex = projectFileName.toLowerCase().lastIndexOf( EXTENSION.toLowerCase() );
+			int extensionIndex = projectFileName.toLowerCase().lastIndexOf( CPlusPlusProjectFile.EXTENSION.toLowerCase() );
 			if ( extensionIndex != -1 )
 				return projectFileName.substring( 0, extensionIndex );
 			else

@@ -24,33 +24,17 @@ import java.util.*;
 
 public final class ProjectFileFactory {
 
+	//==============================================================================================
+
 	private ProjectFileFactory() {
 	}
 
 	//==============================================================================================
 
-	private static boolean hasExtension( Path path, String extension ) {
-		return path.toString().endsWith( extension );
-	}
-
-	//==============================================================================================
-
-	private static boolean isCPlusPlusProjectFilePath( Path projectFilePath ) {
-		return hasExtension( projectFilePath, CPlusPlusProjectFileParser.EXTENSION );
-	}
-
-	//==============================================================================================
-
-	private static boolean isCSharpProjectFilePath( Path projectFilePath ) {
-		return hasExtension( projectFilePath, CSharpProjectFileParser.EXTENSION );
-	}
-
-	//==============================================================================================
-
 	public static Optional< ProjectFile > create( Path projectPath ) throws Exception {
-		if ( isCPlusPlusProjectFilePath( projectPath ) )
+		if ( ProjectFiles.isCPlusPlusProjectFilePath( projectPath ) )
 			return Optional.of( new CPlusPlusProjectFile( projectPath ));
-		else if ( isCSharpProjectFilePath( projectPath ) )
+		else if ( ProjectFiles.isCSharpProjectFilePath( projectPath ) )
 			return Optional.of( new CSharpProjectFile( projectPath ));
 		else
 			return Optional.empty();

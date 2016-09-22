@@ -23,6 +23,10 @@ import java.nio.file.*;
 
 public class CPlusPlusProjectFile extends ProjectFile {
 
+	public static final String EXTENSION = ".vcxproj";
+
+	//==============================================================================================
+
 	public CPlusPlusProjectFile( Path projectFilePath ) throws Exception {
 		super( new CPlusPlusProjectFileParser( projectFilePath ));
 	}

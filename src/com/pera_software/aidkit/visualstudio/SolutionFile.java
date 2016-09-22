@@ -25,6 +25,9 @@ import java.nio.charset.*;
 //##################################################################################################
 
 public class SolutionFile {
+	
+	public static final String EXTENSION = ".sln";
+	
 	private Path _path;
 	private List< String > _lines = new ArrayList<>();
 	private Map< Path, ProjectFile > _projects = new TreeMap<>();

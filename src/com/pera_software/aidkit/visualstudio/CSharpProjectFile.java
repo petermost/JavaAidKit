@@ -23,6 +23,10 @@ import java.nio.file.*;
 
 public class CSharpProjectFile extends ProjectFile {
 
+	public static final String EXTENSION = ".csproj";
+
+	//==============================================================================================
+
 	public CSharpProjectFile( Path projectFilePath ) throws Exception {
 		super( new CSharpProjectFileParser( projectFilePath ));
 	}

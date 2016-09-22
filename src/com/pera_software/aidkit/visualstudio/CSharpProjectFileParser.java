@@ -23,7 +23,6 @@ import java.util.*;
 //##################################################################################################
 
 public class CSharpProjectFileParser extends ProjectFileParser {
-	public static final String EXTENSION = ".csproj";
 
 	//==============================================================================================
 
