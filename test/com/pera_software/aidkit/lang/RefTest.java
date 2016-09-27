@@ -27,19 +27,33 @@ import static org.junit.Assert.*;
 public class RefTest {
 
 	@Test
-	public void testRef() {
-		Ref< String > firstName = new Ref<>( "peter" );
-		Ref< String > lastName = new Ref<>( "most" );
-
-		swapString( firstName, lastName );
+	public void testRefCtor() {
+		Ref< Integer > integer = new Ref<>( 123 );
+		assertEquals( 123, integer.get().intValue() );
+	}
+	
+	@SuppressWarnings( "unused" )
+	@Test( expected = NullPointerException.class )
+	public void TestRefCtorNull() {
+		Ref< Integer > integer = new Ref<>( null );
+	}
+	
+	@Test( expected = NullPointerException.class )
+	public void testSetNull() {
+		Ref< Integer > integer = new Ref<>( 123 );
+		integer.set( null );
+	}
+	
+	@Test
+	public void testCall() {
+		int value = 123;
+		Ref< Integer > integer = new Ref<>( value );
 		
-		assertEquals( "most", firstName.get() );
-		assertEquals( "peter", lastName.get() );
+		setRef( value, integer );
+		assertEquals( value, integer.get().intValue() );
 	}
 
-	private static void swapString( Ref< String > s1, Ref< String > s2 ) {
-		String temp = s1.get();
-		s1.set( s2.get() );
-		s2.set( temp );
+	private static void setRef( int value, Out< Integer > integer ) {
+		integer.set( value );
 	}
 }

@@ -77,10 +77,11 @@ public final class Streams {
 		String line;
 		List< String > lines = new ArrayList<>();
 		
-		try ( BufferedReader reader = new BufferedReader( new InputStreamReader( inputStream ))) {
-			while (( line = reader.readLine()) != null ) {
+		try ( Reader streamReader = new InputStreamReader( inputStream );
+				BufferedReader bufferedReader = new BufferedReader( streamReader )) { 
+			
+			while (( line = bufferedReader.readLine()) != null )
 				lines.add( line );
-			}
 		}
 		return lines;
 	}

@@ -17,6 +17,7 @@
 
 package com.pera_software.aidkit.lang;
 
+import java.util.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -27,32 +28,34 @@ import static org.junit.Assert.*;
 public class OutTest {
 
 	@Test
-	public void testOut() {
-		String number = "123";
+	public void testSet() {
 		Out< Integer > integer = new Out<>();
-		
-		boolean success = tryParse( number, integer );
-		
-		assertTrue( success );
+		integer.set( 123 );
 		assertEquals( 123, integer.get().intValue() );
 	}
 	
+	@Test( expected = NullPointerException.class )
+	public void testSetNull() {
+		Out< Integer > integer = new Out<>();
+		integer.set( null );
+	}
+	
+	@Test( expected = NoSuchElementException.class )
+	public void testGetNull() {
+		Out< Integer > integer = new Out<>();
+		integer.get();
+	}
+	
 	@Test
-	public void testOutWithRef() {
-		String number = "abc";
-		Ref< Integer > integer = new Ref<>( 455 );
-				
-		boolean success = tryParse( number, integer );
-		assertFalse( success );
-		assertEquals( 455, integer.get().intValue() );
+	public void testCall() {
+		int value = 123;
+		Out< Integer > integer = new Out<>();
+		
+		setOut( value, integer );
+		assertEquals( value, integer.get().intValue() );
 	}
 
-	private static boolean tryParse( String number, Out< Integer > integer ) {
-		try {
-			integer.set( Integer.parseInt( number ) );
-			return true;
-		} catch ( NumberFormatException exception ) {
-			return false;
-		}
+	private static void setOut( int value, Out< Integer > integer ) {
+		integer.set( value );
 	}
 }

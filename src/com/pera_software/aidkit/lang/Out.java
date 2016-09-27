@@ -43,13 +43,27 @@ public class Out< T > {
 	public Out() {
 	}
 
+	/**
+	 * Sets the value if not null, otherwise throws a {@code NullPointerException}.
+	 * @param value the non-null value to set.
+	 * @throws NullPointerException if value is null.
+	 */
 	public void set( T value ) {
-		Objects.requireNonNull( value );
+		if ( value == null )
+			throw new NullPointerException();
+		
 		_value = value;
 	}
 
+	/**
+	 * If a value is present, returns the value, otherwise throws {@code NoSuchElementException}. 
+	 * @throws NoSuchElementException if there is no value present
+	 * @return the non-null value held
+	 */
 	public T get() {
-		Objects.requireNonNull( _value );
+		if ( _value == null )
+			throw new NoSuchElementException();
+		
 		return _value;
 	}
 }
