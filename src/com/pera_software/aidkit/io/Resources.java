@@ -42,14 +42,19 @@ public final class Resources {
 	
 	//==============================================================================================
 	
-	public static Path asPath( Class< ? > clazz, String name ) throws ResourceNotFoundException {
+	public static URI asUri( Class< ? > clazz, String name ) throws ResourceNotFoundException {
 		try {
-			URL resourceUrl = asUrl( clazz, name );
-			URI resourceUri = resourceUrl.toURI();
-			return Paths.get( resourceUri );
-		} catch ( URISyntaxException syntaxException ) {
+			return asUrl( clazz, name ).toURI();
+		} 
+		catch ( URISyntaxException syntaxException ) {
 			throw new ResourceNotFoundException( name, syntaxException );
 		}
+	}
+	
+	//==============================================================================================
+	
+	public static Path asPath( Class< ? > clazz, String name ) throws ResourceNotFoundException {
+		return Paths.get( asUri( clazz, name ));
 	}
 	
 	//==============================================================================================
