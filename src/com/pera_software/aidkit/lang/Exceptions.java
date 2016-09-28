@@ -28,6 +28,8 @@ public final class Exceptions {
 	private Exceptions() {
 	}
 
+	//==============================================================================================
+	
 	public static void tryProcedure( Procedure procedure ) {
 		try {
 			procedure.body();
@@ -36,6 +38,8 @@ public final class Exceptions {
 		}
 	}
 
+	//==============================================================================================
+	
 	public static < R > R tryFunction( Function< R > function ) {
 		try {
 			return function.body();
