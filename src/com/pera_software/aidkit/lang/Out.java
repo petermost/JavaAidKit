@@ -40,6 +40,10 @@ import java.util.*;
 public class Out< T > {
 	private T _value = null;
 
+	/**
+	 * No initializing constructor because {@code out} parameters are only supposed to be set in the 
+	 * called method.
+	 */
 	public Out() {
 	}
 
