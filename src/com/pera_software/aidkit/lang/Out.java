@@ -53,10 +53,11 @@ public class Out< T > {
 	 * @throws NullPointerException if value is null.
 	 */
 	public void set( T value ) {
-		if ( value == null )
+		if ( value != null )
+			_value = value;
+		else
 			throw new NullPointerException();
 		
-		_value = value;
 	}
 
 	/**
@@ -65,9 +66,10 @@ public class Out< T > {
 	 * @return the non-null value held
 	 */
 	public T get() {
-		if ( _value == null )
+		if ( _value != null )
+			return _value;
+		else
 			throw new NoSuchElementException();
 		
-		return _value;
 	}
 }
