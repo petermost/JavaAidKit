@@ -20,6 +20,7 @@ package com.pera_software.aidkit.io;
 import com.pera_software.aidkit.lang.*;
 import java.util.*;
 import com.pera_software.aidkit.collection.*;
+import static com.pera_software.aidkit.io.FilePathUtils.*;
 
 //##################################################################################################
 
@@ -37,9 +38,9 @@ public final class FilePath {
 		Drive, Directories, Name, Extensions
 	}
 	
-	private static final char DRIVE_SEPARATOR = ':';
-	private static final char DIRECTORY_SEPARATOR = '/'; // Works on all platforms.
-	private static final char EXTENSION_SEPARATOR = '.';
+	static final char DRIVE_SEPARATOR = ':';
+	static final char DIRECTORY_SEPARATOR = '/'; // Works on all platforms.
+	static final char EXTENSION_SEPARATOR = '.';
 
 	private String _drive = Strings.EMPTY;
 	private CyclicList< String > _directories = new CyclicList<>();
@@ -131,26 +132,6 @@ public final class FilePath {
 
 	//==============================================================================================
 
-	private static String addPrefixSeparator( String string, char separator ) {
-		if ( !string.isEmpty() && string.charAt( 0 ) != separator )
-			return separator + string;
-		else
-			return string;
-	}
-
-	private static String addPostfixSeparator( String string, char separator ) {
-		if ( !string.isEmpty() && string.charAt( string.length() - 1 ) != separator )
-			return string + separator;
-		else
-			return string;
-	}
-
-	//==============================================================================================
-
-	private static String addDriveSeparator( String device ) {
-		return addPostfixSeparator( device, DRIVE_SEPARATOR );
-	}
-
 	public FilePath replaceDrive( String drive ) {
 		FilePath copy = new FilePath( this );
 		copy._drive = addDriveSeparator( drive );
@@ -170,10 +151,6 @@ public final class FilePath {
 	}
 	
 	//==============================================================================================
-
-	private static String addDirectorySeparator( String directory ) {
-		return addPostfixSeparator( directory, DIRECTORY_SEPARATOR );
-	}
 
 	public FilePath appendDirectory( String directory ) {
 		FilePath copy = new FilePath( this );
@@ -232,10 +209,6 @@ public final class FilePath {
 	}
 	
 	//==============================================================================================
-
-	private static String addExtensionSeparator( String extension ) {
-		return addPrefixSeparator( extension, EXTENSION_SEPARATOR );
-	}
 
 	public FilePath appendExtension( String extension ) {
 		FilePath copy = new FilePath( this );
