@@ -35,7 +35,7 @@ public class FilePathTest {
 		assertEquals( Strings.EMPTY, path.directoryAt( 1 ));
 		assertEquals( Strings.EMPTY, path.directoryAt( -1 ));
 		assertEquals( Strings.EMPTY, path.name() );
-		assertEquals( Strings.EMPTY, path.lastExtension() );
+		assertEquals( Strings.EMPTY, path.extension() );
 		assertEquals( Strings.EMPTY, path.extensionAt( 0 ));
 		assertEquals( Strings.EMPTY, path.extensionAt( 1 ));
 		assertEquals( Strings.EMPTY, path.extensionAt( -1 ));
@@ -57,13 +57,13 @@ public class FilePathTest {
 	public void testDriveSeparator() {
 		FilePath path = new FilePath();
 
-		path = path.replaceDrive( "Z" );
+		path = path.setDrive( "Z" );
 		assertEquals( "Z:", path.drive() );
 
-		path = path.replaceDrive( "Z:" );
+		path = path.setDrive( "Z:" );
 		assertEquals( "Z:", path.drive() );
 
-		path = path.replaceDrive( Strings.EMPTY );
+		path = path.setDrive( Strings.EMPTY );
 		assertEquals( Strings.EMPTY, path.drive() );
 
 		path = path.removeDrive();
@@ -76,13 +76,13 @@ public class FilePathTest {
 	public void testDirectorySeparator() {
 		FilePath path = new FilePath();
 
-		path = path.appendDirectory( "dir" );
+		path = path.addDirectory( "dir" );
 		assertEquals( "dir/", path.directoryAt( 0 ));
 
-		path = path.replaceDirectory( 0, "dir/" );
+		path = path.setDirectory( 0, "dir/" );
 		assertEquals( "dir/", path.directoryAt( 0 ));
 
-		path = path.replaceDirectory( 0, Strings.EMPTY );
+		path = path.setDirectory( 0, Strings.EMPTY );
 		assertEquals( Strings.EMPTY, path.directoryAt( 0 ));
 
 		path = path.removeDirectory( 0 );
@@ -95,16 +95,16 @@ public class FilePathTest {
 	public void testExtensionSeparator() {
 		FilePath path = new FilePath();
 
-		path = path.appendExtension( "ext" );
+		path = path.addExtension( "ext" );
 		assertEquals( ".ext", path.extensionAt( 0 ));
 
-		path = path.replaceExtension( 0, ".ext" );
+		path = path.setExtension( 0, ".ext" );
 		assertEquals( ".ext", path.extensionAt( 0 ));
 
-		path = path.replaceExtension( 0, Strings.EMPTY );
+		path = path.setExtension( 0, Strings.EMPTY );
 		assertEquals( Strings.EMPTY, path.extensionAt( 0 ));
 
-		path = path.removeLastExtension();
+		path = path.removeExtension();
 		assertEquals( Strings.EMPTY, path.extensionAt( 0 ));
 	}
 
@@ -132,7 +132,7 @@ public class FilePathTest {
 		assertEquals( ".ext2", path.extensionAt( 1 ));
 		assertEquals( ".ext2", path.extensionAt( -1 ));
 
-		assertEquals( ".ext2", path.lastExtension() );
+		assertEquals( ".ext2", path.extension() );
 	}
 
 	//==============================================================================================
@@ -146,7 +146,7 @@ public class FilePathTest {
 		assertEquals( ".ext1", path.extensionAt( 0 ));
 		assertEquals( ".ext1", path.extensionAt( -2 ));
 
-		assertEquals( ".ext2", path.lastExtension() );
+		assertEquals( ".ext2", path.extension() );
 		assertEquals( ".ext2", path.extensionAt( 1 ));
 		assertEquals( ".ext2", path.extensionAt( -1 ));
 
@@ -166,7 +166,7 @@ public class FilePathTest {
 		assertEquals( "dir1/", path.directoryAt( 1 ));
 		assertEquals( "dir2/", path.directoryAt( 2 ));
 		assertEquals( "name", path.name() );
-		assertEquals( Strings.EMPTY, path.lastExtension() );
+		assertEquals( Strings.EMPTY, path.extension() );
 	}
 
 	//==============================================================================================
@@ -175,13 +175,13 @@ public class FilePathTest {
 	public void testAddingExtension() {
 		FilePath path = new FilePath( "D:/dir1/dir2/name.ext" );
 
-		path = path.replaceExtension( 0, ".second" );
+		path = path.setExtension( 0, ".second" );
 		assertEquals( "D:/dir1/dir2/name.second", path.toString() );
 
-		path = path.insertExtension( 0, ".first" );
+		path = path.addExtension( 0, ".first" );
 		assertEquals( "D:/dir1/dir2/name.first.second", path.toString() );
 
-		path = path.replaceExtension( -1, ".third" );
+		path = path.setExtension( -1, ".third" );
 		assertEquals( "D:/dir1/dir2/name.first.third", path.toString() );
 	}
 	

@@ -132,7 +132,7 @@ public final class FilePath {
 
 	//==============================================================================================
 
-	public FilePath replaceDrive( String drive ) {
+	public FilePath setDrive( String drive ) {
 		FilePath copy = new FilePath( this );
 		copy._drive = addDriveSeparator( drive );
 		
@@ -152,21 +152,21 @@ public final class FilePath {
 	
 	//==============================================================================================
 
-	public FilePath appendDirectory( String directory ) {
+	public FilePath addDirectory( String directory ) {
 		FilePath copy = new FilePath( this );
 		copy._directories.add( addDirectorySeparator( directory ));
 		
 		return copy;
 	}
 
-	public FilePath insertDirectory( int index, String directory ) {
+	public FilePath addDirectory( int index, String directory ) {
 		FilePath copy = new FilePath( this );
 		copy._directories.add( index, addDirectorySeparator( directory ));
 		
 		return copy;
 	}
 
-	public FilePath replaceDirectory( int index, String directory ) {
+	public FilePath setDirectory( int index, String directory ) {
 		FilePath copy = new FilePath( this );
 		copy._directories.set( index, addDirectorySeparator( directory ));
 		
@@ -190,7 +190,7 @@ public final class FilePath {
 	
 	//==============================================================================================
 
-	public FilePath replaceName( String name ) {
+	public FilePath setName( String name ) {
 		FilePath copy = new FilePath( this );
 		copy._name = name;
 		
@@ -210,25 +210,29 @@ public final class FilePath {
 	
 	//==============================================================================================
 
-	public FilePath appendExtension( String extension ) {
+	public FilePath addExtension( String extension ) {
 		FilePath copy = new FilePath( this );
 		copy._extensions.add( addExtensionSeparator( extension ));
 		
 		return copy;
 	}
 
-	public FilePath insertExtension( int index, String extension ) {
+	public FilePath addExtension( int index, String extension ) {
 		FilePath copy = new FilePath( this );
 		copy._extensions.add( index, addExtensionSeparator( extension ));
 		
 		return copy;
 	}
 
-	public FilePath replaceExtension( int index, String extension ) {
+	public FilePath setExtension( int index, String extension ) {
 		FilePath copy = new FilePath( this );
 		copy._extensions.set( index, addExtensionSeparator( extension ));
 		
 		return copy;
+	}
+	
+	public FilePath setExtension( String extension ) {
+		return setExtension( -1, extension );
 	}
 	
 	public FilePath removeExtension( int index ) {
@@ -236,6 +240,10 @@ public final class FilePath {
 		copy._extensions.remove( index );
 		
 		return copy;
+	}
+	
+	public FilePath removeExtension() {
+		return removeExtension( -1 );
 	}
 
 	public String extensionAt( int index ) {
@@ -246,17 +254,8 @@ public final class FilePath {
 		}
 	}
 	
-	//==============================================================================================
-	
-	/**
-	 * Some convenience methods to access/modify the last index.
-	 */
-	
-	public FilePath removeLastExtension() {
-		return removeExtension( -1 );
-	}
-
-	public String lastExtension() {
+	public String extension() {
 		return extensionAt( -1 );
 	}
+
 }
