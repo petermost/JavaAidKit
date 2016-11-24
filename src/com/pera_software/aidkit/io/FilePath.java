@@ -31,8 +31,6 @@ import static com.pera_software.aidkit.io.FilePathUtils.*;
  * @author P. Most
  */
 
-// TODO: Try to replace try/catch in *At() methods.
-
 public final class FilePath {
 	public enum ToStringOptions {
 		Drive, Directories, Name, Extensions
@@ -181,11 +179,10 @@ public final class FilePath {
 	}
 
 	public String directoryAt( int index ) {
-		try {
+		if ( _directories.isIndexWithinBounds( index ))
 			return _directories.get( index );
-		} catch ( IndexOutOfBoundsException e ) {
+		else
 			return Strings.EMPTY;
-		}
 	}
 	
 	//==============================================================================================
@@ -247,11 +244,10 @@ public final class FilePath {
 	}
 
 	public String extensionAt( int index ) {
-		try {
+		if ( _extensions.isIndexWithinBounds( index ))
 			return _extensions.get( index );
-		} catch ( IndexOutOfBoundsException e ) {
+		else
 			return Strings.EMPTY;
-		}
 	}
 	
 	public String extension() {

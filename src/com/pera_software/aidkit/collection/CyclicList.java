@@ -26,6 +26,8 @@ import java.util.*;
  * last element -2 the element before that etc.
  */
 
+// TODO: Add similar constructors like ArrayList<> ?
+
 public class CyclicList< T > implements List< T > {
 	private List< T > _list = new ArrayList<>();
 
@@ -44,6 +46,14 @@ public class CyclicList< T > implements List< T > {
 	
 	public CyclicList( CyclicList< T > other ) {
 		_list.addAll( other._list );
+	}
+	
+	//==============================================================================================
+	
+	public boolean isIndexWithinBounds( int index ) {
+		index = wrapIndex( index );
+		
+		return 0 <= index && index < _list.size();
 	}
 	
 	//==============================================================================================
