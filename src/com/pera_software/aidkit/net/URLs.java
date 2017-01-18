@@ -18,6 +18,8 @@
 package com.pera_software.aidkit.net;
 
 import java.net.*;
+import java.nio.file.*;
+import com.pera_software.aidkit.lang.*;
 
 /**
  * @author P. Most
@@ -29,10 +31,10 @@ public final class URLs {
 	}
 	
 	public static URL get( String url ) {
-		try {
-			return new URL( url );
-		} catch ( MalformedURLException exception ) {
-			throw new Error( exception );
-		}
+		return Exceptions.tryFunction( () -> new URL( url ));
+	}
+	
+	public static URL get( Path path ) {
+		return Exceptions.tryFunction( () -> path.toUri().toURL() );
 	}
 }
