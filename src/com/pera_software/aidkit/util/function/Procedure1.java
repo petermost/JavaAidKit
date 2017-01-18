@@ -21,6 +21,8 @@ package com.pera_software.aidkit.util.function;
  * @author P. Most
  *
  */
+
+@FunctionalInterface
 public interface Procedure1< P1 > {
 	public void body( P1 p1 ) throws Exception;
 }

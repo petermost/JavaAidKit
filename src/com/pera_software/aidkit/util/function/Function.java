@@ -21,6 +21,8 @@ package com.pera_software.aidkit.util.function;
  * @author P. Most
  *
  */
+
+@FunctionalInterface
 public interface Function< R > {
 	public R body() throws Exception;
 }
