@@ -20,7 +20,7 @@ package com.pera_software.aidkit.lang;
 import java.util.*;
 
 /**
- * A class which can be used to return an value from a method via a parameter. The difference to
+ * A class which can be used to return a value from a method via a parameter. The difference to
  * {@link com.pera_software.aidkit.lang.Ref} is that it doesn't need to be initialized with a value.
  * 
  * {@code}
@@ -49,8 +49,8 @@ public class Out< T > {
 
 	/**
 	 * Sets the value if not null, otherwise throws a {@code NullPointerException}.
-	 * @param value the non-null value to set.
-	 * @throws NullPointerException if value is null.
+	 * @param value the non-null value to set
+	 * @throws NullPointerException if value is null
 	 */
 	public void set( T value ) {
 		if ( value != null )

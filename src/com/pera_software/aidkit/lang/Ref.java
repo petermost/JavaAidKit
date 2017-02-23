@@ -18,7 +18,7 @@
 package com.pera_software.aidkit.lang;
 
 /**
- * A class which can be used to return an value from a method via a parameter. The difference to
+ * A class which can be used to return a value from a method via a parameter. The difference to
  * {@link com.pera_software.aidkit.lang.Out} is that it needs to be initialized with a value.
  * 
  * {@code}
