@@ -57,7 +57,7 @@ public class ApplicationJarManifests implements Iterable< ApplicationJarManifest
 
 	private String _requiredVersion = "";
 	private String _requiredVendor = "";
-	private List< Entry > _loadedManifests = new Vector< >();
+	private List< Entry > _loadedManifests = new ArrayList< >();
 
 	//============================================================================
 
