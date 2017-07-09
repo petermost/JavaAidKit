@@ -31,15 +31,11 @@ import static com.pera_software.aidkit.io.FilePathUtils.*;
  * @author P. Most
  */
 
-public final class FilePath {
+public final class FilePath extends FilePathBase {
 	public enum ToStringOptions {
 		Drive, Directories, Name, Extensions
 	}
 	
-	static final char DRIVE_SEPARATOR = ':';
-	static final char DIRECTORY_SEPARATOR = '/'; // Works on all platforms.
-	static final char EXTENSION_SEPARATOR = '.';
-
 	private String _drive = Strings.EMPTY;
 	private CyclicList< String > _directories = new CyclicList<>();
 	private String _name = Strings.EMPTY;

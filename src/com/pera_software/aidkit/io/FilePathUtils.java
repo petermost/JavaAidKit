@@ -21,7 +21,7 @@ package com.pera_software.aidkit.io;
  * @author P. Most
  *
  */
-public final class FilePathUtils {
+public final class FilePathUtils extends FilePathBase {
 
 	private FilePathUtils() {
 	}
