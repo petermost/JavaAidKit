@@ -28,7 +28,7 @@ import com.pera_software.aidkit.signal.*;
  * allows to register channels for different operations and if that operation
  * becomes ready then the corresponding handler method will be called.
  */
-public class NioDispatcher
+public class NioDispatcher implements AutoCloseable
 {
 	private final Signal2< SelectableChannel, Integer > connectionRegisteredSignal = new Signal2<>();
 	private final Signal2< SelectableChannel, Integer > connectionUnregisteredSignal = new Signal2<>();
@@ -51,7 +51,7 @@ public class NioDispatcher
 	//=============================================================================
 
 	@Override
-	public void finalize()
+	public void close()
 		throws Exception
 	{
 		_selector.close();

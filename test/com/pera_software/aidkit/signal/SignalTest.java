@@ -25,15 +25,15 @@ import org.junit.*;
 public abstract class SignalTest {
 	
 	private static final Object EXPECTED_ARGUMENTS[] = {
-		new Byte( ( byte )1 ), 
-		new Long( 2 ), 
-		new Short( ( short )3 ),
-		new Float( 4 ), 
-		new Double( 5 ), 
-		new String( "6" ), 
-		new Integer( 7 ), 
-		new Boolean( true ), 
-		new Character( '9' )
+		Byte.valueOf(( byte )1 ), 
+		Long.valueOf( 2 ), 
+		Short.valueOf(( short )3 ),
+		Float.valueOf( 4 ), 
+		Double.valueOf( 5 ), 
+		String.valueOf( "6" ), 
+		Integer.valueOf( 7 ), 
+		Boolean.valueOf( true ), 
+		Character.valueOf( '9' )
 	};
 	
 	private Class< ? extends Signal > _signalClass;
@@ -66,8 +66,8 @@ public abstract class SignalTest {
 
 		// Create the signal:
 		
-		_signal1 = _signalClass.newInstance();
-		_signal2 = _signalClass.newInstance();
+		_signal1 = _signalClass.getDeclaredConstructor().newInstance();
+		_signal2 = _signalClass.getDeclaredConstructor().newInstance();
 		
 		// Because of type erasure we have to use an array of Object classes:
 
