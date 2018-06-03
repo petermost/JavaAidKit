@@ -28,29 +28,38 @@ public final class Properties {
     private Properties() {
     }
 
-    @SuppressWarnings( "unchecked" )
-	public static <T1, T2, T3, T4> T4 getNonNullOrDefault(T1 instance,
+    public static <T1, T2, T3, T4> T4 getNonNullOrDefault(T1 instance,
             Function<T1, T2> getter1,
             Function<T2, T3> getter2,
             Function<T3, T4> getter3, T4 defaultValue) {
 
-    	return (T4)doGetNonNullOrDefault(instance, new Function[] { getter1, getter2, getter3 }, defaultValue);
+        if (instance != null) {
+            return getNonNullOrDefault(getter1.apply(instance), getter2, getter3, defaultValue);
+        } else {
+            return defaultValue;
+        }
     }
 
-    @SuppressWarnings( "unchecked" )
-	public static <T1, T2, T3> T3 getNonNullOrDefault(T1 instance,
+    public static <T1, T2, T3> T3 getNonNullOrDefault(T1 instance,
             Function<T1, T2> getter1,
             Function<T2, T3> getter2, T3 defaultValue) {
 
-    	return (T3)doGetNonNullOrDefault(instance, new Function[] { getter1, getter2 }, defaultValue);
+        if (instance != null) {
+            return getNonNullOrDefault(getter1.apply(instance), getter2, defaultValue);
+        } else {
+            return defaultValue;
+        }
     }
 
 
-    @SuppressWarnings( "unchecked" )
-	public static <T1, T2> T2 getNonNullOrDefault(T1 instance,
+    public static <T1, T2> T2 getNonNullOrDefault(T1 instance,
             Function<T1, T2> getter1, T2 defaultValue) {
 
-    	return (T2)doGetNonNullOrDefault(instance, new Function[] { getter1 }, defaultValue);
+        if (instance != null) {
+            return getNonNullOrDefault(getter1.apply(instance), defaultValue);
+        } else {
+            return defaultValue;
+        }
     }
 
     public static <T> T getNonNullOrDefault(T value, T defaultValue) {
@@ -61,18 +70,4 @@ public final class Properties {
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	private static Object doGetNonNullOrDefault(Object instance, Function getters[], Object defaultValue) {
-    	Object result = defaultValue;
-		for (Function getter : getters) {
-			if (instance != null) {
-				result = getter.apply(instance);
-				if (result != null)
-					instance = result;
-				else
-					return defaultValue;
-			}
-		}
-    	return result;
-    }
 }
