@@ -47,6 +47,19 @@ public class OutTest {
 	}
 	
 	@Test
+	public void testEmptyToString() {
+		Out< Integer > integer = new Out<>();
+		assertEquals("Out<>: 'null'", integer.toString());
+	}
+	
+	@Test
+	public void testToString() {
+		Out< Integer > integer = new Out<>();
+		integer.set( 13 );
+		assertEquals("Out<Integer>: '13'", integer.toString());
+	}
+	
+	@Test
 	public void testCall() {
 		int value = 123;
 		Out< Integer > integer = new Out<>();

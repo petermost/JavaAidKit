@@ -72,4 +72,10 @@ public class Out< T > {
 			throw new NoSuchElementException();
 		
 	}
+
+	@Override
+	public String toString() {
+		String className = ( _value != null ) ? _value.getClass().getSimpleName() : Strings.EMPTY;
+		return String.format( "Out<%s>: '%s'", className, _value != null ? _value : "null" );
+	}
 }
