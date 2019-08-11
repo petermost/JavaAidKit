@@ -17,9 +17,9 @@
 
 package com.pera_software.aidkit;
 
-import static org.junit.Assert.*;
-import org.junit.*;
-import com.pera_software.aidkit.io.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
+import com.pera_software.aidkit.io.ResourceNotFoundException;
 
 /**
  * @author P. Most

@@ -17,11 +17,13 @@
 
 package com.pera_software.aidkit.nio.file;
 
-import static org.hamcrest.core.Is.*;
-import static org.junit.Assert.*;
-import java.nio.file.*;
-import java.util.*;
-import org.junit.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.Test;
 
 public class PathsTest
 {

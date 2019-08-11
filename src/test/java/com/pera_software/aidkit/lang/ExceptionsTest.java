@@ -17,10 +17,12 @@
 
 package com.pera_software.aidkit.lang;
 
-import org.junit.*;
-import com.pera_software.aidkit.util.function.*;
-import static org.junit.Assert.*;
-import static com.pera_software.aidkit.lang.Exceptions.*;
+import static com.pera_software.aidkit.lang.Exceptions.tryFunction;
+import static com.pera_software.aidkit.lang.Exceptions.tryProcedure;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
+import com.pera_software.aidkit.util.function.Function;
 
 /**
  * @author P. Most
@@ -47,9 +49,9 @@ public class ExceptionsTest {
 	}
 	
 	
-	@Test( expected = Error.class )
+	@Test
 	public void testTryProcedureWithThrowingProcedure() {
-		tryProcedure( this::throwingProcedure );
+		assertThrows(Error.class, () -> tryProcedure( this::throwingProcedure ));
 	}
 
 	@Test
@@ -57,10 +59,10 @@ public class ExceptionsTest {
 		tryProcedure( this::nonThrowingProcedure );
 	}
 	
-	@Test( expected = Error.class )
+	@Test
 	public void testTryFunctionWithThrowingFunction() {
 		Function< String > function = this::throwingFunction;
-		tryFunction( function );
+		assertThrows(Error.class, () -> tryFunction( function ));
 	}
 	
 	@Test

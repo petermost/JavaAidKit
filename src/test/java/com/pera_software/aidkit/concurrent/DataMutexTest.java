@@ -17,10 +17,12 @@
 
 package com.pera_software.aidkit.concurrent;
 
-import static org.junit.Assert.*;
-import java.util.*;
-import java.util.concurrent.locks.*;
-import org.junit.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
+import org.junit.jupiter.api.Test;
 
 //##################################################################################################
 

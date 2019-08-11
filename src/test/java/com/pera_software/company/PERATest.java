@@ -17,8 +17,8 @@
 
 package com.pera_software.company;
 
-import static org.junit.Assert.*;
-import org.junit.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author P. Most

@@ -17,8 +17,8 @@
 
 package com.pera_software.aidkit.util.regex;
 
-import static org.junit.Assert.*;
-import org.junit.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 //##################################################################################################
 

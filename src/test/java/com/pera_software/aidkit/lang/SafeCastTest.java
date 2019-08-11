@@ -17,8 +17,9 @@
 
 package com.pera_software.aidkit.lang;
 
-import static org.junit.Assert.*;
-import org.junit.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 //#############################################################################
 
@@ -41,49 +42,49 @@ public class SafeCastTest
 
 	//=============================================================================
 
-	@Test( expected = OverflowError.class )
+	@Test
 	public void testToIntOverflow()
 	{
-		SafeCast.toInt( Integer.MAX_VALUE + 1L );
+		assertThrows(OverflowError.class, () -> SafeCast.toInt( Integer.MAX_VALUE + 1L ));
 	}
 
 	//=============================================================================
 
-	@Test( expected = UnderflowError.class )
+	@Test
 	public void testToIntUnderflow()
 	{
-		SafeCast.toInt( Integer.MIN_VALUE - 1L );
+		assertThrows(UnderflowError.class, () -> SafeCast.toInt( Integer.MIN_VALUE - 1L ));
 	}
 
 	//=============================================================================
 
-	@Test( expected = OverflowError.class )
+	@Test
 	public void testToShortOverflow()
 	{
-		SafeCast.toShort( Short.MAX_VALUE + 1 );
+		assertThrows(OverflowError.class, () -> SafeCast.toShort( Short.MAX_VALUE + 1 ));
 	}
 
 	//=============================================================================
 
-	@Test( expected = UnderflowError.class )
+	@Test
 	public void testToShortUnderflow()
 	{
-		SafeCast.toShort( Short.MIN_VALUE - 1 );
+		assertThrows(UnderflowError.class, () -> SafeCast.toShort( Short.MIN_VALUE - 1 ));
 	}
 
 	//=============================================================================
 
-	@Test( expected = OverflowError.class )
+	@Test
 	public void testToByteOverflow()
 	{
-		SafeCast.toByte( Byte.MAX_VALUE + 1 );
+		assertThrows(OverflowError.class, () -> SafeCast.toByte( Byte.MAX_VALUE + 1 ));
 	}
 
 	//=============================================================================
 
-	@Test( expected = UnderflowError.class )
+	@Test
 	public void testToByteUnderflow()
 	{
-		SafeCast.toByte( Byte.MIN_VALUE - 1 );
+		assertThrows(UnderflowError.class, () -> SafeCast.toByte( Byte.MIN_VALUE - 1 ));
 	}
 }

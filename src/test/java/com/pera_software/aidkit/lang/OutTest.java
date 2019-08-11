@@ -17,9 +17,10 @@
 
 package com.pera_software.aidkit.lang;
 
-import java.util.*;
-import org.junit.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.NoSuchElementException;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author P. Most
@@ -34,16 +35,20 @@ public class OutTest {
 		assertEquals( 123, integer.get().intValue() );
 	}
 	
-	@Test( expected = NullPointerException.class )
+	@Test
 	public void testSetNull() {
-		Out< Integer > integer = new Out<>();
-		integer.set( null );
+		assertThrows(NullPointerException.class, () -> {
+			Out< Integer > integer = new Out<>();
+			integer.set( null );
+		});
 	}
 	
-	@Test( expected = NoSuchElementException.class )
+	@Test
 	public void testGetNull() {
-		Out< Integer > integer = new Out<>();
-		integer.get();
+		assertThrows(NoSuchElementException.class, () -> {
+			Out< Integer > integer = new Out<>();
+			integer.get();
+		});
 	}
 	
 	@Test

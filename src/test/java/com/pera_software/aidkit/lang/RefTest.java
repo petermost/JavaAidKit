@@ -17,8 +17,9 @@
 
 package com.pera_software.aidkit.lang;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author P. Most
@@ -33,15 +34,19 @@ public class RefTest {
 	}
 	
 	@SuppressWarnings( "unused" )
-	@Test( expected = NullPointerException.class )
+	@Test
 	public void TestRefCtorNull() {
-		Ref< Integer > integer = new Ref<>( null );
+		assertThrows(NullPointerException.class, () -> { 
+			Ref< Integer > integer = new Ref<>( null );
+		});
 	}
 	
-	@Test( expected = NullPointerException.class )
+	@Test
 	public void testSetNull() {
-		Ref< Integer > integer = new Ref<>( 123 );
-		integer.set( null );
+		assertThrows(NullPointerException.class, () -> {
+			Ref< Integer > integer = new Ref<>( 123 );
+			integer.set( null );
+		});
 	}
 	
 	@Test

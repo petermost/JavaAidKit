@@ -17,10 +17,12 @@
 
 package com.pera_software.aidkit.signal;
 
-import static org.junit.Assert.*;
-import java.lang.reflect.*;
-import java.util.*;
-import org.junit.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.Arrays;
+import org.junit.jupiter.api.Test;
 
 public abstract class SignalTest {
 	
@@ -77,18 +79,18 @@ public abstract class SignalTest {
 		// Get the Signal methods:
 
 		_connectMethod = _signalClass.getMethod( "connect", Object.class );
-		assertEquals( "connect() has wrong parameter count!", 1, _connectMethod.getParameterCount() );
+		assertEquals(1, _connectMethod.getParameterCount(), "connect() has wrong parameter count!");
 
 		_emitMethod = _signalClass.getMethod( "emit", _argumentTypes );
-		assertEquals( "emit() has wrong parameter count!", parameterCount, _emitMethod.getParameterCount() );
+		assertEquals(parameterCount, _emitMethod.getParameterCount(), "emit() has wrong parameter count!");
 
 		_disconnectMethod = _signalClass.getMethod( "disconnect", Object.class );
-		assertEquals( "disconnect() has wrong parameter count!", 1, _disconnectMethod.getParameterCount() );
+		assertEquals(1, _disconnectMethod.getParameterCount(), "disconnect() has wrong parameter count!");
 
 		// Get the Slot methods:
 
 		_handleMethod = _slotClass.getMethod( "handle", _argumentTypes );
-		assertEquals( "handle() has wrong parameter count!", parameterCount, _handleMethod.getParameterCount() );
+		assertEquals(parameterCount, _handleMethod.getParameterCount(), "handle() has wrong parameter count!");
 
 		// Create the slot mocks:
 

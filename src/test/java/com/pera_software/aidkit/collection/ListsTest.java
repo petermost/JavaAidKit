@@ -17,10 +17,10 @@
 
 package com.pera_software.aidkit.collection;
 
-import static org.hamcrest.core.Is.*;
-import static org.junit.Assert.*;
-import java.util.*;
-import org.junit.*;
+import static org.hamcrest.core.Is.is;
+import java.util.List;
+import org.hamcrest.Matcher;
+import org.junit.jupiter.api.Test;
 
 //##################################################################################################
 
@@ -39,6 +39,15 @@ public class ListsTest {
 	}
 
 	//==============================================================================================
+
+	/**
+	 * @param actualUniques
+	 * @param matcher
+	 */
+	private void assertThat(List<String> actualUniques, Matcher<List<String>> matcher) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Test
 	public void testFindDuplicates() {

@@ -17,10 +17,10 @@
 
 package com.pera_software.aidkit.io;
 
-import static org.junit.Assert.*;
-import java.util.*;
-import org.junit.*;
-import com.pera_software.aidkit.lang.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.EnumSet;
+import org.junit.jupiter.api.Test;
+import com.pera_software.aidkit.lang.Strings;
 
 //##################################################################################################
 

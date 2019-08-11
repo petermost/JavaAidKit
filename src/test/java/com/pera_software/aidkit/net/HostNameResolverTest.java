@@ -17,9 +17,9 @@
 
 package com.pera_software.aidkit.net;
 
-import java.net.*;
-import org.junit.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.net.InetAddress;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author P. Most

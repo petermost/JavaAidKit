@@ -17,11 +17,11 @@
 
 package com.pera_software.aidkit.java.beans;
 
-import static com.pera_software.aidkit.java.beans.Properties.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import org.junit.Before;
-import org.junit.Test;
+import static com.pera_software.aidkit.java.beans.Properties.getNonNullOrDefault;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -66,7 +66,7 @@ public class PropertiesTest {
     @Mock
     private Address addressMock;
 
-    @Before
+    @BeforeEach
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }

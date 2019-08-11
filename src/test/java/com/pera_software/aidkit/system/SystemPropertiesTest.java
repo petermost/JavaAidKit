@@ -17,11 +17,10 @@
 
 package com.pera_software.aidkit.system;
 
-import org.hamcrest.*;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 /**
  * @author P. Most
  *

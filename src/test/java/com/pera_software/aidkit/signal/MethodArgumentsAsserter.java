@@ -17,8 +17,9 @@
 
 package com.pera_software.aidkit.signal;
 
-import java.lang.reflect.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 class MethodArgumentsAsserter implements InvocationHandler {
 	private Method _expectedMethod;
