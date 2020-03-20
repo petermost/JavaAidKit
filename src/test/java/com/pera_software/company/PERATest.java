@@ -30,6 +30,8 @@ public class PERATest {
 	public void testGetResourceAsStream() throws Exception {
 		// We are just interested whether we can load a resource, so if one works, then we assume
 		// the others will too:
-		assertNotNull( PERA.getResourceAsStream( PERA.ICON_NAME ));
+		try (var stream = PERA.getResourceAsStream( PERA.ICON_NAME )) {
+			assertNotNull(stream);
+		}
 	}
 }

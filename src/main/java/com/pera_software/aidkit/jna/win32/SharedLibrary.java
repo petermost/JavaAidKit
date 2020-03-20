@@ -30,7 +30,6 @@ public class SharedLibrary< Library extends StdCallLibrary > {
 
 	private Library _instance;
 
-	@SuppressWarnings( "unchecked" )
 	protected SharedLibrary( Path sharedLibraryName, Class< Library > sharedLibraryClass ) {
 
 		// Map java names like 'SomeName' to stdcall names ('_SomeName@4'):
@@ -38,7 +37,7 @@ public class SharedLibrary< Library extends StdCallLibrary > {
 		Map< String, StdCallFunctionMapper > options = new HashMap<>();
 		options.put( Library.OPTION_FUNCTION_MAPPER, new StdCallFunctionMapper() );
 
-		_instance = ( Library )Native.loadLibrary( sharedLibraryName.toAbsolutePath().toString(), sharedLibraryClass, options );
+		_instance = Native.load( sharedLibraryName.toAbsolutePath().toString(), sharedLibraryClass, options );
 	}
 
 	protected Library instance() {

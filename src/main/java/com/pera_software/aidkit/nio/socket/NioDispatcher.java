@@ -59,6 +59,7 @@ public class NioDispatcher implements AutoCloseable
 
 	//=============================================================================
 
+	@SuppressWarnings("resource")
 	public void closeChannels()
 		throws Exception
 	{

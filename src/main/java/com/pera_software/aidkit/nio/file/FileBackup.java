@@ -17,13 +17,25 @@
 
 package com.pera_software.aidkit.nio.file;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
-import java.nio.file.attribute.*;
-import java.util.zip.*;
-import com.pera_software.aidkit.io.*;
-import com.pera_software.aidkit.signal.*;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import com.pera_software.aidkit.io.Streams;
+import com.pera_software.aidkit.signal.Signal1;
+import com.pera_software.aidkit.signal.Signal2;
 
 //##################################################################################################
 
@@ -65,6 +77,7 @@ public class FileBackup extends SimpleFileVisitor< Path > implements Closeable {
 		}
 	}
 
+	@SuppressWarnings("resource")
 	private static PathMatcher createPathMatcher( String wildCardPattern ) {
 		return FileSystems.getDefault().getPathMatcher( "glob:" + wildCardPattern );
 	}

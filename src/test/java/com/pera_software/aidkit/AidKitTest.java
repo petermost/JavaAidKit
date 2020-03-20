@@ -19,7 +19,6 @@ package com.pera_software.aidkit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
-import com.pera_software.aidkit.io.ResourceNotFoundException;
 
 /**
  * @author P. Most
@@ -28,10 +27,12 @@ import com.pera_software.aidkit.io.ResourceNotFoundException;
 public class AidKitTest {
 
 	@Test
-	public void testGetResourceAsStream() throws ResourceNotFoundException {
+	public void testGetResourceAsStream() throws Exception {
 		// We are just interested whether we can load a resource, so if one works, then we assume
 		// the others will too:
 		
-		assertNotNull( AidKit.getResourceAsStream( AidKit.APPLICATION_EXIT_ICON ));
+		try (var stream = AidKit.getResourceAsStream( AidKit.APPLICATION_EXIT_ICON )) {
+			assertNotNull(stream);
+		}
 	}
 }

@@ -17,6 +17,8 @@
 
 package com.pera_software.aidkit.nio.socket;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.net.*;
 import java.nio.channels.*;
 
@@ -24,7 +26,7 @@ import java.nio.channels.*;
 /**
  * This class is used to establish a 'client' connection.
  */
-public class NioClient {
+public class NioClient implements Closeable {
 	
 	private NioDispatcher _dispatcher;
 	private SocketChannel _clientChannel;
@@ -46,6 +48,7 @@ public class NioClient {
 	 *
 	 * @see NioHandler#onConnect
 	 */
+	@SuppressWarnings("resource")
 	public void connect( InetAddress address, int port, NioHandler handler ) throws Exception {
 		// Create the non-blocking client channel:
 
@@ -64,7 +67,12 @@ public class NioClient {
 	/**
 	 * Closes the connection and <code>NioHandler.onClose</code>is called.
 	 */
-	public void close() throws Exception {
-		_dispatcher.closeChannel( _clientChannel );
+	@Override
+	public void close() throws IOException {
+		try {
+			_dispatcher.closeChannel( _clientChannel );
+		} catch (Exception exception) {
+			throw new IOException(exception);
+		}
 	}
 }

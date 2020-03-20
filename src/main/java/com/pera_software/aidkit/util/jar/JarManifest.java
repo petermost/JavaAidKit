@@ -32,10 +32,11 @@ public class JarManifest extends Manifest {
 
 	//============================================================================
 
-	public static Optional< JarManifest > getCurrentManifest( Class< ? > mainClass ) {
-		Optional< JarManifest > manifest = getJarManifest( mainClass );
-		if ( manifest == null )
-			manifest = Optional.of( getClassManifest( mainClass ));
+	public static Optional<JarManifest> getCurrentManifest(Class<?> mainClass)
+	{
+		Optional<JarManifest> manifest = getJarManifest(mainClass);
+		if (manifest.isEmpty())
+			manifest = Optional.of(getClassManifest(mainClass));
 
 		return manifest;
 	}
@@ -65,7 +66,9 @@ public class JarManifest extends Manifest {
 					String jarPathName = classPathName.substring( 0, exclamationMarkPosition + 1 );
 					String manifestPathName = jarPathName + "/META-INF/MANIFEST.MF";
 					URL manifestURL = new URL( manifestPathName );
-					manifest = new JarManifest( jarPathName, manifestURL.openStream() );
+					try (var manifestStream = manifestURL.openStream()) {
+						manifest = new JarManifest( jarPathName, manifestStream);
+					}
 				}
 			}
 			return Optional.of( manifest );
