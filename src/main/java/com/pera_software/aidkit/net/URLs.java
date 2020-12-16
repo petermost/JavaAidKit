@@ -17,9 +17,8 @@
 
 package com.pera_software.aidkit.net;
 
-import java.net.*;
-import java.nio.file.*;
-import com.pera_software.aidkit.lang.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author P. Most
@@ -27,14 +26,12 @@ import com.pera_software.aidkit.lang.*;
  */
 public final class URLs {
 
-	private URLs() {
+	private URLs()
+	{
 	}
-	
-	public static URL get( String url ) {
-		return Exceptions.tryFunction( () -> new URL( url ));
-	}
-	
-	public static URL get( Path path ) {
-		return Exceptions.tryFunction( () -> path.toUri().toURL() );
+
+	public static String encode(String url) throws Exception
+	{
+		return URLEncoder.encode(url, StandardCharsets.UTF_8);
 	}
 }
