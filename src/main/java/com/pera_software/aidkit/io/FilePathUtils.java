@@ -23,33 +23,39 @@ package com.pera_software.aidkit.io;
  */
 public final class FilePathUtils extends FilePathBase {
 
-	private FilePathUtils() {
+	private FilePathUtils()
+	{
 	}
 
-	public static String addPrefixSeparator( String string, char separator ) {
-		if ( !string.isEmpty() && string.charAt( 0 ) != separator )
+	public static String addPrefixSeparator(String string, char separator)
+	{
+		if (!string.isEmpty() && string.charAt(0) != separator)
 			return separator + string;
 		else
 			return string;
 	}
 
-	public static String addPostfixSeparator( String string, char separator ) {
-		if ( !string.isEmpty() && string.charAt( string.length() - 1 ) != separator )
+	public static String addPostfixSeparator(String string, char separator)
+	{
+		if (!string.isEmpty() && string.charAt(string.length() - 1) != separator)
 			return string + separator;
 		else
 			return string;
 	}
 
-	public static String addDriveSeparator( String device ) {
-		return addPostfixSeparator( device, FilePath.DRIVE_SEPARATOR );
+	public static String addDriveSeparator(String drive)
+	{
+		return addPostfixSeparator(drive, FilePath.DRIVE_SEPARATOR);
 	}
 
-	public static String addDirectorySeparator( String directory ) {
-		return addPostfixSeparator( directory, FilePath.DIRECTORY_SEPARATOR );
+	public static String addDirectorySeparator(String directory)
+	{
+		return addPostfixSeparator(directory, FilePath.DIRECTORY_SEPARATOR);
 	}
 
-	public static String addExtensionSeparator( String extension ) {
-		return addPrefixSeparator( extension, FilePath.EXTENSION_SEPARATOR );
+	public static String addExtensionSeparator(String extension)
+	{
+		return addPrefixSeparator(extension, FilePath.EXTENSION_SEPARATOR);
 	}
-	
+
 }
