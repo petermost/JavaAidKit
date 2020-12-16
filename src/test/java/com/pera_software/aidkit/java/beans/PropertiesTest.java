@@ -20,6 +20,7 @@ package com.pera_software.aidkit.java.beans;
 import static com.pera_software.aidkit.java.beans.Properties.getNonNullOrDefault;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -57,6 +58,7 @@ public class PropertiesTest {
     private static final Address  DEFAULT_ADDRESS = new Address();
     private static final String   DEFAULT_STREET = "";
 
+    private AutoCloseable _mocks;
     @Mock
     private Order orderMock;
 
@@ -67,8 +69,13 @@ public class PropertiesTest {
     private Address addressMock;
 
     @BeforeEach
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
+    public void openMocks() {
+        _mocks = MockitoAnnotations.openMocks(this);
+    }
+    
+    @AfterEach
+    public void closeMocks() throws Exception {
+    	_mocks.close();
     }
 
     @Test
