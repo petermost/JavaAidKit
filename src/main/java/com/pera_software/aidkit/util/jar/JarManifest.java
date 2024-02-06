@@ -65,14 +65,14 @@ public class JarManifest extends Manifest {
 				if ( exclamationMarkPosition >= 0 ) {
 					String jarPathName = classPathName.substring( 0, exclamationMarkPosition + 1 );
 					String manifestPathName = jarPathName + "/META-INF/MANIFEST.MF";
-					URL manifestURL = new URL( manifestPathName );
+					URL manifestURL = new URI( manifestPathName ).toURL();
 					try (var manifestStream = manifestURL.openStream()) {
 						manifest = new JarManifest( jarPathName, manifestStream);
 					}
 				}
 			}
 			return Optional.of( manifest );
-		} catch ( IOException cause ) {
+		} catch ( Exception cause ) {
 			return Optional.empty();
 		}
 	}
