@@ -29,51 +29,58 @@ import org.junit.jupiter.api.Test;
 public class OutTest {
 
 	@Test
-	public void testSet() {
+	public void testSet()
+	{
 		Out< Integer > integer = new Out<>();
 		integer.set( 123 );
 		assertEquals( 123, integer.get().intValue() );
 	}
-	
+
 	@Test
-	public void testSetNull() {
+	public void testSetNull()
+	{
 		assertThrows(NullPointerException.class, () -> {
 			Out< Integer > integer = new Out<>();
 			integer.set( null );
 		});
 	}
-	
+
 	@Test
-	public void testGetNull() {
+	public void testGetNull()
+	{
 		assertThrows(NoSuchElementException.class, () -> {
 			Out< Integer > integer = new Out<>();
 			integer.get();
 		});
 	}
-	
+
 	@Test
-	public void testEmptyToString() {
+	public void testEmptyToString()
+	{
 		Out< Integer > integer = new Out<>();
-		assertEquals("Out<>: 'null'", integer.toString());
+		assertEquals("", integer.toString());
 	}
-	
+
 	@Test
-	public void testToString() {
+	public void testToString()
+	{
 		Out< Integer > integer = new Out<>();
 		integer.set( 13 );
-		assertEquals("Out<Integer>: '13'", integer.toString());
+		assertEquals("13", integer.toString());
 	}
-	
+
 	@Test
-	public void testCall() {
+	public void testCall()
+	{
 		int value = 123;
 		Out< Integer > integer = new Out<>();
-		
+
 		setOut( value, integer );
 		assertEquals( value, integer.get().intValue() );
 	}
 
-	private static void setOut( int value, Out< Integer > integer ) {
+	private static void setOut( int value, Out< Integer > integer )
+	{
 		integer.set( value );
 	}
 }

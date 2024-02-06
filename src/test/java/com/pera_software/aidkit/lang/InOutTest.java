@@ -25,40 +25,45 @@ import org.junit.jupiter.api.Test;
  * @author P. Most
  *
  */
-public class RefTest {
+public class InOutTest {
 
 	@Test
-	public void testRefCtor() {
-		Ref< Integer > integer = new Ref<>( 123 );
+	public void testContructor()
+	{
+		InOut<Integer> integer = new InOut<>( 123 );
 		assertEquals( 123, integer.get().intValue() );
 	}
-	
+
 	@SuppressWarnings( "unused" )
 	@Test
-	public void TestRefCtorNull() {
-		assertThrows(NullPointerException.class, () -> { 
-			Ref< Integer > integer = new Ref<>( null );
+	public void TestConstructorWithNull()
+	{
+		assertThrows(NullPointerException.class, () -> {
+			InOut<Integer> integer = new InOut<>( null );
 		});
 	}
-	
+
 	@Test
-	public void testSetNull() {
+	public void testSetNull()
+	{
 		assertThrows(NullPointerException.class, () -> {
-			Ref< Integer > integer = new Ref<>( 123 );
+			InOut<Integer> integer = new InOut<>( 123 );
 			integer.set( null );
 		});
 	}
-	
+
 	@Test
-	public void testCall() {
+	public void testCall()
+	{
 		int value = 123;
-		Ref< Integer > integer = new Ref<>( value );
-		
-		setRef( value, integer );
+		InOut<Integer> integer = new InOut<>( value );
+
+		setInOut( value, integer );
 		assertEquals( value, integer.get().intValue() );
 	}
 
-	private static void setRef( int value, Out< Integer > integer ) {
+	private static void setInOut( int value, Out< Integer > integer )
+	{
 		integer.set( value );
 	}
 }
