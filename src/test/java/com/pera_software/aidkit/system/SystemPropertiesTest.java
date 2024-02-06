@@ -19,29 +19,34 @@ package com.pera_software.aidkit.system;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import java.util.Enumeration;
+import java.util.Properties;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+
 /**
  * @author P. Most
  *
  */
 public class SystemPropertiesTest {
 
-//	public void printAllProperties() {
-//		Properties properties = System.getProperties();
-//		Enumeration< Object > keys = properties.keys();
-//		while ( keys.hasMoreElements() ) {
-//			String key = ( String )keys.nextElement();
-//			String value = properties.getProperty( key );
-//			System.out.printf( "'%s' = '%s'\n", key, value );
-//		}
-//	}
-	
 	@Test
-	public void testGetOsArchitecture() {
+	public void printAllProperties()
+	{
+		Properties properties = System.getProperties();
+		Enumeration<Object> keys = properties.keys();
+		while (keys.hasMoreElements()) {
+			String key = (String)keys.nextElement();
+			String value = properties.getProperty(key);
+			System.out.printf("'%s' = '%s'\n", key, value);
+		}
+	}
+
+	@Test
+	public void testGetOsArchitecture()
+	{
 		String osArchitecture = SystemProperties.getOsArchitecture().get();
-		assertThat( osArchitecture, Matchers.anyOf( is( SystemProperties.OS_ARCHITECTURE_32 ),
-			is( SystemProperties.OS_ARCHITECTURE_64 )));
+		assertThat(osArchitecture, Matchers.anyOf(is(SystemProperties.OS_ARCHITECTURE_32), is(SystemProperties.OS_ARCHITECTURE_64)));
 	}
 
 }

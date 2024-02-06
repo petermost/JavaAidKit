@@ -38,7 +38,7 @@ public class DataMutexTest {
 
 		// Must initially not be locked yet:
 
-		DataMutex< List< String >> stringList = new DataMutex<>( new ArrayList< String >() );
+		DataMutex< List< String >> stringList = new DataMutex<>( new ArrayList<>() );
 		assertFalse( stringList.isLocked() );
 
 		// Lock the data:

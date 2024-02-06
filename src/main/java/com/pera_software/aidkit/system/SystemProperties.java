@@ -24,72 +24,81 @@ import java.util.*;
  * Wrap the call to System.getProperty to avoid failing calls because of mistyped key names.
  */
 public final class SystemProperties {
-	
+
 	public static final String OS_ARCHITECTURE_32 = "x86";
 	public static final String OS_ARCHITECTURE_64 = "amd64";
 
 	//==============================================================================================
 
-	private SystemProperties() {
+	private SystemProperties() 
+	{
 	}
 
 	//==============================================================================================
-	
-	private static Optional< String > getProperty( String key ) {
-		return Optional.ofNullable( System.getProperty( key ));
+
+	public static Optional<String> getProperty(String key)
+	{
+		return Optional.ofNullable(System.getProperty(key));
 	}
-	
+
 	//==============================================================================================
 
-	public static Optional< String > getClassPath() {
-		return getProperty( "java.class.path" );
+	public static Optional<String> getClassPath()
+	{
+		return getProperty("java.class.path");
 	}
 
 	//==============================================================================================
 	/**
 	 * @return ":" under UNIX and ";" under Windows
 	 */
-	public static Optional< String > getPathSeparator() {
-		return getProperty( "path.separator" );
+	public static Optional<String> getPathSeparator()
+	{
+		return getProperty("path.separator");
 	}
 
 	//==============================================================================================
 	/**
 	 * @return "/" under UNIX and "\" under Windows
 	 */
-	public static Optional< String > getFileSeparator() {
-		return getProperty( "file.separator" );
+	public static Optional<String> getFileSeparator()
+	{
+		return getProperty("file.separator");
 	}
 
 	//==============================================================================================
 	/**
 	 * @return "\n" under UNIX and "\r\n" under Windows
 	 */
-	public static Optional< String > getLineSeparator() {
-		return getProperty( "line.separator" );
+	public static Optional<String> getLineSeparator()
+	{
+		return getProperty("line.separator");
 	}
 
 	//==============================================================================================
 
-	public static Optional< String > getTmpDir() {
-		return getProperty( "java.io.tmpdir" );
+	public static Optional<String> getTmpDir()
+	{
+		return getProperty("java.io.tmpdir");
 	}
 
 	//==============================================================================================
 	/**
 	 * @return The current working directory
 	 */
-	public static Optional< String > getUserDirectory() {
-		return getProperty( "user.dir" );
+	public static Optional<String> getUserDirectory()
+	{
+		return getProperty("user.dir");
 	}
-	
+
 	//==============================================================================================
-	
+
 	/**
 	 * @return 'x86' for 32-bit JVM and 'amd64' for an 64-bit JVM:
 	 */
-	public static Optional< String > getOsArchitecture() {
-		return getProperty( "os.arch" );
+	public static Optional<String> getOsArchitecture()
+	{
+		return getProperty("os.arch");
 	}
 }
 
@@ -152,4 +161,51 @@ public final class SystemProperties {
 // 'sun.cpu.endian' = 'little'
 // 'sun.desktop' = 'windows'
 // 'sun.cpu.isalist' = 'pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86'
+
+// Another output under Linux:
+
+//'java.specification.version' = '15'
+//'sun.management.compiler' = 'HotSpot 64-Bit Tiered Compilers'
+//'sun.jnu.encoding' = 'UTF-8'
+//'java.runtime.version' = '15.0.1+9'
+//'java.class.path' = '/home/peter/EclipseWorkspace/JavaAidKit/target/test-classes:/home/peter/EclipseWorkspace/JavaAidKit/target/classes:/home/peter/.m2/repository/net/java/dev/jna/jna-platform/5.6.0/jna-platform-5.6.0.jar:/home/peter/.m2/repository/net/java/dev/jna/jna/5.6.0/jna-5.6.0.jar:/home/peter/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.0/junit-jupiter-api-5.7.0.jar:/home/peter/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/peter/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/peter/.m2/repository/org/junit/platform/junit-platform-commons/1.7.0/junit-platform-commons-1.7.0.jar:/home/peter/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.0/junit-jupiter-engine-5.7.0.jar:/home/peter/.m2/repository/org/junit/platform/junit-platform-engine/1.7.0/junit-platform-engine-1.7.0.jar:/home/peter/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.7.0/junit-jupiter-params-5.7.0.jar:/home/peter/.m2/repository/org/mockito/mockito-core/3.6.28/mockito-core-3.6.28.jar:/home/peter/.m2/repository/net/bytebuddy/byte-buddy/1.10.18/byte-buddy-1.10.18.jar:/home/peter/.m2/repository/net/bytebuddy/byte-buddy-agent/1.10.18/byte-buddy-agent-1.10.18.jar:/home/peter/.m2/repository/org/objenesis/objenesis/3.1/objenesis-3.1.jar:/home/peter/.m2/repository/org/hamcrest/java-hamcrest/2.0.0.0/java-hamcrest-2.0.0.0.jar:/home/peter/.m2/repository/org/junit/platform/junit-platform-launcher/1.7.0/junit-platform-launcher-1.7.0.jar:/home/peter/Tools/eclipse/configuration/org.eclipse.osgi/214/0/.cp:/home/peter/Tools/eclipse/configuration/org.eclipse.osgi/212/0/.cp'
+//'user.name' = 'peter'
+//'java.vm.vendor' = 'AdoptOpenJDK'
+//'path.separator' = ':'
+//'sun.arch.data.model' = '64'
+//'os.version' = '5.8.0-34-generic'
+//'java.runtime.name' = 'OpenJDK Runtime Environment'
+//'file.encoding' = 'UTF-8'
+//'java.vendor.url' = 'https://adoptopenjdk.net/'
+//'java.vm.name' = 'OpenJDK 64-Bit Server VM'
+//'java.vm.specification.version' = '15'
+//'os.name' = 'Linux'
+//'java.vendor.version' = 'AdoptOpenJDK'
+//'sun.java.launcher' = 'SUN_STANDARD'
+//'user.country' = 'US'
+//'sun.boot.library.path' = '/usr/lib/jvm/adoptopenjdk-15-hotspot-amd64/lib'
+//'sun.java.command' = 'org.eclipse.jdt.internal.junit.runner.RemoteTestRunner -version 3 -port 35933 -testLoaderClass org.eclipse.jdt.internal.junit5.runner.JUnit5TestLoader -loaderpluginname org.eclipse.jdt.junit5.runtime -packageNameFile /tmp/packageNames6897899698269738726.txt'
+//'java.vendor.url.bug' = 'https://github.com/AdoptOpenJDK/openjdk-support/issues'
+//'java.io.tmpdir' = '/tmp'
+//'jdk.debug' = 'release'
+//'sun.cpu.endian' = 'little'
+//'java.version' = '15.0.1'
+//'user.home' = '/home/peter'
+//'user.dir' = '/home/peter/EclipseWorkspace/JavaAidKit'
+//'os.arch' = 'amd64'
+//'user.language' = 'en'
+//'java.specification.vendor' = 'Oracle Corporation'
+//'java.vm.specification.name' = 'Java Virtual Machine Specification'
+//'java.version.date' = '2020-10-20'
+//'java.home' = '/usr/lib/jvm/adoptopenjdk-15-hotspot-amd64'
+//'file.separator' = '/'
+//'java.vm.compressedOopsMode' = '32-bit'
+//'java.library.path' = '/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib'
+//'java.vm.info' = 'mixed mode, sharing'
+//'java.vm.specification.vendor' = 'Oracle Corporation'
+//'java.specification.name' = 'Java Platform API Specification'
+//'java.vendor' = 'AdoptOpenJDK'
+//'java.vm.version' = '15.0.1+9'
+//'sun.io.unicode.encoding' = 'UnicodeLittle'
+//'java.class.version' = '59.0'
 
