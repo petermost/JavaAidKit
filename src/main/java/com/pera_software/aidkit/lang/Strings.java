@@ -34,8 +34,7 @@ public final class Strings {
 
 	public static final List<String> EMPTY_LIST = new ArrayList<>();
 
-	private Strings()
-	{
+	private Strings() {
 	}
 
 	public static String trimLeftIf(String s, Predicate<Character> condition)
@@ -65,4 +64,30 @@ public final class Strings {
 	{
 		return Optional.ofNullable(value).filter(Predicate.not(String::isBlank));
 	}
+
+	public static boolean isNullOrEmpty(String s)
+	{
+		return s == null || s.isEmpty();
+	}
+
+	/**
+	 * Compare two strings and return the index of the difference.
+	 * @param expectedString
+	 * @param actualString
+	 * @return The index of the difference or -1 when they are equal
+	 */
+	public static int compare(String expectedString, String actualString)
+	{
+		int i;
+
+		for (i = 0; i < expectedString.length() && i < actualString.length(); ++i) {
+			if (expectedString.charAt(i) != actualString.charAt(i))
+				break;
+		}
+		if (i < expectedString.length() || i < actualString.length())
+			return i;
+
+		return -1;
+	}
+
 }
